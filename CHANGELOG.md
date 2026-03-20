@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.0
+
+- 增加演示跑通手册
+- 增加 A/B 组 specialist 批量生成脚本
+- 增加 task / agent / scorecard 的 JSON Schema
+- 增加默认接管增强设计文档
+- README 改为更接近发布页风格
+
 ## 0.5.0
 
 - 增加静默巡检模板

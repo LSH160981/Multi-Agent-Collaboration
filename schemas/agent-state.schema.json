@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent State",
+  "type": "object",
+  "required": ["agent_name", "role", "status"],
+  "properties": {
+    "agent_name": { "type": "string" },
+    "role": { "type": "string" },
+    "group": { "type": "string" },
+    "status": { "type": "string", "enum": ["idle", "working", "blocked", "offline", "reviewing"] },
+    "last_seen_at": { "type": "string" },
+    "current_task_id": { "type": "string" },
+    "weight": { "type": "number" },
+    "pass_rate": { "type": "number" },
+    "notes": { "type": "string" }
+  }
+}

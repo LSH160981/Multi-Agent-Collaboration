@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Task State",
+  "type": "object",
+  "required": ["task_id", "title", "status", "goal"],
+  "properties": {
+    "task_id": { "type": "string" },
+    "title": { "type": "string" },
+    "status": { "type": "string", "enum": ["pending", "assigned", "in_progress", "review", "done", "failed", "rework"] },
+    "from": { "type": "string" },
+    "to": { "type": "string" },
+    "goal": { "type": "string" },
+    "inputs": { "type": "array", "items": { "type": "string" } },
+    "constraints": { "type": "array", "items": { "type": "string" } },
+    "deliverables": { "type": "array", "items": { "type": "string" } },
+    "current_step": { "type": "string" },
+    "last_action_at": { "type": "string" },
+    "blockers": { "type": "array", "items": { "type": "string" } },
+    "artifacts": { "type": "array", "items": { "type": "string" } },
+    "verification": { "type": "array", "items": { "type": "string" } },
+    "next_step": { "type": "string" }
+  }
+}

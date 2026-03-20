@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Scorecard",
+  "type": "object",
+  "required": ["task_id", "group", "total_score", "decision"],
+  "properties": {
+    "task_id": { "type": "string" },
+    "group": { "type": "string" },
+    "reviewer_score": { "type": "number" },
+    "judge_score": { "type": "number" },
+    "metrics_score": { "type": "number" },
+    "total_score": { "type": "number" },
+    "decision": { "type": "string", "enum": ["pass", "reject", "rework"] },
+    "notes": { "type": "string" }
+  }
+}
