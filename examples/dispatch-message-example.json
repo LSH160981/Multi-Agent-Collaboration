@@ -1,0 +1,11 @@
+{
+  "type": "task_assign",
+  "task_id": "TASK-20260321-001",
+  "from": "主Agent",
+  "to": "A组-Frontend",
+  "goal": "实现随机密码页面前端原型",
+  "constraints": ["禁止联系用户"],
+  "inputs": ["功能需求", "视觉参考"],
+  "deliverables": ["页面代码", "验证步骤"],
+  "status": "assigned"
+}

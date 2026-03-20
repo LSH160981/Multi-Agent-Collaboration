@@ -1,0 +1,48 @@
+{
+  "task_id": "TASK-20260320-175637",
+  "task_type": "research",
+  "groups": [
+    {
+      "group": "A",
+      "members": [
+        {
+          "name": "A组长-Lead",
+          "role": "Lead"
+        },
+        {
+          "name": "A组-Research",
+          "role": "Research"
+        },
+        {
+          "name": "A组-Verification",
+          "role": "Verification"
+        },
+        {
+          "name": "A组-Summary",
+          "role": "Summary"
+        }
+      ]
+    },
+    {
+      "group": "B",
+      "members": [
+        {
+          "name": "B组长-Lead",
+          "role": "Lead"
+        },
+        {
+          "name": "B组-Research",
+          "role": "Research"
+        },
+        {
+          "name": "B组-Verification",
+          "role": "Verification"
+        },
+        {
+          "name": "B组-Summary",
+          "role": "Summary"
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.9.0
+
+- 增加动态招聘原型代码 `recruit_team.py`
+- 增加结构化派单原型代码 `dispatch_task.py`
+- 增加结果评分原型代码 `score_result.py`
+- 增加巡检原型代码 `inspect_agents.py`
+- 增加用户结论去重原型代码 `dedupe_summary.py`
+- 增加总控原型代码 `orchestrate_task.py`
+- 增加伪代码到代码映射说明
+- 实际运行并验证新增代码输出
+
 ## 0.8.0
 
 - 增加默认接管基础安装脚本

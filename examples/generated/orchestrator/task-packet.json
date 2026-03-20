@@ -1,0 +1,30 @@
+{
+  "entry": "mac",
+  "task_id": "TASK-20260320-175637",
+  "user_intent": "调研最近 30 天值得关注的 OpenClaw 多Agent 项目，提炼协同架构优点并给出改进建议。",
+  "goal": "调研最近 30 天值得关注的 OpenClaw 多Agent 项目，提炼协同架构优点并给出改进建议。",
+  "task_type": "research",
+  "complexity": "medium",
+  "needs_clarification": false,
+  "clarification_questions": [],
+  "required_roles": [
+    "主Agent",
+    "AgentPool",
+    "审核Agent",
+    "检查Agent"
+  ],
+  "specialists": [
+    "Research",
+    "Verification",
+    "Summary"
+  ],
+  "execution_mode": "dual-group",
+  "output_requirements": [
+    "总结",
+    "验证步骤",
+    "风险说明"
+  ],
+  "constraints": [
+    "禁止非主Agent联系用户"
+  ]
+}

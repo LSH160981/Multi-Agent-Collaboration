@@ -20,12 +20,11 @@
 - **动态 specialist 招聘，而不是预建一堆空角色**
 - **内置 JSON 协议、样例链、评分卡、队列、日志模板**
 - **支持巡检、自学习、恢复、权重淘汰**
-- **提供初始化、自检、单个生成、A/B 批量编组脚本**
-- **已经开始提供可运行代码：/mac 解析、示例校验、默认接管安装脚本**
+- **已经具备一批可运行原型代码：解析、编组、派单、评分、巡检、去重、总控**
 
 ## 当前版本
 
-`0.8.0`
+`0.9.0`
 
 ## 适合什么任务
 
@@ -55,6 +54,8 @@
 16. 发布说明草案
 17. 示例校验脚本与日志样例生成脚本
 18. 默认接管基础安装脚本
+19. 动态招聘 / 派单 / 评分 / 巡检 / 去重 / 总控原型代码
+20. 伪代码到代码映射说明
 
 ## 目录概览
 
@@ -63,9 +64,9 @@
 - `templates/`：动态 specialist 与共享模板
 - `examples/`：任务样例、自动化测试模板、JSON 样例、运行痕迹样例
 - `schemas/`：任务状态 / Agent 状态 / 评分卡 schema
-- `scripts/`：初始化、自检、生成、批量编组、/mac 解析、示例校验脚本
+- `scripts/`：初始化、自检、生成、批量编组、/mac 解析、派单、评分、巡检、去重、总控脚本
 - `research/`：外部资料与提炼
-- `docs/`：系统设计、演示手册、发布说明、代码落地说明与路线图
+- `docs/`：系统设计、演示手册、发布说明、代码落地说明、伪代码映射与路线图
 
 ## 快速开始
 
@@ -87,29 +88,31 @@
 ./scripts/default-takeover-setup.sh
 ```
 
-### 4. 可选：批量生成一套 A/B 组 specialist 骨架
+### 4. 试跑总控原型
 
 ```bash
-./scripts/generate-ab-team.sh
+./scripts/orchestrate_task.py "/mac 调研最近 30 天值得关注的 OpenClaw 多Agent 项目，提炼协同架构优点并给出改进建议。"
 ```
 
-### 5. 可选：把 `/mac` 文本转成任务包 JSON
+### 5. 试跑评分 / 巡检 / 去重
 
 ```bash
-./scripts/mac_cli.py "/mac 调研最近 30 天值得关注的 OpenClaw 多Agent 项目"
+./scripts/score_result.py examples/result-package-example.json
+./scripts/inspect_agents.py ~/.openclaw/workspace --stale-minutes 30
+./scripts/dedupe_summary.py examples/dedupe-input.json
 ```
 
 ## 阅读顺序建议
 
 1. `docs/演示跑通手册.md`
 2. `docs/代码落地说明.md`
-3. `skills/Multi-Agent-Collaboration/SKILL.md`
-4. `skills/Multi-Agent-Collaboration/mac任务包协议.md`
+3. `docs/伪代码到代码映射.md`
+4. `skills/Multi-Agent-Collaboration/SKILL.md`
 5. `examples/tests/`
 6. `examples/json/`
 7. `schemas/`
 
 ## 项目状态
 
-当前已经是一个**高完成度原型仓库**：可安装、可初始化、可演示、可扩展、并开始具备可运行代码。
-下一步将继续推进更自动化的默认接管机制，以及更适合 ClawHub 发布的最终包装。
+当前已经是一个**高完成度原型仓库**：可安装、可初始化、可演示、可扩展，并且已有一批可运行原型代码。
+下一步将继续推进更接近真实 OpenClaw 多 session 运行时的联动能力。
