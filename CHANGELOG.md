@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0
+
+- 补全主Agent/审核Agent/检查Agent/AgentPool 的 abilities 与目录模板
+- 增加 specialist 模板
+- 增加 `/mac` 任务包协议
+- 增加调研/开发/故障排查三类真实任务样例
+
 ## 0.2.0
 
 - 增加主Agent/审核Agent/检查Agent/AgentPool 目录模板

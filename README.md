@@ -10,10 +10,31 @@ OpenClaw 原生多会话多 Agent 协作系统。
 - **按需创建子 Agent，而不是预先堆满角色**
 - **双组竞争 + 审核 + 巡检 + 记忆/日志/任务队列**
 
+## 当前进度
+
+当前版本：`0.3.0`
+
+已具备：
+
+1. skill 本体
+2. 研究资料与提炼
+3. 中文伪代码
+4. 中文逻辑流程
+5. JSON 通信协议
+6. 主Agent / 审核Agent / 检查Agent / AgentPool 骨架
+7. specialist 模板
+8. `/mac` 任务包协议
+9. 安装脚本、测试脚本、恢复策略、git 策略、自学习方案
+10. 三类真实任务样例
+
 ## 仓库结构
 
 - `skills/Multi-Agent-Collaboration/`：正式 skill
+- `agents/`：核心固定角色骨架
+- `templates/`：动态生成 specialist 与共享模板
+- `examples/`：任务样例
 - `research/`：外部资料、学习摘录、优秀设计提炼
+- `docs/`：系统设计与路线图
 
 ## 快速开始
 
@@ -23,21 +44,11 @@ OpenClaw 原生多会话多 Agent 协作系统。
 - 使用 `/mac <任务>`
 - 或说：`使用 Multi-Agent-Collaboration skill 完成 XXX任务`
 
-## 当前版本
+## 下一步重点
 
-这是第一版骨架，重点先落地：
+后续将继续补：
 
-1. skill 说明
-2. 角色架构
-3. 任务协议
-4. JSON 通信协议
-5. 中文伪代码
-6. 中文逻辑流程
-7. 外部资料学习摘录
-
-后续可继续补：
-
-- 自动安装/配置脚本
-- OpenClaw config patch 模板
-- 多平台 `/mac` 分发方案
-- 自动自学习 cron/heartbeat 模块
+- 更强的 `/mac` 触发与安装自检
+- 更完整的 JSON 消息样例库
+- 更细的权重/淘汰机制
+- 更接近可发布到 ClawHub 的包装
