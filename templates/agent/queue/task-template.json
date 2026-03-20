@@ -1,0 +1,17 @@
+{
+  "task_id": "TASK-YYYYMMDD-001",
+  "title": "任务标题",
+  "status": "pending",
+  "from": "主Agent",
+  "to": "某Agent",
+  "goal": "任务目标",
+  "inputs": [],
+  "constraints": [],
+  "deliverables": [],
+  "current_step": "",
+  "last_action_at": "",
+  "blockers": [],
+  "artifacts": [],
+  "verification": [],
+  "next_step": ""
+}
