@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0",
+  "description": "Multi-Agent-Collaboration 内部 Agent 间 JSON 通信协议",
+  "message_types": {
+    "task_assign": {
+      "required": ["task_id", "from", "to", "goal", "status"],
+      "optional": ["inputs", "constraints", "deliverables", "reply_to", "priority", "deadline"]
+    },
+    "task_ack": {
+      "required": ["task_id", "from", "to", "status"],
+      "optional": ["note", "eta"]
+    },
+    "task_progress": {
+      "required": ["task_id", "from", "to", "status", "progress"],
+      "optional": ["artifacts", "blockers", "next_step"]
+    },
+    "task_result": {
+      "required": ["task_id", "from", "to", "status", "summary"],
+      "optional": ["artifacts", "verification", "risks", "score_hint"]
+    },
+    "task_reject": {
+      "required": ["task_id", "from", "to", "status", "reason"],
+      "optional": ["fix_requirements", "retry_limit"]
+    },
+    "agent_ping": {
+      "required": ["from", "to", "status"],
+      "optional": ["reason"]
+    },
+    "agent_intro": {
+      "required": ["from", "to", "name", "abilities"],
+      "optional": ["limits", "group"]
+    }
+  }
+}
