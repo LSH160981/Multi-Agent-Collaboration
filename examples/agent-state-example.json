@@ -1,0 +1,11 @@
+{
+  "agent_name": "A组-前端专家-Frontend",
+  "role": "Frontend Specialist",
+  "group": "GROUP-A",
+  "status": "working",
+  "last_seen_at": "2026-03-21T01:20:00+08:00",
+  "current_task_id": "TASK-20260321-001",
+  "weight": 0.86,
+  "pass_rate": 0.91,
+  "notes": "最近两次审核通过率较高，可优先复用"
+}

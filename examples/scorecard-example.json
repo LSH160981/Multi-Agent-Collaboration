@@ -1,0 +1,10 @@
+{
+  "task_id": "TASK-20260321-001",
+  "group": "GROUP-A",
+  "reviewer_score": 26,
+  "judge_score": 60,
+  "metrics_score": 23,
+  "total_score": 109,
+  "decision": "pass",
+  "notes": "结构完整，验证充分，建议优化视觉细节"
+}
