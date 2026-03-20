@@ -1,0 +1,6 @@
+{
+  "status": "ok",
+  "sender_log": "/root/.openclaw/workspace/mac-system/agents/主Agent/logs",
+  "receiver_log": "/root/.openclaw/workspace/mac-system/agents/A组-Frontend/logs",
+  "receiver_queue": "/root/.openclaw/workspace/mac-system/agents/A组-Frontend/queue/TASK-20260321-001.json"
+}

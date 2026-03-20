@@ -1,0 +1,10 @@
+{
+  "task_id": "TASK-20260321-001",
+  "group": "GROUP-A",
+  "reviewer_score": 10,
+  "judge_score": 26,
+  "metrics_score": 9,
+  "total_score": 45,
+  "decision": "pass",
+  "notes": "自动评分结果（原型）"
+}

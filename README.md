@@ -21,10 +21,11 @@
 - **内置 JSON 协议、样例链、评分卡、队列、日志模板**
 - **支持巡检、自学习、恢复、权重淘汰**
 - **已经具备一批可运行原型代码：解析、编组、派单、评分、巡检、去重、总控**
+- **已开始接入真实 OpenClaw runtime 调度能力**
 
 ## 当前版本
 
-`0.9.0`
+`1.0.0-alpha`
 
 ## 适合什么任务
 
@@ -56,6 +57,7 @@
 18. 默认接管基础安装脚本
 19. 动态招聘 / 派单 / 评分 / 巡检 / 去重 / 总控原型代码
 20. 伪代码到代码映射说明
+21. runtime dispatch / runtime orchestrator / inspect-and-recover / demo pipeline
 
 ## 目录概览
 
@@ -64,9 +66,9 @@
 - `templates/`：动态 specialist 与共享模板
 - `examples/`：任务样例、自动化测试模板、JSON 样例、运行痕迹样例
 - `schemas/`：任务状态 / Agent 状态 / 评分卡 schema
-- `scripts/`：初始化、自检、生成、批量编组、/mac 解析、派单、评分、巡检、去重、总控脚本
+- `scripts/`：初始化、自检、生成、批量编组、/mac 解析、派单、评分、巡检、去重、总控、runtime 调度脚本
 - `research/`：外部资料与提炼
-- `docs/`：系统设计、演示手册、发布说明、代码落地说明、伪代码映射与路线图
+- `docs/`：系统设计、演示手册、发布说明、代码落地说明、runtime 调度说明、伪代码映射与路线图
 
 ## 快速开始
 
@@ -82,37 +84,34 @@
 ./scripts/install-selfcheck.sh
 ```
 
-### 3. 可选：安装共享 skill，形成默认接管基础环境
+### 3. 试跑 demo pipeline
 
 ```bash
-./scripts/default-takeover-setup.sh
+./scripts/demo_pipeline.py "/mac 调研最近 30 天值得关注的 OpenClaw 多Agent 项目，提炼协同架构优点并给出改进建议。"
 ```
 
-### 4. 试跑总控原型
+### 4. 如你已经创建好多套真实 OpenClaw agent，可试 runtime orchestration
 
 ```bash
-./scripts/orchestrate_task.py "/mac 调研最近 30 天值得关注的 OpenClaw 多Agent 项目，提炼协同架构优点并给出改进建议。"
-```
-
-### 5. 试跑评分 / 巡检 / 去重
-
-```bash
-./scripts/score_result.py examples/result-package-example.json
-./scripts/inspect_agents.py ~/.openclaw/workspace --stale-minutes 30
-./scripts/dedupe_summary.py examples/dedupe-input.json
+./scripts/runtime_orchestrator.py \
+  "/mac 调研最近 30 天值得关注的 OpenClaw 多Agent 项目" \
+  --main-agent smart \
+  --pool-agent smart \
+  --review-agent smart \
+  --inspect-agent smart
 ```
 
 ## 阅读顺序建议
 
 1. `docs/演示跑通手册.md`
 2. `docs/代码落地说明.md`
-3. `docs/伪代码到代码映射.md`
-4. `skills/Multi-Agent-Collaboration/SKILL.md`
-5. `examples/tests/`
-6. `examples/json/`
-7. `schemas/`
+3. `docs/runtime调度说明.md`
+4. `docs/伪代码到代码映射.md`
+5. `skills/Multi-Agent-Collaboration/SKILL.md`
+6. `examples/tests/`
+7. `examples/json/`
+8. `schemas/`
 
 ## 项目状态
 
-当前已经是一个**高完成度原型仓库**：可安装、可初始化、可演示、可扩展，并且已有一批可运行原型代码。
-下一步将继续推进更接近真实 OpenClaw 多 session 运行时的联动能力。
+当前已经是一个**高完成度原型仓库**：可安装、可初始化、可演示、可扩展，且已有一批可运行原型代码，并开始接入真实 OpenClaw runtime 调度能力。

@@ -12,5 +12,10 @@
 - `inspect_agents.py`：巡检 Agent 目录的日志与队列状态
 - `dedupe_summary.py`：对候选结论做去重汇总
 - `orchestrate_task.py`：串起 `/mac` 解析与 A/B 编组的总控原型
+- `runtime_lib.py`：OpenClaw runtime 调度辅助库
+- `runtime_dispatch.py`：通过 OpenClaw CLI 真实向 agent 发结构化任务
+- `runtime_orchestrator.py`：通过 OpenClaw CLI 调度主Agent/审核Agent/检查Agent/AgentPool
+- `inspect_and_recover.py`：巡检并可选执行恢复唤醒
+- `demo_pipeline.py`：串起 parse / recruit / dispatch / score / dedupe 的 demo 流水线
 - `validate_examples.py`：校验核心 JSON 示例
 - `generate-log-samples.py`：生成额外日志样例
