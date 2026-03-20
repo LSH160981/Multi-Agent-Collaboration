@@ -1,0 +1,12 @@
+{
+  "type": "task_assign",
+  "task_id": "TASK-20260321-001",
+  "from": "主Agent-Main",
+  "to": "AgentPool-HR",
+  "goal": "根据用户任务组建两支可执行团队",
+  "inputs": ["用户原始需求", "任务包v1"],
+  "constraints": ["禁止非主Agent联系用户", "优先复用已有Agent"],
+  "deliverables": ["招聘清单", "A/B组编组方案", "能力边界说明"],
+  "reply_to": "主Agent-Main",
+  "status": "assigned"
+}

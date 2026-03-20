@@ -1,0 +1,12 @@
+{
+  "type": "task_assign",
+  "task_id": "TASK-20260321-001",
+  "from": "A组-组长-Lead",
+  "to": "A组-前端专家-Frontend",
+  "goal": "实现随机密码页面前端原型",
+  "inputs": ["UI参考", "功能需求"],
+  "constraints": ["禁止联系用户", "产物写入artifacts"],
+  "deliverables": ["页面代码", "运行方式", "自测结果"],
+  "reply_to": "A组-组长-Lead",
+  "status": "assigned"
+}

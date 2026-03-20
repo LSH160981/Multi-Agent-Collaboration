@@ -1,0 +1,12 @@
+{
+  "type": "task_assign",
+  "task_id": "TASK-20260321-001",
+  "from": "AgentPool-HR",
+  "to": "A组-组长-Lead",
+  "goal": "组织A组完成开发任务并提交成果",
+  "inputs": ["任务包v1", "A组成员名单"],
+  "constraints": ["组内自行拆解", "保持日志与队列更新"],
+  "deliverables": ["组内成果汇总", "验证说明", "风险列表"],
+  "reply_to": "审核Agent-Review",
+  "status": "assigned"
+}

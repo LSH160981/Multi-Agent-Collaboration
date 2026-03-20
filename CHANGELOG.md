@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0
+
+- 增加 A2A JSON 消息样例库
+- 增加权重系统与淘汰机制文档
+- 增加安装后自检脚本
+- 增加 Agent 目录生成脚本
+
 ## 0.3.0
 
 - 补全主Agent/审核Agent/检查Agent/AgentPool 的 abilities 与目录模板

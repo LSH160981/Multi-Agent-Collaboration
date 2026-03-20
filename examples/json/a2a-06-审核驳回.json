@@ -1,0 +1,10 @@
+{
+  "type": "task_reject",
+  "task_id": "TASK-20260321-001",
+  "from": "审核Agent-Review",
+  "to": "B组-组长-Lead",
+  "status": "rejected",
+  "reason": "缺少验证步骤，且结果描述不完整",
+  "fix_requirements": ["补充验证步骤", "补充已知风险", "重新提交评分卡对应项"],
+  "retry_limit": 1
+}

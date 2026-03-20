@@ -1,0 +1,12 @@
+{
+  "type": "task_result",
+  "task_id": "TASK-20260321-001",
+  "from": "审核Agent-Review",
+  "to": "主Agent-Main",
+  "status": "approved",
+  "summary": "A组结果优于B组，建议采用A组成果作为最终输出",
+  "artifacts": ["artifacts/review-scorecard-A.md", "artifacts/review-summary.md"],
+  "verification": ["功能可运行", "结构完整", "验证步骤齐全"],
+  "risks": ["视觉风格仍可继续优化"],
+  "score_hint": "A组 89，B组 71"
+}
