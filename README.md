@@ -12,7 +12,7 @@ OpenClaw 原生多会话多 Agent 协作系统。
 
 ## 当前进度
 
-当前版本：`0.4.0`
+当前版本：`0.5.0`
 
 已具备：
 
@@ -29,14 +29,17 @@ OpenClaw 原生多会话多 Agent 协作系统。
 11. A2A JSON 消息样例库
 12. 权重系统与淘汰机制
 13. 安装后自检脚本与 Agent 生成脚本
+14. 静默巡检模板与 cron 自学习模板
+15. 一键初始化 `mac-system/` 脚本
+16. 任务看板/评分卡/日志/队列示例
 
 ## 仓库结构
 
 - `skills/Multi-Agent-Collaboration/`：正式 skill
 - `agents/`：核心固定角色骨架
 - `templates/`：动态生成 specialist 与共享模板
-- `examples/`：任务样例与 JSON 样例
-- `scripts/`：自检与生成脚本
+- `examples/`：任务样例、JSON 样例、运行痕迹样例
+- `scripts/`：初始化、自检、生成脚本
 - `research/`：外部资料、学习摘录、优秀设计提炼
 - `docs/`：系统设计与路线图
 
@@ -48,6 +51,12 @@ OpenClaw 原生多会话多 Agent 协作系统。
 - 使用 `/mac <任务>`
 - 或说：`使用 Multi-Agent-Collaboration skill 完成 XXX任务`
 
+如需初始化本地多 Agent 工作目录，可运行：
+
+```bash
+./scripts/init-mac-system.sh
+```
+
 ## 下一步重点
 
 后续将继续补：
@@ -55,3 +64,4 @@ OpenClaw 原生多会话多 Agent 协作系统。
 - 更强的默认接管方案
 - 更完整的自动化安装/生成/测试流程
 - 更接近 ClawHub 发布级别的包装
+- 更完整的协议与日志样例

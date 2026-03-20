@@ -1,0 +1,17 @@
+{
+  "task_id": "TASK-20260321-001",
+  "title": "随机密码页面开发",
+  "status": "review",
+  "from": "主Agent-Main",
+  "to": "审核Agent-Review",
+  "goal": "完成随机密码页面并通过审核",
+  "inputs": ["功能需求", "参考风格"],
+  "constraints": ["禁止非主Agent联系用户"],
+  "deliverables": ["代码", "验证步骤", "风险说明"],
+  "current_step": "A组已提交审核，B组重做中",
+  "last_action_at": "2026-03-21T01:09:00+08:00",
+  "blockers": [],
+  "artifacts": ["artifacts/group-a-summary.md"],
+  "verification": ["打开页面测试生成功能"],
+  "next_step": "等待审核Agent最终评分"
+}
