@@ -1,34 +1,63 @@
 {
-  "version": "1.0.0",
-  "description": "Multi-Agent-Collaboration 内部 Agent 间 JSON 通信协议",
+  "version": "2.0.0",
+  "description": "Multi-Agent-Collaboration 内部 Agent 间 JSON 通信协议（OpenClaw 原生多会话版）",
+  "principles": [
+    "所有内部任务通信优先结构化 JSON",
+    "只有主Agent可以联系用户",
+    "所有消息都应能写入日志与任务队列",
+    "所有结果都应可恢复、可审计、可评分"
+  ],
+  "common_fields": {
+    "task_id": "统一任务ID",
+    "from": "发送方Agent",
+    "to": "接收方Agent或广播目标",
+    "status": "当前状态",
+    "timestamp": "ISO-8601 时间戳"
+  },
   "message_types": {
     "task_assign": {
-      "required": ["task_id", "from", "to", "goal", "status"],
-      "optional": ["inputs", "constraints", "deliverables", "reply_to", "priority", "deadline"]
+      "required": ["task_id", "from", "to", "goal", "status", "timestamp"],
+      "optional": ["inputs", "constraints", "deliverables", "reply_to", "priority", "deadline", "group", "strategy"]
     },
     "task_ack": {
-      "required": ["task_id", "from", "to", "status"],
+      "required": ["task_id", "from", "to", "status", "timestamp"],
       "optional": ["note", "eta"]
     },
     "task_progress": {
-      "required": ["task_id", "from", "to", "status", "progress"],
-      "optional": ["artifacts", "blockers", "next_step"]
+      "required": ["task_id", "from", "to", "status", "progress", "timestamp"],
+      "optional": ["artifacts", "blockers", "next_step", "percent"]
     },
     "task_result": {
-      "required": ["task_id", "from", "to", "status", "summary"],
-      "optional": ["artifacts", "verification", "risks", "score_hint"]
+      "required": ["task_id", "from", "to", "status", "summary", "timestamp"],
+      "optional": ["artifacts", "verification", "risks", "score_hint", "citations"]
     },
     "task_reject": {
-      "required": ["task_id", "from", "to", "status", "reason"],
-      "optional": ["fix_requirements", "retry_limit"]
+      "required": ["task_id", "from", "to", "status", "reason", "timestamp"],
+      "optional": ["fix_requirements", "retry_limit", "scorecard"]
     },
     "agent_ping": {
-      "required": ["from", "to", "status"],
-      "optional": ["reason"]
+      "required": ["from", "to", "status", "timestamp"],
+      "optional": ["reason", "expected_action"]
     },
     "agent_intro": {
-      "required": ["from", "to", "name", "abilities"],
-      "optional": ["limits", "group"]
+      "required": ["from", "to", "name", "abilities", "timestamp"],
+      "optional": ["limits", "group", "workspace"]
+    },
+    "broadcast_notice": {
+      "required": ["task_id", "from", "to", "status", "timestamp"],
+      "optional": ["topic", "message", "shared_context_ref"]
+    },
+    "shared_context_update": {
+      "required": ["task_id", "from", "status", "timestamp"],
+      "optional": ["facts", "artifacts", "file_ref", "note"]
+    },
+    "recovery_action": {
+      "required": ["task_id", "from", "to", "status", "timestamp", "reason"],
+      "optional": ["action", "retry_count", "replacement_agent", "checkpoint"]
+    },
+    "review_scorecard": {
+      "required": ["task_id", "from", "to", "status", "timestamp"],
+      "optional": ["reviewer_score", "judge_score", "metrics_score", "total_score", "decision", "notes"]
     }
   }
 }

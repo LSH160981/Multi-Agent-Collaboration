@@ -1,8 +1,8 @@
 {
   "entry": "mac",
-  "task_id": "TASK-20260321-025510",
-  "user_intent": "调研最近 30 天值得关注的 OpenClaw 多Agent 项目，提炼协同架构优点并给出改进建议。",
-  "goal": "调研最近 30 天值得关注的 OpenClaw 多Agent 项目，提炼协同架构优点并给出改进建议。",
+  "task_id": "TASK-20260322-025637",
+  "user_intent": "调研最近 30 天值得关注的 OpenClaw 多Agent 项目，并给出改造建议",
+  "goal": "调研最近 30 天值得关注的 OpenClaw 多Agent 项目，并给出改造建议",
   "task_type": "research",
   "complexity": "medium",
   "needs_clarification": false,
