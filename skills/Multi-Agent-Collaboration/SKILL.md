@@ -1,299 +1,67 @@
 ---
 name: Multi-Agent-Collaboration
-description: OpenClaw 原生多会话多 Agent 协作系统。默认把复杂任务转为主Agent统筹、动态招募、双组竞争、审核评分、巡检恢复的原生协作流程。
-user-invocable: true
+description: Coordinate complex work across multiple OpenClaw sessions with a single user-facing main agent. Use when a task benefits from decomposition, parallel research or implementation, A/B competition, review and scoring, patrol-based recovery, structured agent-to-agent messages, or explicit `/mac`-style orchestration. Best for multi-step research, complex coding, debugging, verification, recovery planning, and high-reliability tasks where only the main agent should talk to the user.
 ---
 
 # Multi-Agent-Collaboration
 
-这是一个 **OpenClaw 原生多会话版** 多 Agent 协作 skill。
+Treat this skill as an operating model for running a small AI company on top of OpenClaw's native multi-session runtime.
 
-核心定义：
+Core stance:
 
-- **Agent = OpenClaw session**
-- **不是 subagent 堆叠模拟团队，而是用原生会话构建团队**
-- **主 Agent 是唯一与用户通信的 Agent**
-- **其他 Agent 包括后来动态创建的 Agent，一律禁止直接联系用户**
-- **复杂任务默认进入本 skill 的协作模式**
+- Treat each agent as a real OpenClaw session, not a fake inner monologue worker.
+- Keep exactly one user-facing agent: the main agent.
+- Route all other work through structured tasking, artifacts, logs, and reviews.
+- Prefer OpenClaw-native primitives first: sessions, tools, cron, logs, files, and message routing.
 
-你要把这个 skill 理解成一个“AI 公司操作系统”：
+## Mandatory rules
 
-- 主Agent = CEO / 对用户窗口
-- 审核Agent = Reviewer / Judge / Metrics 三维审查
-- 检查Agent = Inspector / Patrol / 强制唤醒
-- AgentPool = HR / 动态招聘池
-- Group A / Group B = 两支竞争团队
-- Specialist Agent = 按需招聘的专家
+1. Only the main agent may talk to the user.
+2. Non-main agents must report through structured messages or artifacts.
+3. Before any user-visible reply, the main agent must deduplicate, merge asynchronous updates, remove internal noise, and send one clean conclusion.
+4. For complex tasks, default to decomposition instead of solo execution.
+5. Reuse existing agents when possible; recruit only for missing capabilities.
+6. For medium/high-risk tasks, prefer A/B group competition plus review.
+7. Patrol and recovery are part of execution, not an afterthought.
 
-## 默认行为
+## Default control plane
 
-当用户发来复杂任务、研发任务、调研任务、多步骤任务、需要高可靠性的任务时：
+Use these four persistent roles as the management layer:
 
-1. 默认启用本 skill 的多 Agent 方法
-2. 主 Agent 先理解任务与约束
-3. 如果需求缺失，先向用户追问关键缺口
-4. 然后进入“拆解 → 招聘 → 双组执行 → 审核 → 巡检 → 汇总 → 去重回复”流程
+- `main-ceo`: understand the request, plan, assign, merge, and deliver the final answer
+- `pool-hr`: recruit or reuse workers, define boundaries, form groups
+- `review-judge`: review outputs, score quality, approve or reject
+- `inspect-patrol`: detect stalls, trigger recovery, record failure patterns
 
-当用户明确说：
+Specialists are dynamic. Add them only when the task clearly needs them.
 
-- `/mac XXX任务`
-- `使用 Multi-Agent-Collaboration skill 完成 XXX任务`
+## Execution flow
 
-也强制进入本流程。
+1. Parse the user request into a task packet.
+2. Decide whether the task needs multi-agent handling.
+3. If requirements are missing, the main agent asks only for critical gaps.
+4. Form or reuse the control plane and recruit specialists as needed.
+5. For substantial work, create Group A and Group B with different execution biases.
+6. Dispatch structured task messages and require deliverables, verification steps, and risk notes.
+7. Send outputs through review.
+8. Let patrol inspect stalled work and recover from the latest valid state.
+9. Have the main agent merge the winning result into one user-facing reply.
 
-## 唯一用户出口规则
+## How to use bundled references
 
-必须严格遵守：
+Read only what is needed:
 
-- **只有主Agent可以联系用户**
-- 其他任何 Agent 禁止直接联系用户
-- 其他 Agent 只能向主Agent、组长、审核Agent、检查Agent 发 JSON 结构化消息
-- 用户可见消息在发出前，主Agent必须：
-  - 去重
-  - 合并异步回执
-  - 删除无效中间状态
-  - 删除内部噪音
-  - 只保留最新有效结论
+- `references/workflow.md` — end-to-end operating flow, role model, and orchestration checkpoints
+- `references/protocol.md` — task packet fields, agent-to-agent JSON message types, and output expectations
+- `references/operations.md` — installation, `/mac` entry, testing, patrol, and recovery guidance
 
-如果任何非主Agent打算联系用户，视为违例，必须阻止。
+## Practical guidance
 
-## 角色体系
+- Prefer shared context files over repeatedly pasting the same background into many sessions.
+- Require every worker to state: what was done, where artifacts live, how to verify, and what risks remain.
+- When recovering, resume from queue/log/artifact state instead of restarting the whole task.
+- When the task is simple, stay lightweight; do not force a full org chart for trivial work.
 
-### 1. 主Agent（CEO）
+## `/mac` convention
 
-职责：
-
-- 理解用户需求
-- 判断是否缺少关键信息
-- 把大任务拆成可执行子任务
-- 决定需要哪些能力
-- 让 AgentPool 招聘人才
-- 指挥双组竞争执行
-- 收集所有结果
-- 汇总、去重、审核用户可见信息
-- 向用户输出最终结论
-
-### 2. AgentPool（HR）
-
-职责：
-
-- 读取当前任务需要的能力
-- 查看已有 Agent 能力边界
-- 缺什么才招聘什么
-- 每次优先创建两批竞争团队，每组都有组长
-- 低分组淘汰，必要时重新招聘一整组
-
-要求：
-
-- 不能盲目扩张 Agent 数量
-- 能复用就复用，缺人再招
-- 每个角色必须写死能做/不能做的边界
-
-### 3. 组长Agent（Lead）
-
-职责：
-
-- 接收主Agent/HR 分派的组内任务
-- 再拆给组内 specialist
-- 汇总组内成果
-- 向审核Agent提交本组产物
-
-### 4. Specialist Agent（专家）
-
-职责：
-
-- 执行单一专业任务
-- 自己直接调用 OpenClaw 工具、模型、网络
-- 独立产出结果、日志、记忆、任务状态
-- 只能对 Agent 说话，不能对用户说话
-
-### 5. 审核Agent（Reviewer/Judge/Metrics）
-
-职责：
-
-- 审核每个组的成果
-- 从格式、质量、评分三个维度给分
-- 不达标驳回重做
-- 通过率高的 Agent 提高权重
-- 低分 Agent 或低分组降权、淘汰或销毁
-
-### 6. 检查Agent（Inspector/Patrol）
-
-职责：
-
-- 用户下达任务后立刻启动
-- 周期性检查各 Agent 是否在工作
-- 依据日志、产出、任务队列、最近活动判断是否卡住
-- 如果没工作：立即激活 / retry / 重启 / 重派单
-- 复盘系统问题，写下：问题、后果、解决方案、预防方案、伪代码怎么改、流程怎么改
-
-## 协作模式
-
-### 双组竞争
-
-默认不是一组干活，而是：
-
-- Group A
-- Group B
-
-两个组都解决同一个目标，允许路径不同。
-然后由审核Agent比较：
-
-- 完整度
-- 准确性
-- 可执行性
-- 创新度
-- 风险
-- 验证性
-
-择优上交主Agent。
-
-### 动态招聘
-
-不要预先建满所有子Agent。
-应先理解任务，再招聘需要的专家。
-例如：
-
-- 前端任务 → 前端专家 / 测试专家
-- 调研任务 → 搜索专家 / 交叉验证专家
-- 运维任务 → 日志分析专家 / 故障恢复专家
-
-## 通信规则
-
-Agent 之间通信统一使用 **JSON 协议**，并同时写入日志。
-
-支持三种通信：
-
-1. **广播**：所有相关 Agent 一起交流
-2. **点对点**：一个 Agent 发给另一个 Agent
-3. **共享上下文**：把公共事实写入共享上下文文件，而不是在聊天里重复灌输
-
-JSON 示例：
-
-```json
-{
-  "type": "task_assign",
-  "task_id": "TASK-20260321-001",
-  "from": "主Agent",
-  "to": "A组-前端专家",
-  "goal": "实现页面原型",
-  "inputs": ["需求文档v1", "设计参考链接"],
-  "constraints": ["只做可回滚改动", "禁止联系用户"],
-  "deliverables": ["代码", "说明", "验证步骤"],
-  "reply_to": "A组-组长",
-  "status": "assigned"
-}
-```
-
-要求：
-
-- 任务指令必须结构化
-- 回执必须结构化
-- 不要只说“我做完了”
-- 必须交代：做了什么、产物在哪、如何验证、还有什么风险
-
-## 文件纪律
-
-每个 Agent 都必须有独立目录，至少包含：
-
-- `memory/`：该 Agent 的记忆
-- `logs/`：该 Agent 的日志
-- `abilities.md`：能力边界
-- `queue/`：任务队列
-- `artifacts/`：产物
-
-每个任务队列项至少记录：
-
-- 接收了什么任务
-- 当前步骤
-- 阻塞点
-- 最近一次动作时间
-- 是否完成
-- 下次恢复从哪继续
-
-## 安装后必须做的测试
-
-### 测试一：Agent 两两握手
-
-安装完成后，必须测试所有 Agent 的互通能力。
-
-测试模板：
-
-- A 发给 B：`我是A agent，你是谁？`
-- B 回复：`我是B agent，我的能力是XXX。`
-
-每个 Agent 都要给每个 Agent 发一次。
-
-### 测试二：静默任务测试
-
-安装完成后，要做静默压力测试：
-
-- 搜索 GitHub 最近 7 天 star 涨得最快的 10 个项目
-- 总结共同特点
-- 验证所有 Agent 是否还能继续工作
-
-## 自动自学习/自进化
-
-本 skill 允许并鼓励系统周期性自学习，但只限于：
-
-- 搜索新的多 Agent 协作 skill / 文章 / 开源项目
-- 分析优点缺点
-- 更新自己的研究资料、伪代码、流程设计
-- 必要时改进自己的 skill 文档和辅助文件
-
-自学习结果必须：
-
-- 写入研究目录
-- 写入变更日志
-- 使用 git 记录
-- commit message 使用中文
-- 优先节省磁盘占用，避免无意义缓存
-
-## 中断恢复原则
-
-必须单独考虑：
-
-- Agent 中断怎么恢复
-- Specialist 挂掉怎么办
-- Lead 挂掉怎么办
-- Group 整体失败怎么办
-- Review 中断怎么办
-- Inspection 中断怎么办
-
-默认策略：
-
-1. 先读该 Agent 的 queue 和 logs
-2. 找到最近一次成功状态
-3. 判断可否重试
-4. 不可重试就重建 Agent 并继承必要上下文
-5. 重建后继续执行，不要从头盲目重跑全部流程
-
-## 执行原则
-
-- 安装和使用都应尽量简单
-- 功能要全面强大，但对用户入口要足够直观
-- 普通对话场景下，如任务明显复杂，也优先套用本 skill 的方法论
-- 始终把 OpenClaw 原生多会话能力放在第一位
-- 主Agent不要沉迷自己做所有事，要学会组织、审查、汇总、控制质量
-
-## 你实际工作时应该怎么做
-
-当你使用本 skill 时：
-
-1. 先判断任务是否需要多 Agent
-2. 如果需要，先由主Agent理解需求
-3. 缺信息就问用户
-4. 然后创建/复用：主Agent、审核Agent、检查Agent、AgentPool
-5. 再按任务招聘对应 specialist，并形成 A/B 两组
-6. 用结构化协议派单
-7. 审核Agent打分筛选
-8. 检查Agent巡检卡点与故障
-9. 主Agent汇总并向用户输出唯一结论
-
-## /mac 约定
-
-当用户使用 `/mac <任务>` 时，将其理解为：
-
-> 立即使用 Multi-Agent-Collaboration 的完整多 Agent 协作流程处理该任务。
-
-如果平台本身没有真正注册斜杠命令能力，也要把 `/mac` 文本识别为本 skill 的明确触发词。
+If the user says `/mac <task>`, treat it as an explicit request to use this full orchestration model. If the platform lacks native slash commands, still interpret the text `/mac ...` as a hard trigger.
