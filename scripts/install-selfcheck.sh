@@ -4,6 +4,7 @@ set -euo pipefail
 WORKSPACE="${1:-$HOME/.openclaw/workspace}"
 SKILL_DIR="$WORKSPACE/skills/Multi-Agent-Collaboration"
 MAC_BRIDGE_DIR="$WORKSPACE/skills/mac"
+SHARED_MAC_BRIDGE_DIR="$HOME/.openclaw/skills/mac"
 MAC_DIR="$WORKSPACE/mac-system"
 
 printf '%s\n' '== Multi-Agent-Collaboration 自检 =='
@@ -15,9 +16,11 @@ else
 fi
 
 if [ -d "$MAC_BRIDGE_DIR" ]; then
-  echo "[OK] /mac 命令桥 skill 已安装：$MAC_BRIDGE_DIR"
+  echo "[OK] /mac 命令桥 skill 已安装（workspace）：$MAC_BRIDGE_DIR"
+elif [ -d "$SHARED_MAC_BRIDGE_DIR" ]; then
+  echo "[OK] /mac 命令桥 skill 已安装（shared）：$SHARED_MAC_BRIDGE_DIR"
 else
-  echo "[WARN] 未发现 /mac 命令桥 skill：$MAC_BRIDGE_DIR"
+  echo "[WARN] 未发现 /mac 命令桥 skill：$MAC_BRIDGE_DIR 或 $SHARED_MAC_BRIDGE_DIR"
 fi
 
 for dir in "$MAC_DIR" "$MAC_DIR/agents" "$MAC_DIR/shared" "$MAC_DIR/tasks" "$MAC_DIR/logs" "$MAC_DIR/research"; do

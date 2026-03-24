@@ -34,6 +34,7 @@
 - `逻辑执行流程.md`：中文流程
 - `通信协议.json`：Agent JSON 消息协议
 - `mac任务包协议.md`：`/mac` 任务包协议
+- `../../docs/openclaw-agent-session-commands.md`：OpenClaw agent session / slash commands 参考
 - `恢复策略.md`：中断恢复思路
 - `自动自学习方案.md`：周期学习机制
 - `测试脚本.md`：安装后测试模板

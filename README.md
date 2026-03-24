@@ -97,8 +97,10 @@
 19. 动态招聘 / 派单 / 评分 / 巡检 / 去重 / 总控原型代码
 20. 伪代码到代码映射说明
 21. runtime dispatch / runtime orchestrator / inspect-and-recover / demo pipeline
-22. `/mac` 命令桥 skill
+22. `/mac` 命令桥 skill（已补齐 `skills/mac`，安装后可暴露为 user-invocable command）
 23. 原生 session 调度样例
+24. OpenClaw agent session / slash commands 参考文档
+25. 多 agent 协同学习资料 research 目录
 
 ## 快速开始
 
@@ -112,6 +114,12 @@
 
 ```bash
 ./scripts/install-selfcheck.sh
+```
+
+### 2.1 查看 OpenClaw session / agent 相关命令参考
+
+```bash
+cat docs/openclaw-agent-session-commands.md
 ```
 
 ### 3. 试跑 demo pipeline

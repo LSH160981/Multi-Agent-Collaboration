@@ -1,0 +1,3 @@
+# Keep external research clones local only; do not commit nested repos
+*
+!.gitignore
