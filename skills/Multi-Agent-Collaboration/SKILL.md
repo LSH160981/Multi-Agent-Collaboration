@@ -1,67 +1,57 @@
 ---
 name: Multi-Agent-Collaboration
-description: Coordinate complex work across multiple OpenClaw sessions with a single user-facing main agent. Use when a task benefits from decomposition, parallel research or implementation, A/B competition, review and scoring, patrol-based recovery, structured agent-to-agent messages, or explicit `/mac`-style orchestration. Best for multi-step research, complex coding, debugging, verification, recovery planning, and high-reliability tasks where only the main agent should talk to the user.
+description: 中文兼容入口：把复杂任务转为 OpenClaw 原生多会话协作。用于 /mac、多步骤研究、并行实现、交叉验证、A/B 对比、调试恢复等场景；主会话是唯一用户出口，其他会话只做内部工作。
 ---
 
 # Multi-Agent-Collaboration
 
-Treat this skill as an operating model for running a small AI company on top of OpenClaw's native multi-session runtime.
+这是 **中文兼容入口**。
 
-Core stance:
+默认把它视为主多会话协作技能的中文包装层：
 
-- Treat each agent as a real OpenClaw session, not a fake inner monologue worker.
-- Keep exactly one user-facing agent: the main agent.
-- Route all other work through structured tasking, artifacts, logs, and reviews.
-- Prefer OpenClaw-native primitives first: sessions, tools, cron, logs, files, and message routing.
+- **主技能负责核心执行规则**
+- **本技能负责中文触发、中文导航、中文参考资料入口**
+- 不要再维护两套彼此漂移的主流程
 
-## Mandatory rules
+## 使用原则
 
-1. Only the main agent may talk to the user.
-2. Non-main agents must report through structured messages or artifacts.
-3. Before any user-visible reply, the main agent must deduplicate, merge asynchronous updates, remove internal noise, and send one clean conclusion.
-4. For complex tasks, default to decomposition instead of solo execution.
-5. Reuse existing agents when possible; recruit only for missing capabilities.
-6. For medium/high-risk tasks, prefer A/B group competition plus review.
-7. Patrol and recovery are part of execution, not an afterthought.
+- 只有当前主会话可以对用户说话
+- 其他会话只做内部工作，禁止直接联系用户
+- 优先用最小够用团队，不要无脑扩张
+- 只有在拆解、交叉验证、A/B 比较、并行实现确实有价值时，才进入多会话协作
+- 回复用户前必须：去重、合并、降噪、保留唯一有效结论
 
-## Default control plane
+## 默认解释
 
-Use these four persistent roles as the management layer:
+当用户出现以下意图时，触发本技能：
 
-- `main-ceo`: understand the request, plan, assign, merge, and deliver the final answer
-- `pool-hr`: recruit or reuse workers, define boundaries, form groups
-- `review-judge`: review outputs, score quality, approve or reject
-- `inspect-patrol`: detect stalls, trigger recovery, record failure patterns
+- `/mac <任务>`
+- 明确要求多 Agent / 多会话协作
+- 复杂研发任务、调试任务、调研任务、恢复任务
+- 需要更高可靠性、交叉验证、双方案比较
 
-Specialists are dynamic. Add them only when the task clearly needs them.
+## 实际执行时怎么做
 
-## Execution flow
+优先遵循主技能 `mac` 的规则，以及其背后的 Multi-Agent-Collaboration 工作流：
 
-1. Parse the user request into a task packet.
-2. Decide whether the task needs multi-agent handling.
-3. If requirements are missing, the main agent asks only for critical gaps.
-4. Form or reuse the control plane and recruit specialists as needed.
-5. For substantial work, create Group A and Group B with different execution biases.
-6. Dispatch structured task messages and require deliverables, verification steps, and risk notes.
-7. Send outputs through review.
-8. Let patrol inspect stalled work and recover from the latest valid state.
-9. Have the main agent merge the winning result into one user-facing reply.
+- 主触发技能：`/root/.openclaw/workspace/Multi-Agent-Collaboration/skills/mac/SKILL.md`
+- 复杂编排技能：`/root/.openclaw/workspace/Multi-Agent-Collaboration/skills/Multi-Agent-Collaboration/SKILL.md`
 
-## How to use bundled references
+## 本目录保留内容的定位
 
-Read only what is needed:
+本目录只保留 **中文增强材料和历史兼容资源**，按需读取：
 
-- `references/workflow.md` — end-to-end operating flow, role model, and orchestration checkpoints
-- `references/protocol.md` — task packet fields, agent-to-agent JSON message types, and output expectations
-- `references/operations.md` — installation, `/mac` entry, testing, patrol, and recovery guidance
+- `references/workflow.md`：工作流 / 角色 / 编排步骤
+- `references/protocol.md`：任务包、结构化消息、输出约束
+- `references/operations.md`：运行、巡检、恢复、/mac 入口相关说明
 
-## Practical guidance
+## 不要做的事
 
-- Prefer shared context files over repeatedly pasting the same background into many sessions.
-- Require every worker to state: what was done, where artifacts live, how to verify, and what risks remain.
-- When recovering, resume from queue/log/artifact state instead of restarting the whole task.
-- When the task is simple, stay lightweight; do not force a full org chart for trivial work.
+- 不要把这个中文入口再写成另一套独立主流程
+- 不要假设存在平台级 slash command 注册能力
+- 不要让 worker 直接联系用户
+- 不要把内部 chatter 直接转发给用户
 
-## `/mac` convention
+## 一句话规则
 
-If the user says `/mac <task>`, treat it as an explicit request to use this full orchestration model. If the platform lacks native slash commands, still interpret the text `/mac ...` as a hard trigger.
+**需要中文入口时走这里；真正执行仍遵守主多会话协作技能的规则。**
