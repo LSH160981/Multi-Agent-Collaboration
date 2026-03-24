@@ -8,45 +8,66 @@ from runtime_lib import newest_session_for_agent, run_openclaw_agent, write_json
 REPO = Path(__file__).resolve().parent.parent
 
 
-def worker_prompt(task_packet: dict, worker_role: str) -> str:
+def compact_packet(task_packet: dict) -> dict:
+    return {
+        "task_id": task_packet.get("task_id"),
+        "goal": task_packet.get("goal"),
+        "task_type": task_packet.get("task_type"),
+        "specialists": task_packet.get("specialists", []),
+        "constraints": task_packet.get("constraints", []),
+        "output_requirements": task_packet.get("output_requirements", []),
+    }
+
+
+def worker_prompt(task_packet: dict, worker_role: str, style: str) -> str:
+    slim = compact_packet(task_packet)
     return (
-        f"你是执行Agent，当前承担角色：{worker_role}。\\n"
-        "请根据下面任务包完成你的执行视角输出，严格返回：1.你的理解 2.执行计划 3.初步产出 4.风险。\\n\\n"
-        + json.dumps(task_packet, ensure_ascii=False, indent=2)
+        f"你是执行Agent，角色={worker_role}，风格={style}。"
+        "请用极简结构输出 JSON："
+        '{"summary":"","findings":[""],"risks":[""],"next":""}'
+        "。只给结论，不写长解释。\n\n"
+        + json.dumps(slim, ensure_ascii=False)
     )
 
 
-def review_prompt(task_packet: dict, worker_result: dict) -> str:
+def review_prompt(task_packet: dict, worker_a: dict, worker_b: dict | None) -> str:
+    payload = {
+        "task": compact_packet(task_packet),
+        "worker_a": worker_a,
+        "worker_b": worker_b,
+    }
     return (
-        "你是审核Agent。请基于任务包与执行Agent的结果，从 Reviewer（格式）、Judge（质量）、Metrics（评分）三个维度给出审核。\\n"
-        "严格输出：1.是否通过 2.三维评分 3.问题 4.修改建议。\\n\\n"
-        + json.dumps({"task_packet": task_packet, "worker_result": worker_result}, ensure_ascii=False, indent=2)
+        "你是审核Agent。比较两个worker结果。"
+        "请输出 JSON："
+        '{"pass":true,"winner":"A|B|tie","scores":{"A":0,"B":0},"issues":[""],"merge_advice":[""]}'
+        "。\n\n"
+        + json.dumps(payload, ensure_ascii=False)
     )
 
 
-def final_prompt(task_packet: dict, worker_result: dict, review_result: dict) -> str:
+def final_prompt(task_packet: dict, worker_a: dict, worker_b: dict | None, review_result: dict) -> str:
+    payload = {
+        "task": compact_packet(task_packet),
+        "worker_a": worker_a,
+        "worker_b": worker_b,
+        "review": review_result,
+    }
     return (
-        "你是主Agent，且你是唯一允许对用户输出的人。\\n"
-        "请基于任务包、执行Agent结果、审核Agent结果，生成去重后的最终结论。\\n"
-        "严格输出：1.最终摘要 2.关键发现 3.风险与下一步。\\n\\n"
-        + json.dumps(
-            {
-                "task_packet": task_packet,
-                "worker_result": worker_result,
-                "review_result": review_result,
-            },
-            ensure_ascii=False,
-            indent=2,
-        )
+        "你是主Agent，也是唯一用户出口。"
+        "请输出 JSON："
+        '{"final_summary":"","key_points":[""],"risks":[""],"next_steps":[""]}'
+        "。去重，只保留最新有效结论。\n\n"
+        + json.dumps(payload, ensure_ascii=False)
     )
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Fuller runtime demo with main/pool/worker/review/inspect chain")
+    parser = argparse.ArgumentParser(description="Compact full runtime demo with dual-worker comparison")
     parser.add_argument("text", help="Raw /mac text")
     parser.add_argument("--main-agent", default="main-ceo")
     parser.add_argument("--pool-agent", default="pool-hr")
-    parser.add_argument("--worker-agent", default="exec-worker-1")
+    parser.add_argument("--worker-agent-a", default="exec-worker-1")
+    parser.add_argument("--worker-agent-b", default="")
     parser.add_argument("--review-agent", default="review-judge")
     parser.add_argument("--inspect-agent", default="inspect-patrol")
     parser.add_argument("--outdir", default=str(REPO / "examples" / "generated" / "full-runtime-demo"))
@@ -65,33 +86,50 @@ def main():
     group_plan = json.loads(group_plan_path.read_text(encoding="utf-8"))
     worker_role = (task_packet.get("specialists") or ["Generalist"])[0]
 
-    pool_result = run_openclaw_agent(args.pool_agent, f"你是AgentPool，请基于任务包和编组方案说明为什么此时应启用 {args.worker_agent} 承担 {worker_role} 角色。\\n\\n" + json.dumps({"task_packet": task_packet, "group_plan": group_plan}, ensure_ascii=False, indent=2))
-    inspect_result = run_openclaw_agent(args.inspect_agent, "你是检查Agent，请给出本轮执行前巡检清单，并说明将如何识别 stale / watch / retry。")
-    worker_result = run_openclaw_agent(args.worker_agent, worker_prompt(task_packet, worker_role), timeout=900)
-    review_result = run_openclaw_agent(args.review_agent, review_prompt(task_packet, worker_result), timeout=900)
-    final_result = run_openclaw_agent(args.main_agent, final_prompt(task_packet, worker_result, review_result), timeout=900)
+    pool_result = run_openclaw_agent(
+        args.pool_agent,
+        "你是AgentPool。请用 JSON 简短说明本轮如何分工："
+        '{"role":"","why":"","plan":[""]}'
+        + "\n\n"
+        + json.dumps({"task": compact_packet(task_packet), "group_plan": group_plan}, ensure_ascii=False),
+        timeout=300,
+    )
+    inspect_result = run_openclaw_agent(
+        args.inspect_agent,
+        "你是检查Agent。请用 JSON 输出巡检策略："
+        '{"watch":[""],"stale_rule":"","recover":[""]}',
+        timeout=300,
+    )
+    worker_a_result = run_openclaw_agent(args.worker_agent_a, worker_prompt(task_packet, worker_role, "stable"), timeout=450)
+    worker_b_result = None
+    if args.worker_agent_b:
+        worker_b_result = run_openclaw_agent(args.worker_agent_b, worker_prompt(task_packet, worker_role, "aggressive"), timeout=450)
+    review_result = run_openclaw_agent(args.review_agent, review_prompt(task_packet, worker_a_result, worker_b_result), timeout=450)
+    final_result = run_openclaw_agent(args.main_agent, final_prompt(task_packet, worker_a_result, worker_b_result, review_result), timeout=450)
 
     session_probe = {
         "main_agent": newest_session_for_agent(args.main_agent),
         "pool_agent": newest_session_for_agent(args.pool_agent),
-        "worker_agent": newest_session_for_agent(args.worker_agent),
+        "worker_agent_a": newest_session_for_agent(args.worker_agent_a),
+        "worker_agent_b": newest_session_for_agent(args.worker_agent_b) if args.worker_agent_b else None,
         "review_agent": newest_session_for_agent(args.review_agent),
         "inspect_agent": newest_session_for_agent(args.inspect_agent),
     }
 
     result = {
-        "task_packet": task_packet,
+        "task_packet": compact_packet(task_packet),
         "group_plan": group_plan,
         "worker_role": worker_role,
         "pool_result": pool_result,
         "inspect_result": inspect_result,
-        "worker_result": worker_result,
+        "worker_a_result": worker_a_result,
+        "worker_b_result": worker_b_result,
         "review_result": review_result,
         "final_result": final_result,
         "session_probe": session_probe,
     }
     write_json(outdir / "full-runtime-demo.json", result)
-    print(json.dumps({"status": "ok", "outdir": str(outdir), "worker_role": worker_role}, ensure_ascii=False, indent=2))
+    print(json.dumps({"status": "ok", "outdir": str(outdir), "worker_role": worker_role, "dual_worker": bool(args.worker_agent_b)}, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

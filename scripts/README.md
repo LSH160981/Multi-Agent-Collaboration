@@ -15,7 +15,7 @@
 - `runtime_lib.py`：OpenClaw runtime 调度辅助库
 - `runtime_dispatch.py`：通过 OpenClaw CLI 真实向 agent 发结构化任务
 - `runtime_orchestrator.py`：通过 OpenClaw CLI 调度主Agent/审核Agent/检查Agent/AgentPool
-- `full_runtime_demo.py`：主Agent / AgentPool / Worker / 审核 / 检查 五段式更完整 runtime demo
+- `full_runtime_demo.py`：主Agent / AgentPool / Worker / 审核 / 检查 五段式更完整 runtime demo，支持双 worker 对比链
 - `inspect_and_recover.py`：巡检并可选执行恢复唤醒
 - `session_probe.py`：探测当前 OpenClaw sessions，辅助排障与恢复
 - `test_agent_handshake.py`：Agent 两两握手测试
