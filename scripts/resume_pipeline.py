@@ -4,6 +4,7 @@ import subprocess
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
+PY = "python3"
 
 
 def main():
@@ -27,6 +28,7 @@ def main():
 
     if stage == "stage1_done":
         subprocess.check_call([
+            PY,
             str(REPO / "scripts" / "stage2_workers.py"),
             str(state_path),
             "--worker-agent-a", args.worker_agent_a,
@@ -37,6 +39,7 @@ def main():
 
     if stage == "stage2_done":
         subprocess.check_call([
+            PY,
             str(REPO / "scripts" / "stage3_review_final.py"),
             str(state_path),
             "--main-agent", args.main_agent,

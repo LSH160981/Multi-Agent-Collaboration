@@ -20,6 +20,7 @@
 - `stage2_workers.py`：stage2，执行一个或两个 worker，并把结果写回 pipeline-state.json
 - `stage3_review_final.py`：stage3，审核与最终总结，并写入 pipeline-state.json
 - `resume_pipeline.py`：从已有 pipeline-state.json 继续推进剩余阶段
+- `run_staged_pipeline.py`：统一入口，一次发起 stage1→stage2→stage3，可选择 stop-after
 - `inspect_and_recover.py`：巡检并可选执行恢复唤醒
 - `session_probe.py`：探测当前 OpenClaw sessions，辅助排障与恢复
 - `test_agent_handshake.py`：Agent 两两握手测试

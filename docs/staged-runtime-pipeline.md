@@ -44,6 +44,12 @@
 - 自动判断当前 stage
 - 从中断点继续后续阶段
 
+### run_staged_pipeline.py
+负责：
+- 作为统一入口发起 staged pipeline
+- 可以 `--stop-after stage1|stage2|stage3`
+- 便于测试、演示和恢复前暂停
+
 ## 最关键的文件
 
 - `examples/generated/staged-runtime/pipeline-state.json`
