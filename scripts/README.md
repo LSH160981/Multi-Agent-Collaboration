@@ -16,6 +16,10 @@
 - `runtime_dispatch.py`：通过 OpenClaw CLI 真实向 agent 发结构化任务
 - `runtime_orchestrator.py`：通过 OpenClaw CLI 调度主Agent/审核Agent/检查Agent/AgentPool
 - `full_runtime_demo.py`：主Agent / AgentPool / Worker / 审核 / 检查 五段式更完整 runtime demo，支持双 worker 对比链
+- `stage1_plan.py`：stage1，生成任务包、编组方案、分工与巡检策略，并写入 pipeline-state.json
+- `stage2_workers.py`：stage2，执行一个或两个 worker，并把结果写回 pipeline-state.json
+- `stage3_review_final.py`：stage3，审核与最终总结，并写入 pipeline-state.json
+- `resume_pipeline.py`：从已有 pipeline-state.json 继续推进剩余阶段
 - `inspect_and_recover.py`：巡检并可选执行恢复唤醒
 - `session_probe.py`：探测当前 OpenClaw sessions，辅助排障与恢复
 - `test_agent_handshake.py`：Agent 两两握手测试
