@@ -3,7 +3,7 @@ import argparse
 import json
 import subprocess
 from pathlib import Path
-from runtime_lib import run_openclaw_agent
+from runtime_lib import build_recovery_message, newest_session_for_agent, run_openclaw_agent
 
 REPO = Path(__file__).resolve().parent.parent
 
@@ -26,14 +26,18 @@ def main():
     actions = []
     for item in report.get("reports", []):
         if item["status"] in {"stale", "watch"}:
+            mapped_agent_id = agent_map.get(item["agent"])
+            session_info = newest_session_for_agent(mapped_agent_id) if mapped_agent_id else None
             action = {
                 "agent_dir": item["agent"],
+                "mapped_agent_id": mapped_agent_id,
                 "issues": item["issues"],
-                "suggestion": "发送唤醒消息并检查未完成任务"
+                "latest_session": session_info,
+                "suggestion": "发送唤醒消息并检查未完成任务；必要时重派或重建",
             }
-            if args.execute and item["agent"] in agent_map:
-                message = "你被检查Agent判定为需要恢复，请检查你的日志、队列和未完成任务，并立即汇报当前状态。"
-                action["runtime_result"] = run_openclaw_agent(agent_map[item["agent"]], message)
+            if args.execute and mapped_agent_id:
+                message = build_recovery_message(item["agent"], item["issues"], session_info)
+                action["runtime_result"] = run_openclaw_agent(mapped_agent_id, message)
             actions.append(action)
 
     print(json.dumps({"report": report, "actions": actions}, ensure_ascii=False, indent=2))

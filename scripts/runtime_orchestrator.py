@@ -3,7 +3,7 @@ import argparse
 import json
 import subprocess
 from pathlib import Path
-from runtime_lib import run_openclaw_agent, write_json
+from runtime_lib import newest_session_for_agent, run_openclaw_agent, write_json
 
 REPO = Path(__file__).resolve().parent.parent
 
@@ -37,8 +37,15 @@ def main():
         "inspect_agent": run_openclaw_agent(args.inspect_agent, "你是检查Agent，请启动巡检，关注是否存在 stale agent 与未推进任务。"),
     }
 
-    write_json(outdir / "runtime-results.json", results)
-    print(json.dumps({"status": "ok", "outdir": str(outdir)}, ensure_ascii=False, indent=2))
+    session_probe = {
+        "main_agent": newest_session_for_agent(args.main_agent),
+        "pool_agent": newest_session_for_agent(args.pool_agent),
+        "review_agent": newest_session_for_agent(args.review_agent),
+        "inspect_agent": newest_session_for_agent(args.inspect_agent),
+    }
+
+    write_json(outdir / "runtime-results.json", {"results": results, "session_probe": session_probe})
+    print(json.dumps({"status": "ok", "outdir": str(outdir), "session_probe": session_probe}, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
