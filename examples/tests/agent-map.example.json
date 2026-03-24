@@ -1,0 +1,6 @@
+{
+  "主Agent": "main-ceo",
+  "AgentPool": "pool-hr",
+  "审核Agent": "review-judge",
+  "检查Agent": "inspect-patrol"
+}

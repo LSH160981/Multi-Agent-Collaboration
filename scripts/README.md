@@ -16,6 +16,10 @@
 - `runtime_dispatch.py`：通过 OpenClaw CLI 真实向 agent 发结构化任务
 - `runtime_orchestrator.py`：通过 OpenClaw CLI 调度主Agent/审核Agent/检查Agent/AgentPool
 - `inspect_and_recover.py`：巡检并可选执行恢复唤醒
+- `session_probe.py`：探测当前 OpenClaw sessions，辅助排障与恢复
+- `test_agent_handshake.py`：Agent 两两握手测试
+- `test_silent_task.py`：静默任务回归测试
+- `test_recovery_loop.py`：恢复链路测试
 - `demo_pipeline.py`：串起 parse / recruit / dispatch / score / dedupe 的 demo 流水线
 - `validate_examples.py`：校验核心 JSON 示例
 - `generate-log-samples.py`：生成额外日志样例
