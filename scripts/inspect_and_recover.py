@@ -6,44 +6,78 @@ from pathlib import Path
 from runtime_lib import build_recovery_message, newest_session_for_agent, run_openclaw_agent
 
 REPO = Path(__file__).resolve().parent.parent
+PY = "python3"
+
+
+def state_candidates(workspace: str):
+    return [
+        Path(workspace) / "Multi-Agent-Collaboration" / "examples" / "generated" / "staged-runtime" / "pipeline-state.json",
+        REPO / "examples" / "generated" / "staged-runtime" / "pipeline-state.json",
+    ]
 
 
 def inspect_pipeline_state(workspace: str):
-    state_path = Path(workspace) / "Multi-Agent-Collaboration" / "examples" / "generated" / "staged-runtime" / "pipeline-state.json"
-    alt_state_path = REPO / "examples" / "generated" / "staged-runtime" / "pipeline-state.json"
-    path = state_path if state_path.exists() else alt_state_path
-    if not path.exists():
+    path = next((p for p in state_candidates(workspace) if p.exists()), None)
+    if not path:
         return None
     data = json.loads(path.read_text(encoding="utf-8"))
     stage = data.get("stage")
     fields = set(data.keys())
     precise_action = None
     issue = None
+    repair_action = None
 
     if stage == "stage1_done":
-        precise_action = f"python3 {REPO / 'scripts' / 'stage2_workers.py'} {path} --worker-agent-b exec-worker-2"
+        precise_action = f"{PY} {REPO / 'scripts' / 'stage2_workers.py'} {path} --worker-agent-b exec-worker-2"
         issue = "stage1 已完成，等待 worker 执行"
     elif stage == "stage2_done":
-        precise_action = f"python3 {REPO / 'scripts' / 'stage3_review_final.py'} {path}"
+        precise_action = f"{PY} {REPO / 'scripts' / 'stage3_review_final.py'} {path}"
         issue = "stage2 已完成，等待 review/final"
     elif stage == "stage3_done":
         issue = None
     else:
         issue = f"未知 stage: {stage}"
+        repair_action = f"{PY} {REPO / 'scripts' / 'repair_pipeline_state.py'} {path} --set-stage stage1_done --note 修复未知stage"
 
     if stage == "stage2_done" and not {"worker_a_result", "worker_agent_a"}.issubset(fields):
         issue = "stage2 状态不完整，建议重跑 stage2_workers.py"
-        precise_action = f"python3 {REPO / 'scripts' / 'stage2_workers.py'} {path} --worker-agent-b exec-worker-2"
+        precise_action = f"{PY} {REPO / 'scripts' / 'stage2_workers.py'} {path} --worker-agent-b exec-worker-2"
     if stage == "stage3_done" and not {"review_result", "final_result", "session_probe"}.issubset(fields):
         issue = "stage3 状态不完整，建议重跑 stage3_review_final.py"
-        precise_action = f"python3 {REPO / 'scripts' / 'stage3_review_final.py'} {path}"
+        precise_action = f"{PY} {REPO / 'scripts' / 'stage3_review_final.py'} {path}"
+
+    validate_cmd = [PY, str(REPO / 'scripts' / 'validate_pipeline_state.py'), str(path)]
+    valid = True
+    missing = []
+    try:
+        out = subprocess.check_output(validate_cmd, text=True)
+        validation = json.loads(out)
+        valid = validation.get('valid', True)
+        missing = validation.get('missing', [])
+    except subprocess.CalledProcessError as e:
+        try:
+            validation = json.loads(e.output)
+            valid = validation.get('valid', False)
+            missing = validation.get('missing', [])
+        except Exception:
+            valid = False
+    if not valid and not repair_action:
+        repair_action = f"{PY} {REPO / 'scripts' / 'repair_pipeline_state.py'} {path} --note 缺少字段:{','.join(missing)}"
+        issue = issue or f"pipeline-state 缺少字段: {missing}"
 
     return {
         "path": str(path),
         "stage": stage,
         "issue": issue,
         "precise_action": precise_action,
+        "repair_action": repair_action,
+        "valid": valid,
+        "missing": missing,
     }
+
+
+def maybe_run(cmd_str: str):
+    return subprocess.check_output(cmd_str, shell=True, text=True, stderr=subprocess.STDOUT)
 
 
 def main():
@@ -52,6 +86,8 @@ def main():
     parser.add_argument("--stale-minutes", type=int, default=30)
     parser.add_argument("--recovery-agent-map", help="JSON file mapping directory names to OpenClaw agent ids")
     parser.add_argument("--execute", action="store_true", help="Actually send recovery nudges")
+    parser.add_argument("--auto-resume-pipeline", action="store_true", help="Automatically execute precise pipeline resume action when available")
+    parser.add_argument("--auto-repair-pipeline", action="store_true", help="Automatically execute pipeline repair action when available")
     args = parser.parse_args()
 
     inspect_cmd = [str(REPO / "scripts" / "inspect_agents.py"), args.workspace, "--stale-minutes", str(args.stale_minutes)]
@@ -65,13 +101,21 @@ def main():
     actions = []
 
     if pipeline_state and pipeline_state.get("issue"):
-        actions.append({
+        action = {
             "type": "pipeline_resume",
             "stage": pipeline_state.get("stage"),
             "state_path": pipeline_state.get("path"),
             "suggestion": pipeline_state.get("issue"),
             "precise_action": pipeline_state.get("precise_action"),
-        })
+            "repair_action": pipeline_state.get("repair_action"),
+            "valid": pipeline_state.get("valid"),
+            "missing": pipeline_state.get("missing"),
+        }
+        if args.auto_repair_pipeline and pipeline_state.get("repair_action"):
+            action["repair_result"] = maybe_run(pipeline_state["repair_action"])
+        if args.auto_resume_pipeline and pipeline_state.get("precise_action"):
+            action["resume_result"] = maybe_run(pipeline_state["precise_action"])
+        actions.append(action)
 
     for item in report.get("reports", []):
         if item["status"] in {"stale", "watch"}:

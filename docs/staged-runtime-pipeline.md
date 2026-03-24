@@ -54,8 +54,9 @@
 ## 最关键的文件
 
 - `examples/generated/staged-runtime/pipeline-state.json`
+- `schemas/pipeline-state.schema.json`
 
-这是 staged pipeline 的单一事实源。
+这是 staged pipeline 的单一事实源，以及对应的字段约束。
 
 ## 恢复意义
 

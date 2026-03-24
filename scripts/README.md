@@ -22,7 +22,9 @@
 - `test_stage3_smoke.py`：stage3 烟雾测试，检查 review/final/session_probe 是否落盘
 - `resume_pipeline.py`：从已有 pipeline-state.json 继续推进剩余阶段
 - `run_staged_pipeline.py`：统一入口，一次发起 stage1→stage2→stage3，可选择 stop-after
-- `inspect_and_recover.py`：巡检并可选执行恢复唤醒
+- `inspect_and_recover.py`：巡检并可选执行恢复唤醒；已支持 pipeline-state 校验、repair、resume
+- `validate_pipeline_state.py`：轻量校验 pipeline-state.json 必需字段
+- `repair_pipeline_state.py`：补最小字段并写 repair_note
 - `session_probe.py`：探测当前 OpenClaw sessions，辅助排障与恢复
 - `test_agent_handshake.py`：Agent 两两握手测试
 - `test_silent_task.py`：静默任务回归测试
