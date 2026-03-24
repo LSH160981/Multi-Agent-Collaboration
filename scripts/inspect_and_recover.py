@@ -16,6 +16,18 @@ def state_candidates(workspace: str):
     ]
 
 
+def validate_state(path: Path):
+    cmd = [PY, str(REPO / 'scripts' / 'validate_pipeline_state.py'), str(path)]
+    try:
+        out = subprocess.check_output(cmd, text=True, stderr=subprocess.STDOUT)
+        return json.loads(out)
+    except subprocess.CalledProcessError as e:
+        try:
+            return json.loads(e.output)
+        except Exception:
+            return {"stage": None, "valid": False, "missing": ["unknown"]}
+
+
 def inspect_pipeline_state(workspace: str):
     path = next((p for p in state_candidates(workspace) if p.exists()), None)
     if not path:
@@ -46,21 +58,9 @@ def inspect_pipeline_state(workspace: str):
         issue = "stage3 状态不完整，建议重跑 stage3_review_final.py"
         precise_action = f"{PY} {REPO / 'scripts' / 'stage3_review_final.py'} {path}"
 
-    validate_cmd = [PY, str(REPO / 'scripts' / 'validate_pipeline_state.py'), str(path)]
-    valid = True
-    missing = []
-    try:
-        out = subprocess.check_output(validate_cmd, text=True)
-        validation = json.loads(out)
-        valid = validation.get('valid', True)
-        missing = validation.get('missing', [])
-    except subprocess.CalledProcessError as e:
-        try:
-            validation = json.loads(e.output)
-            valid = validation.get('valid', False)
-            missing = validation.get('missing', [])
-        except Exception:
-            valid = False
+    validation = validate_state(path)
+    valid = validation.get("valid", True)
+    missing = validation.get("missing", [])
     if not valid and not repair_action:
         repair_action = f"{PY} {REPO / 'scripts' / 'repair_pipeline_state.py'} {path} --note 缺少字段:{','.join(missing)}"
         issue = issue or f"pipeline-state 缺少字段: {missing}"
@@ -108,13 +108,17 @@ def main():
             "suggestion": pipeline_state.get("issue"),
             "precise_action": pipeline_state.get("precise_action"),
             "repair_action": pipeline_state.get("repair_action"),
-            "valid": pipeline_state.get("valid"),
-            "missing": pipeline_state.get("missing"),
+            "valid_before": pipeline_state.get("valid"),
+            "missing_before": pipeline_state.get("missing"),
         }
+        state_path = Path(pipeline_state["path"])
         if args.auto_repair_pipeline and pipeline_state.get("repair_action"):
             action["repair_result"] = maybe_run(pipeline_state["repair_action"])
+            action["validation_after_repair"] = validate_state(state_path)
         if args.auto_resume_pipeline and pipeline_state.get("precise_action"):
             action["resume_result"] = maybe_run(pipeline_state["precise_action"])
+            action["state_after_resume"] = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else None
+            action["validation_after_resume"] = validate_state(state_path) if state_path.exists() else None
         actions.append(action)
 
     for item in report.get("reports", []):

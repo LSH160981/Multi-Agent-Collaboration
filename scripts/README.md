@@ -25,6 +25,7 @@
 - `inspect_and_recover.py`：巡检并可选执行恢复唤醒；已支持 pipeline-state 校验、repair、resume
 - `validate_pipeline_state.py`：轻量校验 pipeline-state.json 必需字段
 - `repair_pipeline_state.py`：补最小字段并写 repair_note
+- `test_recovery_pipeline_smoke.py`：恢复闭环烟雾测试（broken state → inspect → repair/resume → validate）
 - `session_probe.py`：探测当前 OpenClaw sessions，辅助排障与恢复
 - `test_agent_handshake.py`：Agent 两两握手测试
 - `test_silent_task.py`：静默任务回归测试

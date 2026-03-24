@@ -50,3 +50,5 @@
 - 给出 `repair_action`
 - 可选 `--auto-resume-pipeline`
 - 可选 `--auto-repair-pipeline`
+- 输出 `valid_before / missing_before`
+- 自动恢复后输出 `validation_after_repair / validation_after_resume / state_after_resume`
