@@ -35,6 +35,7 @@
 - 主Agent 做最终去重总结
 - 附带 session_probe
 - 写回 state
+- 当前已进一步压缩 prompt，降低 stage3 超时概率
 
 输出状态：`stage3_done`
 

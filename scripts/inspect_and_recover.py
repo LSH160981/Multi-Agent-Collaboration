@@ -16,10 +16,34 @@ def inspect_pipeline_state(workspace: str):
         return None
     data = json.loads(path.read_text(encoding="utf-8"))
     stage = data.get("stage")
-    stage_issue = None
-    if stage in {"stage1_done", "stage2_done"}:
-        stage_issue = f"staged pipeline 停在 {stage}，可继续后续阶段"
-    return {"path": str(path), "stage": stage, "issue": stage_issue}
+    fields = set(data.keys())
+    precise_action = None
+    issue = None
+
+    if stage == "stage1_done":
+        precise_action = f"python3 {REPO / 'scripts' / 'stage2_workers.py'} {path} --worker-agent-b exec-worker-2"
+        issue = "stage1 已完成，等待 worker 执行"
+    elif stage == "stage2_done":
+        precise_action = f"python3 {REPO / 'scripts' / 'stage3_review_final.py'} {path}"
+        issue = "stage2 已完成，等待 review/final"
+    elif stage == "stage3_done":
+        issue = None
+    else:
+        issue = f"未知 stage: {stage}"
+
+    if stage == "stage2_done" and not {"worker_a_result", "worker_agent_a"}.issubset(fields):
+        issue = "stage2 状态不完整，建议重跑 stage2_workers.py"
+        precise_action = f"python3 {REPO / 'scripts' / 'stage2_workers.py'} {path} --worker-agent-b exec-worker-2"
+    if stage == "stage3_done" and not {"review_result", "final_result", "session_probe"}.issubset(fields):
+        issue = "stage3 状态不完整，建议重跑 stage3_review_final.py"
+        precise_action = f"python3 {REPO / 'scripts' / 'stage3_review_final.py'} {path}"
+
+    return {
+        "path": str(path),
+        "stage": stage,
+        "issue": issue,
+        "precise_action": precise_action,
+    }
 
 
 def main():
@@ -45,7 +69,8 @@ def main():
             "type": "pipeline_resume",
             "stage": pipeline_state.get("stage"),
             "state_path": pipeline_state.get("path"),
-            "suggestion": "运行 resume_pipeline.py 从当前阶段继续",
+            "suggestion": pipeline_state.get("issue"),
+            "precise_action": pipeline_state.get("precise_action"),
         })
 
     for item in report.get("reports", []):

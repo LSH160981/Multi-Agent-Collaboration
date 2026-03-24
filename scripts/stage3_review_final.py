@@ -5,21 +5,36 @@ from pathlib import Path
 from runtime_lib import newest_session_for_agent, run_openclaw_agent, write_json
 
 
+def slim(value):
+    if isinstance(value, dict):
+        return value
+    return {"raw": str(value)[:800]}
+
+
 def review_prompt(task_packet: dict, worker_a: dict, worker_b: dict | None) -> str:
+    payload = {
+        "task": task_packet,
+        "worker_a": slim(worker_a),
+        "worker_b": slim(worker_b) if worker_b is not None else None,
+    }
     return (
-        "你是审核Agent。请比较两个worker结果并输出 JSON："
+        "你是审核Agent。只输出 JSON："
         '{"pass":true,"winner":"A|B|tie","scores":{"A":0,"B":0},"issues":[""],"merge_advice":[""]}'
         + "\n\n"
-        + json.dumps({"task": task_packet, "worker_a": worker_a, "worker_b": worker_b}, ensure_ascii=False)
+        + json.dumps(payload, ensure_ascii=False)
     )
 
 
-def final_prompt(task_packet: dict, worker_a: dict, worker_b: dict | None, review_result: dict) -> str:
+def final_prompt(task_packet: dict, review_result: dict) -> str:
+    payload = {
+        "task": task_packet,
+        "review": slim(review_result),
+    }
     return (
-        "你是主Agent，唯一用户出口。请输出 JSON："
+        "你是主Agent，唯一用户出口。只输出 JSON："
         '{"final_summary":"","key_points":[""],"risks":[""],"next_steps":[""]}'
         + "\n\n"
-        + json.dumps({"task": task_packet, "worker_a": worker_a, "worker_b": worker_b, "review": review_result}, ensure_ascii=False)
+        + json.dumps(payload, ensure_ascii=False)
     )
 
 
@@ -37,12 +52,12 @@ def main():
     review_result = run_openclaw_agent(
         args.review_agent,
         review_prompt(state["task_packet"], state.get("worker_a_result"), state.get("worker_b_result")),
-        timeout=360,
+        timeout=240,
     )
     final_result = run_openclaw_agent(
         args.main_agent,
-        final_prompt(state["task_packet"], state.get("worker_a_result"), state.get("worker_b_result"), review_result),
-        timeout=360,
+        final_prompt(state["task_packet"], review_result),
+        timeout=240,
     )
 
     state["review_result"] = review_result
