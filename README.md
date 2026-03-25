@@ -36,6 +36,7 @@ Multi-Agent-Collaboration/
 详细说明看：
 - `docs/PROJECT_STRUCTURE.md`
 - `docs/CODE_REVIEW_NOTES.md`
+- `docs/README.md`
 
 ---
 
@@ -83,17 +84,17 @@ Multi-Agent-Collaboration/
 - `skills/Multi-Agent-Collaboration/SKILL.md`
 - `skills/mac/SKILL.md`
 - `skills/Multi-Agent-Collaboration/安装与使用.md`
-- `docs/openclaw-agent-session-commands.md`
+- `docs/guides/openclaw-agent-session-commands.md`
 
 ### 开发者先看
 - `docs/PROJECT_STRUCTURE.md`
 - `docs/CODE_REVIEW_NOTES.md`
-- `docs/项目骨架与逻辑执行流程.md`
+- `docs/architecture/项目骨架与逻辑执行流程.md`
 - `scripts/README.md`
 
 ### 学习者先看
 - `research/README.md`
-- `docs/多agent协同外部资料提炼-20260326.md`
+- `docs/research/多agent协同外部资料提炼-20260326.md`
 - `research/web/*.md`
 
 ---

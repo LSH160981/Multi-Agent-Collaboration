@@ -1,4 +1,18 @@
 #!/usr/bin/env python3
+"""mac_cli.py
+
+`/mac` 文本入口解析器。
+
+职责：
+- 识别用户输入中的 `/mac` 前缀。
+- 推断 task_type / complexity / specialists / execution_mode。
+- 输出统一任务包，作为后续编组、调度、审核链路的起点。
+
+说明：
+- 这是整个项目最关键的入口脚本之一。
+- 保持简单、可预测，比“过度智能猜测”更重要。
+"""
+
 import argparse
 import json
 import re

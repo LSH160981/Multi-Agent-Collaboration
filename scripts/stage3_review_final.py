@@ -1,4 +1,14 @@
 #!/usr/bin/env python3
+"""stage3_review_final.py
+
+staged pipeline 的第三阶段：审核与最终收口。
+
+职责：
+- 调用审核Agent 对 worker 结果做裁决。
+- 调用主Agent 生成最终对外结论。
+- 更新 session_probe 与最终 resume 状态。
+"""
+
 import argparse
 import json
 from pathlib import Path

@@ -1,4 +1,14 @@
 #!/usr/bin/env python3
+"""recruit_team.py
+
+根据任务包生成编组方案。
+
+职责：
+- 基于 task_type 和 execution_mode 生成单组或双组结构。
+- 为组长和 specialist 赋予基础角色边界。
+- 输出 group_plan，供 staffing、runtime、review 链路复用。
+"""
+
 import argparse
 import json
 from pathlib import Path

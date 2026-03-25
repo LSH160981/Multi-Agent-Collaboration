@@ -1,4 +1,14 @@
 #!/usr/bin/env python3
+"""staffing_decision.py
+
+编组后的复用 / 启用决策器。
+
+职责：
+- 根据 group_plan 中的角色需求选择候选 agent。
+- 优先复用已有 session；没有合适 session 时，给出新回合启用建议。
+- 输出结构化 staffing decision，供 runtime orchestration 使用。
+"""
+
 import argparse
 import json
 from pathlib import Path

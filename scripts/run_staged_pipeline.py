@@ -1,4 +1,17 @@
 #!/usr/bin/env python3
+"""run_staged_pipeline.py
+
+当前推荐的 staged pipeline 主入口。
+
+职责：
+- 统一驱动 stage1 / stage2 / stage3 三段式运行。
+- 支持在任意阶段停下，方便调试、恢复和回归测试。
+- 输出稳定的 pipeline-state.json 路径，供后续脚本继续处理。
+
+说明：
+- 相比早期原型脚本，这个文件更适合作为标准入口保留。
+"""
+
 import argparse
 import subprocess
 from pathlib import Path

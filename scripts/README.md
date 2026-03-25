@@ -35,8 +35,10 @@
 - `stage1_plan.py`
 - `stage2_workers.py`
 - `stage3_review_final.py`
-- `orchestrate_task.py`
-- `demo_pipeline.py`
+- `run_staged_pipeline.py`
+
+> 已删除早期重复原型：`orchestrate_task.py`、`demo_pipeline.py`。
+> 原因：它们已被 staged pipeline 与 runtime orchestrator 覆盖，继续保留只会制造入口混乱。
 
 ## 5. 校验与测试
 - `validate_pipeline_state.py`

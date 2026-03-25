@@ -16,6 +16,8 @@ Multi-Agent-Collaboration/
 ├── README.md
 ├── docs/
 │   ├── PROJECT_STRUCTURE.md        # 本文件：总览与分层
+│   ├── CODE_REVIEW_NOTES.md        # 代码审计与重构记录
+│   ├── README.md                   # docs 目录导航
 │   ├── architecture/               # 架构、骨架、接管、流程、差距
 │   ├── guides/                     # 安装、命令、演示、发布、使用说明
 │   ├── testing/                    # 测试矩阵、smoke、验收说明

@@ -1,4 +1,14 @@
 #!/usr/bin/env python3
+"""stage2_workers.py
+
+staged pipeline 的第二阶段：执行 worker 回合。
+
+职责：
+- 驱动 stable / aggressive worker 执行。
+- 记录执行前后 session 状态。
+- 把结果写回 pipeline-state.json。
+"""
+
 import argparse
 import json
 from pathlib import Path

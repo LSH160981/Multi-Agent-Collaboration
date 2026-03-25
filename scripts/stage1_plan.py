@@ -1,4 +1,17 @@
 #!/usr/bin/env python3
+"""stage1_plan.py
+
+staged pipeline 的第一阶段：任务理解、编组、巡检策略初始化。
+
+输出：
+- task_packet
+- group_plan
+- pipeline-state.json（stage1_done）
+
+作用：
+- 把复杂任务从“用户输入”推进到“可执行计划”。
+"""
+
 import argparse
 import json
 import subprocess

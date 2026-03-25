@@ -2,14 +2,14 @@
 
 这批脚本开始把系统从“本地生成 JSON”推进到“通过 OpenClaw 原生 session / agent turn 真实调度 agent”。
 
-## 新增脚本
+## 当前核心脚本
 
 - `scripts/runtime_lib.py`
 - `scripts/runtime_dispatch.py`
 - `scripts/runtime_orchestrator.py`
 - `scripts/runtime_sessions.py`
 - `scripts/inspect_and_recover.py`
-- `scripts/demo_pipeline.py`
+- `scripts/run_staged_pipeline.py`
 
 ## 1. runtime_dispatch.py
 
@@ -54,12 +54,13 @@
 - 先用 `inspect_agents.py` 发现 stale / watch agent
 - 再根据目录名 → OpenClaw agent id 的映射，可选执行真正的恢复唤醒消息
 
-## 5. demo_pipeline.py
+## 5. run_staged_pipeline.py
 
 作用：
 
-- 串起 parse → recruit → dispatch(local files) → score → dedupe
-- 当前这是最稳的演示流水线，不依赖修改你现有 agent 配置
+- 串起 stage1 → stage2 → stage3
+- 统一当前主 pipeline 原型入口
+- 比早期 `demo_pipeline.py` 更接近实际运行链路
 
 ## 当前限制
 
