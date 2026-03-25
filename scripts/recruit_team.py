@@ -23,6 +23,20 @@ def build_group(group_name: str, task_type: str, strategy: str):
     return {"group": group_name, "strategy": strategy, "members": members}
 
 
+def build_group_plan(packet: dict) -> dict:
+    task_type = packet.get("task_type", "mixed")
+    execution_mode = packet.get("execution_mode", "single-group")
+    groups = [build_group("A", task_type, "stable")]
+    if execution_mode == "dual-group":
+        groups.append(build_group("B", task_type, "aggressive"))
+    return {
+        "task_id": packet["task_id"],
+        "task_type": task_type,
+        "execution_mode": execution_mode,
+        "groups": groups,
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(description="Generate group plan from task type and execution mode")
     parser.add_argument("task_packet", help="Path to task packet JSON")
@@ -30,17 +44,7 @@ def main():
     args = parser.parse_args()
 
     packet = json.loads(Path(args.task_packet).read_text(encoding="utf-8"))
-    task_type = packet.get("task_type", "mixed")
-    execution_mode = packet.get("execution_mode", "single-group")
-    groups = [build_group("A", task_type, "stable")]
-    if execution_mode == "dual-group":
-        groups.append(build_group("B", task_type, "aggressive"))
-    result = {
-        "task_id": packet["task_id"],
-        "task_type": task_type,
-        "execution_mode": execution_mode,
-        "groups": groups,
-    }
+    result = build_group_plan(packet)
     rendered = json.dumps(result, ensure_ascii=False, indent=2)
     if args.output:
         Path(args.output).write_text(rendered + "\n", encoding="utf-8")

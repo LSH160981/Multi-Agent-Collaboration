@@ -1,0 +1,3849 @@
+<!DOCTYPE html>
+<html class='han-la' dir='ltr' lang='zh-CN' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+<meta content='width=device-width, initial-scale=1' name='viewport'/>
+<meta content='ee6c9aN8GD5TllaJa3q2' name='follow.it-verification-code'/>
+<title>Openclaw 命令行 TUI 中 使用多 Agent 协同完成任务 Openclaw v2026.3.13</title>
+<script src='https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js'></script>
+<script src='https://crazypeace.github.io/text-autospace.js/text-autospace.min.js'></script>
+<script src='https://crazypeace.github.io/blogger-replace-blockquote-to-pre/blockquote-add-copy-button.js'></script>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+<!-- Chrome, Firefox OS and Opera -->
+<meta content='#f4f4f4' name='theme-color'/>
+<!-- Windows Phone -->
+<meta content='#f4f4f4' name='msapplication-navbutton-color'/>
+<meta content='blogger' name='generator'/>
+<link href='https://zelikk.blogspot.com/favicon.ico' rel='icon' type='image/x-icon'/>
+<link href='https://zelikk.blogspot.com/2026/03/openclaw-tui-agent-cooperate.html' rel='canonical'/>
+<link rel="alternate" type="application/atom+xml" title="ICDYCT / 我能, 你也行 / I Can Do, You Can Too - Atom" href="https://zelikk.blogspot.com/feeds/posts/default" />
+<link rel="alternate" type="application/rss+xml" title="ICDYCT / 我能, 你也行 / I Can Do, You Can Too - RSS" href="https://zelikk.blogspot.com/feeds/posts/default?alt=rss" />
+<link rel="service.post" type="application/atom+xml" title="ICDYCT / 我能, 你也行 / I Can Do, You Can Too - Atom" href="https://www.blogger.com/feeds/5672901950085364729/posts/default" />
+
+<link rel="alternate" type="application/atom+xml" title="ICDYCT / 我能, 你也行 / I Can Do, You Can Too - Atom" href="https://zelikk.blogspot.com/feeds/1456213950534754656/comments/default" />
+<!--Can't find substitution for tag [blog.ieCssRetrofitLinks]-->
+<link href='https://blogger.googleusercontent.com/img/a/AVvXsEiAEnYfJqYPWJ5onFQqbIqAD1CMYmHvImsOOvUHhuEQqAGLNDWig9oy8zp8egIsGaLCDPZiUCTiId3cal62Ji1Wj89L7WoyHtvZqyFoxKyeZclEJdjE1gAd4vWwSNPKHMkmoLfesiRfrug-zbpckr4HOZrE8RRuayHmf50CgKKbtPKxRHMrOr6Zb9rssww=s16000' rel='image_src'/>
+<meta content='https://www.youtube.com/watch?v=MUSUt7Mjyd0' name='description'/>
+<meta content='https://zelikk.blogspot.com/2026/03/openclaw-tui-agent-cooperate.html' property='og:url'/>
+<meta content='Openclaw 命令行 TUI 中 使用多 Agent 协同完成任务 Openclaw v2026.3.13' property='og:title'/>
+<meta content='https://www.youtube.com/watch?v=MUSUt7Mjyd0' property='og:description'/>
+<meta content='https://blogger.googleusercontent.com/img/a/AVvXsEiAEnYfJqYPWJ5onFQqbIqAD1CMYmHvImsOOvUHhuEQqAGLNDWig9oy8zp8egIsGaLCDPZiUCTiId3cal62Ji1Wj89L7WoyHtvZqyFoxKyeZclEJdjE1gAd4vWwSNPKHMkmoLfesiRfrug-zbpckr4HOZrE8RRuayHmf50CgKKbtPKxRHMrOr6Zb9rssww=w1200-h630-p-k-no-nu' property='og:image'/>
+<style type='text/css'>@font-face{font-family:'Damion';font-style:normal;font-weight:400;font-display:swap;src:url(//fonts.gstatic.com/s/damion/v15/hv-XlzJ3KEUe_YZkZGw2ATE.woff2)format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}@font-face{font-family:'Damion';font-style:normal;font-weight:400;font-display:swap;src:url(//fonts.gstatic.com/s/damion/v15/hv-XlzJ3KEUe_YZkamw2.woff2)format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}@font-face{font-family:'Playfair Display';font-style:normal;font-weight:900;font-display:swap;src:url(//fonts.gstatic.com/s/playfairdisplay/v40/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKfsunDTbtPY_Q.woff2)format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;}@font-face{font-family:'Playfair Display';font-style:normal;font-weight:900;font-display:swap;src:url(//fonts.gstatic.com/s/playfairdisplay/v40/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKfsunDYbtPY_Q.woff2)format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;}@font-face{font-family:'Playfair Display';font-style:normal;font-weight:900;font-display:swap;src:url(//fonts.gstatic.com/s/playfairdisplay/v40/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKfsunDZbtPY_Q.woff2)format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}@font-face{font-family:'Playfair Display';font-style:normal;font-weight:900;font-display:swap;src:url(//fonts.gstatic.com/s/playfairdisplay/v40/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKfsunDXbtM.woff2)format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}@font-face{font-family:'Roboto';font-style:italic;font-weight:300;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFOKCnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmOClHrs6ljXfMMLt_QuAX-k2Qn.woff2)format('woff2');unicode-range:U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;}@font-face{font-family:'Roboto';font-style:italic;font-weight:300;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFOKCnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmOClHrs6ljXfMMLt_QuAz-k2Qn.woff2)format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;}@font-face{font-family:'Roboto';font-style:italic;font-weight:300;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFOKCnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmOClHrs6ljXfMMLt_QuAT-k2Qn.woff2)format('woff2');unicode-range:U+1F00-1FFF;}@font-face{font-family:'Roboto';font-style:italic;font-weight:300;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFOKCnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmOClHrs6ljXfMMLt_QuAv-k2Qn.woff2)format('woff2');unicode-range:U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF;}@font-face{font-family:'Roboto';font-style:italic;font-weight:300;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFOKCnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmOClHrs6ljXfMMLt_QuHT-k2Qn.woff2)format('woff2');unicode-range:U+0302-0303,U+0305,U+0307-0308,U+0310,U+0312,U+0315,U+031A,U+0326-0327,U+032C,U+032F-0330,U+0332-0333,U+0338,U+033A,U+0346,U+034D,U+0391-03A1,U+03A3-03A9,U+03B1-03C9,U+03D1,U+03D5-03D6,U+03F0-03F1,U+03F4-03F5,U+2016-2017,U+2034-2038,U+203C,U+2040,U+2043,U+2047,U+2050,U+2057,U+205F,U+2070-2071,U+2074-208E,U+2090-209C,U+20D0-20DC,U+20E1,U+20E5-20EF,U+2100-2112,U+2114-2115,U+2117-2121,U+2123-214F,U+2190,U+2192,U+2194-21AE,U+21B0-21E5,U+21F1-21F2,U+21F4-2211,U+2213-2214,U+2216-22FF,U+2308-230B,U+2310,U+2319,U+231C-2321,U+2336-237A,U+237C,U+2395,U+239B-23B7,U+23D0,U+23DC-23E1,U+2474-2475,U+25AF,U+25B3,U+25B7,U+25BD,U+25C1,U+25CA,U+25CC,U+25FB,U+266D-266F,U+27C0-27FF,U+2900-2AFF,U+2B0E-2B11,U+2B30-2B4C,U+2BFE,U+3030,U+FF5B,U+FF5D,U+1D400-1D7FF,U+1EE00-1EEFF;}@font-face{font-family:'Roboto';font-style:italic;font-weight:300;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFOKCnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmOClHrs6ljXfMMLt_QuGb-k2Qn.woff2)format('woff2');unicode-range:U+0001-000C,U+000E-001F,U+007F-009F,U+20DD-20E0,U+20E2-20E4,U+2150-218F,U+2190,U+2192,U+2194-2199,U+21AF,U+21E6-21F0,U+21F3,U+2218-2219,U+2299,U+22C4-22C6,U+2300-243F,U+2440-244A,U+2460-24FF,U+25A0-27BF,U+2800-28FF,U+2921-2922,U+2981,U+29BF,U+29EB,U+2B00-2BFF,U+4DC0-4DFF,U+FFF9-FFFB,U+10140-1018E,U+10190-1019C,U+101A0,U+101D0-101FD,U+102E0-102FB,U+10E60-10E7E,U+1D2C0-1D2D3,U+1D2E0-1D37F,U+1F000-1F0FF,U+1F100-1F1AD,U+1F1E6-1F1FF,U+1F30D-1F30F,U+1F315,U+1F31C,U+1F31E,U+1F320-1F32C,U+1F336,U+1F378,U+1F37D,U+1F382,U+1F393-1F39F,U+1F3A7-1F3A8,U+1F3AC-1F3AF,U+1F3C2,U+1F3C4-1F3C6,U+1F3CA-1F3CE,U+1F3D4-1F3E0,U+1F3ED,U+1F3F1-1F3F3,U+1F3F5-1F3F7,U+1F408,U+1F415,U+1F41F,U+1F426,U+1F43F,U+1F441-1F442,U+1F444,U+1F446-1F449,U+1F44C-1F44E,U+1F453,U+1F46A,U+1F47D,U+1F4A3,U+1F4B0,U+1F4B3,U+1F4B9,U+1F4BB,U+1F4BF,U+1F4C8-1F4CB,U+1F4D6,U+1F4DA,U+1F4DF,U+1F4E3-1F4E6,U+1F4EA-1F4ED,U+1F4F7,U+1F4F9-1F4FB,U+1F4FD-1F4FE,U+1F503,U+1F507-1F50B,U+1F50D,U+1F512-1F513,U+1F53E-1F54A,U+1F54F-1F5FA,U+1F610,U+1F650-1F67F,U+1F687,U+1F68D,U+1F691,U+1F694,U+1F698,U+1F6AD,U+1F6B2,U+1F6B9-1F6BA,U+1F6BC,U+1F6C6-1F6CF,U+1F6D3-1F6D7,U+1F6E0-1F6EA,U+1F6F0-1F6F3,U+1F6F7-1F6FC,U+1F700-1F7FF,U+1F800-1F80B,U+1F810-1F847,U+1F850-1F859,U+1F860-1F887,U+1F890-1F8AD,U+1F8B0-1F8BB,U+1F8C0-1F8C1,U+1F900-1F90B,U+1F93B,U+1F946,U+1F984,U+1F996,U+1F9E9,U+1FA00-1FA6F,U+1FA70-1FA7C,U+1FA80-1FA89,U+1FA8F-1FAC6,U+1FACE-1FADC,U+1FADF-1FAE9,U+1FAF0-1FAF8,U+1FB00-1FBFF;}@font-face{font-family:'Roboto';font-style:italic;font-weight:300;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFOKCnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmOClHrs6ljXfMMLt_QuAf-k2Qn.woff2)format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;}@font-face{font-family:'Roboto';font-style:italic;font-weight:300;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFOKCnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmOClHrs6ljXfMMLt_QuAb-k2Qn.woff2)format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}@font-face{font-family:'Roboto';font-style:italic;font-weight:300;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFOKCnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmOClHrs6ljXfMMLt_QuAj-kw.woff2)format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3GUBGEe.woff2)format('woff2');unicode-range:U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3iUBGEe.woff2)format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3CUBGEe.woff2)format('woff2');unicode-range:U+1F00-1FFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3-UBGEe.woff2)format('woff2');unicode-range:U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMawCUBGEe.woff2)format('woff2');unicode-range:U+0302-0303,U+0305,U+0307-0308,U+0310,U+0312,U+0315,U+031A,U+0326-0327,U+032C,U+032F-0330,U+0332-0333,U+0338,U+033A,U+0346,U+034D,U+0391-03A1,U+03A3-03A9,U+03B1-03C9,U+03D1,U+03D5-03D6,U+03F0-03F1,U+03F4-03F5,U+2016-2017,U+2034-2038,U+203C,U+2040,U+2043,U+2047,U+2050,U+2057,U+205F,U+2070-2071,U+2074-208E,U+2090-209C,U+20D0-20DC,U+20E1,U+20E5-20EF,U+2100-2112,U+2114-2115,U+2117-2121,U+2123-214F,U+2190,U+2192,U+2194-21AE,U+21B0-21E5,U+21F1-21F2,U+21F4-2211,U+2213-2214,U+2216-22FF,U+2308-230B,U+2310,U+2319,U+231C-2321,U+2336-237A,U+237C,U+2395,U+239B-23B7,U+23D0,U+23DC-23E1,U+2474-2475,U+25AF,U+25B3,U+25B7,U+25BD,U+25C1,U+25CA,U+25CC,U+25FB,U+266D-266F,U+27C0-27FF,U+2900-2AFF,U+2B0E-2B11,U+2B30-2B4C,U+2BFE,U+3030,U+FF5B,U+FF5D,U+1D400-1D7FF,U+1EE00-1EEFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMaxKUBGEe.woff2)format('woff2');unicode-range:U+0001-000C,U+000E-001F,U+007F-009F,U+20DD-20E0,U+20E2-20E4,U+2150-218F,U+2190,U+2192,U+2194-2199,U+21AF,U+21E6-21F0,U+21F3,U+2218-2219,U+2299,U+22C4-22C6,U+2300-243F,U+2440-244A,U+2460-24FF,U+25A0-27BF,U+2800-28FF,U+2921-2922,U+2981,U+29BF,U+29EB,U+2B00-2BFF,U+4DC0-4DFF,U+FFF9-FFFB,U+10140-1018E,U+10190-1019C,U+101A0,U+101D0-101FD,U+102E0-102FB,U+10E60-10E7E,U+1D2C0-1D2D3,U+1D2E0-1D37F,U+1F000-1F0FF,U+1F100-1F1AD,U+1F1E6-1F1FF,U+1F30D-1F30F,U+1F315,U+1F31C,U+1F31E,U+1F320-1F32C,U+1F336,U+1F378,U+1F37D,U+1F382,U+1F393-1F39F,U+1F3A7-1F3A8,U+1F3AC-1F3AF,U+1F3C2,U+1F3C4-1F3C6,U+1F3CA-1F3CE,U+1F3D4-1F3E0,U+1F3ED,U+1F3F1-1F3F3,U+1F3F5-1F3F7,U+1F408,U+1F415,U+1F41F,U+1F426,U+1F43F,U+1F441-1F442,U+1F444,U+1F446-1F449,U+1F44C-1F44E,U+1F453,U+1F46A,U+1F47D,U+1F4A3,U+1F4B0,U+1F4B3,U+1F4B9,U+1F4BB,U+1F4BF,U+1F4C8-1F4CB,U+1F4D6,U+1F4DA,U+1F4DF,U+1F4E3-1F4E6,U+1F4EA-1F4ED,U+1F4F7,U+1F4F9-1F4FB,U+1F4FD-1F4FE,U+1F503,U+1F507-1F50B,U+1F50D,U+1F512-1F513,U+1F53E-1F54A,U+1F54F-1F5FA,U+1F610,U+1F650-1F67F,U+1F687,U+1F68D,U+1F691,U+1F694,U+1F698,U+1F6AD,U+1F6B2,U+1F6B9-1F6BA,U+1F6BC,U+1F6C6-1F6CF,U+1F6D3-1F6D7,U+1F6E0-1F6EA,U+1F6F0-1F6F3,U+1F6F7-1F6FC,U+1F700-1F7FF,U+1F800-1F80B,U+1F810-1F847,U+1F850-1F859,U+1F860-1F887,U+1F890-1F8AD,U+1F8B0-1F8BB,U+1F8C0-1F8C1,U+1F900-1F90B,U+1F93B,U+1F946,U+1F984,U+1F996,U+1F9E9,U+1FA00-1FA6F,U+1FA70-1FA7C,U+1FA80-1FA89,U+1FA8F-1FAC6,U+1FACE-1FADC,U+1FADF-1FAE9,U+1FAF0-1FAF8,U+1FB00-1FBFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3OUBGEe.woff2)format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3KUBGEe.woff2)format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBA.woff2)format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}@font-face{font-family:'Roboto';font-style:normal;font-weight:700;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3GUBGEe.woff2)format('woff2');unicode-range:U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F;}@font-face{font-family:'Roboto';font-style:normal;font-weight:700;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3iUBGEe.woff2)format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;}@font-face{font-family:'Roboto';font-style:normal;font-weight:700;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3CUBGEe.woff2)format('woff2');unicode-range:U+1F00-1FFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:700;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3-UBGEe.woff2)format('woff2');unicode-range:U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:700;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMawCUBGEe.woff2)format('woff2');unicode-range:U+0302-0303,U+0305,U+0307-0308,U+0310,U+0312,U+0315,U+031A,U+0326-0327,U+032C,U+032F-0330,U+0332-0333,U+0338,U+033A,U+0346,U+034D,U+0391-03A1,U+03A3-03A9,U+03B1-03C9,U+03D1,U+03D5-03D6,U+03F0-03F1,U+03F4-03F5,U+2016-2017,U+2034-2038,U+203C,U+2040,U+2043,U+2047,U+2050,U+2057,U+205F,U+2070-2071,U+2074-208E,U+2090-209C,U+20D0-20DC,U+20E1,U+20E5-20EF,U+2100-2112,U+2114-2115,U+2117-2121,U+2123-214F,U+2190,U+2192,U+2194-21AE,U+21B0-21E5,U+21F1-21F2,U+21F4-2211,U+2213-2214,U+2216-22FF,U+2308-230B,U+2310,U+2319,U+231C-2321,U+2336-237A,U+237C,U+2395,U+239B-23B7,U+23D0,U+23DC-23E1,U+2474-2475,U+25AF,U+25B3,U+25B7,U+25BD,U+25C1,U+25CA,U+25CC,U+25FB,U+266D-266F,U+27C0-27FF,U+2900-2AFF,U+2B0E-2B11,U+2B30-2B4C,U+2BFE,U+3030,U+FF5B,U+FF5D,U+1D400-1D7FF,U+1EE00-1EEFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:700;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMaxKUBGEe.woff2)format('woff2');unicode-range:U+0001-000C,U+000E-001F,U+007F-009F,U+20DD-20E0,U+20E2-20E4,U+2150-218F,U+2190,U+2192,U+2194-2199,U+21AF,U+21E6-21F0,U+21F3,U+2218-2219,U+2299,U+22C4-22C6,U+2300-243F,U+2440-244A,U+2460-24FF,U+25A0-27BF,U+2800-28FF,U+2921-2922,U+2981,U+29BF,U+29EB,U+2B00-2BFF,U+4DC0-4DFF,U+FFF9-FFFB,U+10140-1018E,U+10190-1019C,U+101A0,U+101D0-101FD,U+102E0-102FB,U+10E60-10E7E,U+1D2C0-1D2D3,U+1D2E0-1D37F,U+1F000-1F0FF,U+1F100-1F1AD,U+1F1E6-1F1FF,U+1F30D-1F30F,U+1F315,U+1F31C,U+1F31E,U+1F320-1F32C,U+1F336,U+1F378,U+1F37D,U+1F382,U+1F393-1F39F,U+1F3A7-1F3A8,U+1F3AC-1F3AF,U+1F3C2,U+1F3C4-1F3C6,U+1F3CA-1F3CE,U+1F3D4-1F3E0,U+1F3ED,U+1F3F1-1F3F3,U+1F3F5-1F3F7,U+1F408,U+1F415,U+1F41F,U+1F426,U+1F43F,U+1F441-1F442,U+1F444,U+1F446-1F449,U+1F44C-1F44E,U+1F453,U+1F46A,U+1F47D,U+1F4A3,U+1F4B0,U+1F4B3,U+1F4B9,U+1F4BB,U+1F4BF,U+1F4C8-1F4CB,U+1F4D6,U+1F4DA,U+1F4DF,U+1F4E3-1F4E6,U+1F4EA-1F4ED,U+1F4F7,U+1F4F9-1F4FB,U+1F4FD-1F4FE,U+1F503,U+1F507-1F50B,U+1F50D,U+1F512-1F513,U+1F53E-1F54A,U+1F54F-1F5FA,U+1F610,U+1F650-1F67F,U+1F687,U+1F68D,U+1F691,U+1F694,U+1F698,U+1F6AD,U+1F6B2,U+1F6B9-1F6BA,U+1F6BC,U+1F6C6-1F6CF,U+1F6D3-1F6D7,U+1F6E0-1F6EA,U+1F6F0-1F6F3,U+1F6F7-1F6FC,U+1F700-1F7FF,U+1F800-1F80B,U+1F810-1F847,U+1F850-1F859,U+1F860-1F887,U+1F890-1F8AD,U+1F8B0-1F8BB,U+1F8C0-1F8C1,U+1F900-1F90B,U+1F93B,U+1F946,U+1F984,U+1F996,U+1F9E9,U+1FA00-1FA6F,U+1FA70-1FA7C,U+1FA80-1FA89,U+1FA8F-1FAC6,U+1FACE-1FADC,U+1FADF-1FAE9,U+1FAF0-1FAF8,U+1FB00-1FBFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:700;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3OUBGEe.woff2)format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;}@font-face{font-family:'Roboto';font-style:normal;font-weight:700;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3KUBGEe.woff2)format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:700;font-stretch:100%;font-display:swap;src:url(//fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBA.woff2)format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}</style>
+<style id='page-skin-1' type='text/css'><!--
+/*! normalize.css v8.0.0 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-0.25em}sup{top:-0.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}button,[type="button"],[type="reset"],[type="submit"]{-webkit-appearance:button}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type="checkbox"],[type="radio"]{box-sizing:border-box;padding:0}[type="number"]::-webkit-inner-spin-button,[type="number"]::-webkit-outer-spin-button{height:auto}[type="search"]{-webkit-appearance:textfield;outline-offset:-2px}[type="search"]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}
+/*!************************************************
+* Blogger Template Style
+* Name: Essential
+**************************************************/
+body{
+overflow-wrap:break-word;
+word-break:break-word;
+word-wrap:break-word
+}
+.hidden{
+display:none
+}
+.invisible{
+visibility:hidden
+}
+.container:after,.float-container:after{
+clear:both;
+content:"";
+display:table
+}
+.clearboth{
+clear:both
+}
+#comments .comment .comment-actions,.subscribe-popup .FollowByEmail .follow-by-email-submit,.widget.Profile .profile-link,.widget.Profile .profile-link.visit-profile{
+background:transparent;
+border:0;
+box-shadow:none;
+color:#2196f3;
+cursor:pointer;
+font-size:14px;
+font-weight:700;
+outline:none;
+text-decoration:none;
+text-transform:uppercase;
+width:auto
+}
+.dim-overlay{
+height:100vh;
+left:0;
+position:fixed;
+top:0;
+width:100%
+}
+#sharing-dim-overlay{
+background-color:transparent
+}
+input::-ms-clear{
+display:none
+}
+.blogger-logo,.svg-icon-24.blogger-logo{
+fill:#ff9800;
+opacity:1
+}
+.loading-spinner-large{
+-webkit-animation:mspin-rotate 1568.63ms linear infinite;
+animation:mspin-rotate 1568.63ms linear infinite;
+height:48px;
+overflow:hidden;
+position:absolute;
+width:48px;
+z-index:200
+}
+.loading-spinner-large>div{
+-webkit-animation:mspin-revrot 5332ms steps(4) infinite;
+animation:mspin-revrot 5332ms steps(4) infinite
+}
+.loading-spinner-large>div>div{
+-webkit-animation:mspin-singlecolor-large-film 1333ms steps(81) infinite;
+animation:mspin-singlecolor-large-film 1333ms steps(81) infinite;
+background-size:100%;
+height:48px;
+width:3888px
+}
+.mspin-black-large>div>div,.mspin-grey_54-large>div>div{
+background-image:url(https://www.blogblog.com/indie/mspin_black_large.svg)
+}
+.mspin-white-large>div>div{
+background-image:url(https://www.blogblog.com/indie/mspin_white_large.svg)
+}
+.mspin-grey_54-large{
+opacity:.54
+}
+@-webkit-keyframes mspin-singlecolor-large-film{
+0%{
+-webkit-transform:translateX(0);
+transform:translateX(0)
+}
+to{
+-webkit-transform:translateX(-3888px);
+transform:translateX(-3888px)
+}
+}
+@keyframes mspin-singlecolor-large-film{
+0%{
+-webkit-transform:translateX(0);
+transform:translateX(0)
+}
+to{
+-webkit-transform:translateX(-3888px);
+transform:translateX(-3888px)
+}
+}
+@-webkit-keyframes mspin-rotate{
+0%{
+-webkit-transform:rotate(0deg);
+transform:rotate(0deg)
+}
+to{
+-webkit-transform:rotate(1turn);
+transform:rotate(1turn)
+}
+}
+@keyframes mspin-rotate{
+0%{
+-webkit-transform:rotate(0deg);
+transform:rotate(0deg)
+}
+to{
+-webkit-transform:rotate(1turn);
+transform:rotate(1turn)
+}
+}
+@-webkit-keyframes mspin-revrot{
+0%{
+-webkit-transform:rotate(0deg);
+transform:rotate(0deg)
+}
+to{
+-webkit-transform:rotate(-1turn);
+transform:rotate(-1turn)
+}
+}
+@keyframes mspin-revrot{
+0%{
+-webkit-transform:rotate(0deg);
+transform:rotate(0deg)
+}
+to{
+-webkit-transform:rotate(-1turn);
+transform:rotate(-1turn)
+}
+}
+.skip-navigation{
+background-color:#fff;
+box-sizing:border-box;
+color:#000;
+display:block;
+height:0;
+left:0;
+line-height:50px;
+overflow:hidden;
+padding-top:0;
+position:fixed;
+text-align:center;
+top:0;
+-webkit-transition:box-shadow .3s,height .3s,padding-top .3s;
+transition:box-shadow .3s,height .3s,padding-top .3s;
+width:100%;
+z-index:900
+}
+.skip-navigation:focus{
+box-shadow:0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12),0 2px 4px -1px rgba(0,0,0,.2);
+height:50px
+}
+#main{
+outline:none
+}
+.main-heading{
+position:absolute;
+clip:rect(1px,1px,1px,1px);
+padding:0;
+border:0;
+height:1px;
+width:1px;
+overflow:hidden
+}
+.Attribution{
+margin-top:1em;
+text-align:center
+}
+.Attribution .blogger img,.Attribution .blogger svg{
+vertical-align:bottom
+}
+.Attribution .blogger img{
+margin-right:.5em
+}
+.Attribution div{
+line-height:24px;
+margin-top:.5em
+}
+.Attribution .copyright,.Attribution .image-attribution{
+font-size:.7em;
+margin-top:1.5em
+}
+.BLOG_mobile_video_class{
+display:none
+}
+.bg-photo{
+background-attachment:scroll!important
+}
+body .CSS_LIGHTBOX{
+z-index:900
+}
+.extendable .show-less,.extendable .show-more{
+border-color:#2196f3;
+color:#2196f3;
+margin-top:8px
+}
+.extendable .show-less.hidden,.extendable .show-more.hidden,.inline-ad{
+display:none
+}
+.inline-ad{
+max-width:100%;
+overflow:hidden
+}
+.adsbygoogle{
+display:block
+}
+#cookieChoiceInfo{
+bottom:0;
+top:auto
+}
+iframe.b-hbp-video{
+border:0
+}
+.post-body iframe,.post-body img{
+max-width:100%
+}
+.post-body a[imageanchor=\31]{
+display:inline-block
+}
+.byline{
+margin-right:1em
+}
+.byline:last-child{
+margin-right:0
+}
+.link-copied-dialog{
+max-width:520px;
+outline:0
+}
+.link-copied-dialog .modal-dialog-buttons{
+margin-top:8px
+}
+.link-copied-dialog .goog-buttonset-default{
+background:transparent;
+border:0
+}
+.link-copied-dialog .goog-buttonset-default:focus{
+outline:0
+}
+.paging-control-container{
+margin-bottom:16px
+}
+.paging-control-container .paging-control{
+display:inline-block
+}
+.paging-control-container .comment-range-text:after,.paging-control-container .paging-control{
+color:#2196f3
+}
+.paging-control-container .comment-range-text,.paging-control-container .paging-control{
+margin-right:8px
+}
+.paging-control-container .comment-range-text:after,.paging-control-container .paging-control:after{
+content:"\b7";
+cursor:default;
+padding-left:8px;
+pointer-events:none
+}
+.paging-control-container .comment-range-text:last-child:after,.paging-control-container .paging-control:last-child:after{
+content:none
+}
+.byline.reactions iframe{
+height:20px
+}
+.b-notification{
+color:#000;
+background-color:#fff;
+border-bottom:1px solid #000;
+box-sizing:border-box;
+padding:16px 32px;
+text-align:center
+}
+.b-notification.visible{
+-webkit-transition:margin-top .3s cubic-bezier(.4,0,.2,1);
+transition:margin-top .3s cubic-bezier(.4,0,.2,1)
+}
+.b-notification.invisible{
+position:absolute
+}
+.b-notification-close{
+position:absolute;
+right:8px;
+top:8px
+}
+.no-posts-message{
+line-height:40px;
+text-align:center
+}
+@media screen and (max-width:800px){
+body.item-view .post-body a[imageanchor=\31][style*=float\:\ left\;],body.item-view .post-body a[imageanchor=\31][style*=float\:\ right\;]{
+float:none!important;
+clear:none!important
+}
+body.item-view .post-body a[imageanchor=\31] img{
+display:block;
+height:auto;
+margin:0 auto
+}
+body.item-view .post-body>.separator:first-child>a[imageanchor=\31]:first-child{
+margin-top:20px
+}
+.post-body a[imageanchor]{
+display:block
+}
+body.item-view .post-body a[imageanchor=\31]{
+margin-left:0!important;
+margin-right:0!important
+}
+body.item-view .post-body a[imageanchor=\31]+a[imageanchor=\31]{
+margin-top:16px
+}
+}
+.item-control{
+display:none
+}
+#comments{
+border-top:1px dashed rgba(0,0,0,.54);
+margin-top:20px;
+padding:20px
+}
+#comments .comment-thread ol{
+margin:0;
+padding-left:0;
+padding-left:0
+}
+#comments .comment-thread .comment-replies,#comments .comment .comment-replybox-single{
+margin-left:60px
+}
+#comments .comment-thread .thread-count{
+display:none
+}
+#comments .comment{
+list-style-type:none;
+padding:0 0 30px;
+position:relative
+}
+#comments .comment .comment{
+padding-bottom:8px
+}
+.comment .avatar-image-container{
+position:absolute
+}
+.comment .avatar-image-container img{
+border-radius:50%
+}
+.avatar-image-container svg,.comment .avatar-image-container .avatar-icon{
+border-radius:50%;
+border:1px solid #707070;
+box-sizing:border-box;
+fill:#707070;
+height:35px;
+margin:0;
+padding:7px;
+width:35px
+}
+.comment .comment-block{
+margin-top:10px;
+margin-left:60px;
+padding-bottom:0
+}
+#comments .comment-author-header-wrapper{
+margin-left:40px
+}
+#comments .comment .thread-expanded .comment-block{
+padding-bottom:20px
+}
+#comments .comment .comment-header .user,#comments .comment .comment-header .user a{
+color:#424242;
+font-style:normal;
+font-weight:700
+}
+#comments .comment .comment-actions{
+bottom:0;
+margin-bottom:15px;
+position:absolute
+}
+#comments .comment .comment-actions>*{
+margin-right:8px
+}
+#comments .comment .comment-header .datetime{
+bottom:0;
+display:inline-block;
+font-size:13px;
+font-style:italic;
+margin-left:8px
+}
+#comments .comment .comment-footer .comment-timestamp a,#comments .comment .comment-header .datetime,#comments .comment .comment-header .datetime a{
+color:rgba(66,66,66,.54)
+}
+#comments .comment .comment-content,.comment .comment-body{
+margin-top:12px;
+word-break:break-word
+}
+.comment-body{
+margin-bottom:12px
+}
+#comments.embed[data-num-comments=\30]{
+border:0;
+margin-top:0;
+padding-top:0
+}
+#comment-editor-src,#comments.embed[data-num-comments=\30] #comment-post-message,#comments.embed[data-num-comments=\30] div.comment-form>p,#comments.embed[data-num-comments=\30] p.comment-footer{
+display:none
+}
+.comments .comments-content .loadmore.loaded{
+max-height:0;
+opacity:0;
+overflow:hidden
+}
+.extendable .remaining-items{
+height:0;
+overflow:hidden;
+-webkit-transition:height .3s cubic-bezier(.4,0,.2,1);
+transition:height .3s cubic-bezier(.4,0,.2,1)
+}
+.extendable .remaining-items.expanded{
+height:auto
+}
+.svg-icon-24,.svg-icon-24-button{
+cursor:pointer;
+height:24px;
+width:24px;
+min-width:24px
+}
+.touch-icon{
+margin:-12px;
+padding:12px
+}
+.touch-icon:active,.touch-icon:focus{
+background-color:hsla(0,0%,60%,.4);
+border-radius:50%
+}
+svg:not(:root).touch-icon{
+overflow:visible
+}
+html[dir=rtl] .rtl-reversible-icon{
+-webkit-transform:scaleX(-1);
+transform:scaleX(-1)
+}
+.svg-icon-24-button,.touch-icon-button{
+background:transparent;
+border:0;
+margin:0;
+outline:none;
+padding:0
+}
+.touch-icon-button .touch-icon:active,.touch-icon-button .touch-icon:focus{
+background-color:transparent
+}
+.touch-icon-button:active .touch-icon,.touch-icon-button:focus .touch-icon{
+background-color:hsla(0,0%,60%,.4);
+border-radius:50%
+}
+.Profile .default-avatar-wrapper .avatar-icon{
+border-radius:50%;
+border:1px solid #707070;
+box-sizing:border-box;
+fill:#707070;
+margin:0
+}
+.Profile .individual .default-avatar-wrapper .avatar-icon{
+padding:25px
+}
+.Profile .individual .avatar-icon,.Profile .individual .profile-img{
+height:120px;
+width:120px
+}
+.Profile .team .default-avatar-wrapper .avatar-icon{
+padding:8px
+}
+.Profile .team .avatar-icon,.Profile .team .default-avatar-wrapper,.Profile .team .profile-img{
+height:40px;
+width:40px
+}
+.snippet-container{
+margin:0;
+position:relative;
+overflow:hidden
+}
+.snippet-fade{
+bottom:0;
+box-sizing:border-box;
+position:absolute;
+width:96px;
+right:0
+}
+.snippet-fade:after{
+content:"\2026";
+float:right
+}
+.post-bottom{
+-webkit-box-align:center;
+align-items:center;
+display:-webkit-box;
+display:flex;
+flex-wrap:wrap
+}
+.post-footer{
+-webkit-box-flex:1;
+flex:1 1 auto;
+flex-wrap:wrap;
+-webkit-box-ordinal-group:2;
+order:1
+}
+.post-footer>*{
+-webkit-box-flex:0;
+flex:0 1 auto
+}
+.post-footer .byline:last-child{
+margin-right:1em
+}
+.jump-link{
+-webkit-box-flex:0;
+flex:0 0 auto;
+-webkit-box-ordinal-group:3;
+order:2
+}
+.centered-top-container.sticky{
+left:0;
+position:fixed;
+right:0;
+top:0;
+width:auto;
+z-index:50;
+-webkit-transition-property:opacity,-webkit-transform;
+transition-property:opacity,-webkit-transform;
+transition-property:transform,opacity;
+transition-property:transform,opacity,-webkit-transform;
+-webkit-transition-duration:.2s;
+transition-duration:.2s;
+-webkit-transition-timing-function:cubic-bezier(.4,0,.2,1);
+transition-timing-function:cubic-bezier(.4,0,.2,1)
+}
+.centered-top-placeholder{
+display:none
+}
+.collapsed-header .centered-top-placeholder{
+display:block
+}
+.centered-top-container .Header .replaced h1,.centered-top-placeholder .Header .replaced h1{
+display:none
+}
+.centered-top-container.sticky .Header .replaced h1{
+display:block
+}
+.centered-top-container.sticky .Header .header-widget{
+background:none
+}
+.centered-top-container.sticky .Header .header-image-wrapper{
+display:none
+}
+.centered-top-container img,.centered-top-placeholder img{
+max-width:100%
+}
+.collapsible{
+-webkit-transition:height .3s cubic-bezier(.4,0,.2,1);
+transition:height .3s cubic-bezier(.4,0,.2,1)
+}
+.collapsible,.collapsible>summary{
+display:block;
+overflow:hidden
+}
+.collapsible>:not(summary){
+display:none
+}
+.collapsible[open]>:not(summary){
+display:block
+}
+.collapsible:focus,.collapsible>summary:focus{
+outline:none
+}
+.collapsible>summary{
+cursor:pointer;
+display:block;
+padding:0
+}
+.collapsible:focus>summary,.collapsible>summary:focus{
+background-color:transparent
+}
+.collapsible>summary::-webkit-details-marker{
+display:none
+}
+.collapsible-title{
+-webkit-box-align:center;
+align-items:center;
+display:-webkit-box;
+display:flex
+}
+.collapsible-title .title{
+-webkit-box-flex:1;
+flex:1 1 auto;
+-webkit-box-ordinal-group:1;
+order:0;
+overflow:hidden;
+text-overflow:ellipsis;
+white-space:nowrap
+}
+.collapsible-title .chevron-down,.collapsible[open] .collapsible-title .chevron-up{
+display:block
+}
+.collapsible-title .chevron-up,.collapsible[open] .collapsible-title .chevron-down{
+display:none
+}
+.flat-button{
+font-weight:700;
+text-transform:uppercase;
+border-radius:2px;
+padding:8px;
+margin:-8px
+}
+.flat-button,.flat-icon-button{
+cursor:pointer;
+display:inline-block
+}
+.flat-icon-button{
+background:transparent;
+border:0;
+outline:none;
+margin:-12px;
+padding:12px;
+box-sizing:content-box;
+line-height:0
+}
+.flat-icon-button,.flat-icon-button .splash-wrapper{
+border-radius:50%
+}
+.flat-icon-button .splash.animate{
+-webkit-animation-duration:.3s;
+animation-duration:.3s
+}
+.overflowable-container{
+max-height:46px;
+overflow:hidden;
+position:relative
+}
+.overflow-button{
+cursor:pointer
+}
+#overflowable-dim-overlay{
+background:transparent
+}
+.overflow-popup{
+box-shadow:0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+background-color:#ffffff;
+left:0;
+max-width:calc(100% - 32px);
+position:absolute;
+top:0;
+visibility:hidden;
+z-index:101
+}
+.overflow-popup ul{
+list-style:none
+}
+.overflow-popup .tabs li,.overflow-popup li{
+display:block;
+height:auto
+}
+.overflow-popup .tabs li{
+padding-left:0;
+padding-right:0
+}
+.overflow-button.hidden,.overflow-popup .tabs li.hidden,.overflow-popup li.hidden{
+display:none
+}
+.pill-button{
+background:transparent;
+border:1px solid;
+border-radius:12px;
+cursor:pointer;
+display:inline-block;
+padding:4px 16px;
+text-transform:uppercase
+}
+.ripple{
+position:relative
+}
+.ripple>*{
+z-index:1
+}
+.splash-wrapper{
+bottom:0;
+left:0;
+overflow:hidden;
+pointer-events:none;
+position:absolute;
+right:0;
+top:0;
+z-index:0
+}
+.splash{
+background:#ccc;
+border-radius:100%;
+display:block;
+opacity:.6;
+position:absolute;
+-webkit-transform:scale(0);
+transform:scale(0)
+}
+.splash.animate{
+-webkit-animation:ripple-effect .4s linear;
+animation:ripple-effect .4s linear
+}
+@-webkit-keyframes ripple-effect{
+to{
+opacity:0;
+-webkit-transform:scale(2.5);
+transform:scale(2.5)
+}
+}
+@keyframes ripple-effect{
+to{
+opacity:0;
+-webkit-transform:scale(2.5);
+transform:scale(2.5)
+}
+}
+.search{
+display:-webkit-box;
+display:flex;
+line-height:24px;
+width:24px
+}
+.search.focused,.search.focused .section{
+width:100%
+}
+.search form{
+z-index:101
+}
+.search h3{
+display:none
+}
+.search form{
+display:-webkit-box;
+display:flex;
+-webkit-box-flex:1;
+flex:1 0 0;
+border-bottom:1px solid transparent;
+padding-bottom:8px
+}
+.search form>*{
+display:none
+}
+.search.focused form>*{
+display:block
+}
+.search .search-input label{
+display:none
+}
+.collapsed-header .centered-top-container .search.focused form{
+border-bottom-color:transparent
+}
+.search-expand{
+-webkit-box-flex:0;
+flex:0 0 auto
+}
+.search-expand-text{
+display:none
+}
+.search-close{
+display:inline;
+vertical-align:middle
+}
+.search-input{
+-webkit-box-flex:1;
+flex:1 0 1px
+}
+.search-input input{
+background:none;
+border:0;
+box-sizing:border-box;
+color:#424242;
+display:inline-block;
+outline:none;
+width:calc(100% - 48px)
+}
+.search-input input.no-cursor{
+color:transparent;
+text-shadow:0 0 0 #424242
+}
+.collapsed-header .centered-top-container .search-action,.collapsed-header .centered-top-container .search-input input{
+color:#424242
+}
+.collapsed-header .centered-top-container .search-input input.no-cursor{
+color:transparent;
+text-shadow:0 0 0 #424242
+}
+.collapsed-header .centered-top-container .search-input input.no-cursor:focus,.search-input input.no-cursor:focus{
+outline:none
+}
+.search-focused>*{
+visibility:hidden
+}
+.search-focused .search,.search-focused .search-icon{
+visibility:visible
+}
+.widget.Sharing .sharing-button{
+display:none
+}
+.widget.Sharing .sharing-buttons li{
+padding:0
+}
+.widget.Sharing .sharing-buttons li span{
+display:none
+}
+.post-share-buttons{
+position:relative
+}
+.sharing-open.touch-icon-button:active .touch-icon,.sharing-open.touch-icon-button:focus .touch-icon{
+background-color:transparent
+}
+.share-buttons{
+background-color:#ffffff;
+border-radius:2px;
+box-shadow:0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+color:#424242;
+list-style:none;
+margin:0;
+padding:8px 0;
+position:absolute;
+top:-11px;
+min-width:200px;
+z-index:101
+}
+.share-buttons.hidden{
+display:none
+}
+.sharing-button{
+background:transparent;
+border:0;
+margin:0;
+outline:none;
+padding:0;
+cursor:pointer
+}
+.share-buttons li{
+margin:0;
+height:48px
+}
+.share-buttons li:last-child{
+margin-bottom:0
+}
+.share-buttons li .sharing-platform-button{
+box-sizing:border-box;
+cursor:pointer;
+display:block;
+height:100%;
+margin-bottom:0;
+padding:0 16px;
+position:relative;
+width:100%
+}
+.share-buttons li .sharing-platform-button:focus,.share-buttons li .sharing-platform-button:hover{
+background-color:hsla(0,0%,50.2%,.1);
+outline:none
+}
+.share-buttons li svg[class*=sharing-],.share-buttons li svg[class^=sharing-]{
+position:absolute;
+top:10px
+}
+.share-buttons li span.sharing-platform-button{
+position:relative;
+top:0
+}
+.share-buttons li .platform-sharing-text{
+display:block;
+font-size:16px;
+line-height:48px;
+white-space:nowrap;
+margin-left:56px
+}
+.sidebar-container{
+background-color:#ffffff;
+max-width:284px;
+overflow-y:auto;
+-webkit-transition-property:-webkit-transform;
+transition-property:-webkit-transform;
+transition-property:transform;
+transition-property:transform,-webkit-transform;
+-webkit-transition-duration:.3s;
+transition-duration:.3s;
+-webkit-transition-timing-function:cubic-bezier(0,0,.2,1);
+transition-timing-function:cubic-bezier(0,0,.2,1);
+width:284px;
+z-index:101;
+-webkit-overflow-scrolling:touch
+}
+.sidebar-container .navigation{
+line-height:0;
+padding:16px
+}
+.sidebar-container .sidebar-back{
+cursor:pointer
+}
+.sidebar-container .widget{
+background:none;
+margin:0 16px;
+padding:16px 0
+}
+.sidebar-container .widget .title{
+color:#424242;
+margin:0
+}
+.sidebar-container .widget ul{
+list-style:none;
+margin:0;
+padding:0
+}
+.sidebar-container .widget ul ul{
+margin-left:1em
+}
+.sidebar-container .widget li{
+font-size:16px;
+line-height:normal
+}
+.sidebar-container .widget+.widget{
+border-top:1px dashed #cccccc
+}
+.BlogArchive li{
+margin:16px 0
+}
+.BlogArchive li:last-child{
+margin-bottom:0
+}
+.Label li a{
+display:inline-block
+}
+.BlogArchive .post-count,.Label .label-count{
+float:right;
+margin-left:.25em
+}
+.BlogArchive .post-count:before,.Label .label-count:before{
+content:"("
+}
+.BlogArchive .post-count:after,.Label .label-count:after{
+content:")"
+}
+.widget.Translate .skiptranslate>div{
+display:block!important
+}
+.widget.Profile .profile-link{
+display:-webkit-box;
+display:flex
+}
+.widget.Profile .team-member .default-avatar-wrapper,.widget.Profile .team-member .profile-img{
+-webkit-box-flex:0;
+flex:0 0 auto;
+margin-right:1em
+}
+.widget.Profile .individual .profile-link{
+-webkit-box-orient:vertical;
+-webkit-box-direction:normal;
+flex-direction:column
+}
+.widget.Profile .team .profile-link .profile-name{
+align-self:center;
+display:block;
+-webkit-box-flex:1;
+flex:1 1 auto
+}
+.dim-overlay{
+background-color:rgba(0,0,0,.54);
+z-index:100
+}
+body.sidebar-visible{
+overflow-y:hidden
+}
+@media screen and (max-width:1739px){
+.sidebar-container{
+bottom:0;
+position:fixed;
+top:0;
+left:0;
+right:auto
+}
+.sidebar-container.sidebar-invisible{
+-webkit-transition-timing-function:cubic-bezier(.4,0,.6,1);
+transition-timing-function:cubic-bezier(.4,0,.6,1);
+-webkit-transform:translateX(-284px);
+transform:translateX(-284px)
+}
+}
+@media screen and (min-width:1740px){
+.sidebar-container{
+position:absolute;
+top:0;
+left:0;
+right:auto
+}
+.sidebar-container .navigation{
+display:none
+}
+}
+.dialog{
+box-shadow:0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+background:#FFFFFF;
+box-sizing:border-box;
+color:#757575;
+padding:30px;
+position:fixed;
+text-align:center;
+width:calc(100% - 24px);
+z-index:101
+}
+.dialog input[type=email],.dialog input[type=text]{
+background-color:transparent;
+border:0;
+border-bottom:1px solid rgba(117,117,117,.12);
+color:#757575;
+display:block;
+font-family:Roboto, sans-serif;
+font-size:16px;
+line-height:24px;
+margin:auto;
+padding-bottom:7px;
+outline:none;
+text-align:center;
+width:100%
+}
+.dialog input[type=email]::-webkit-input-placeholder,.dialog input[type=text]::-webkit-input-placeholder{
+color:#757575
+}
+.dialog input[type=email]::-moz-placeholder,.dialog input[type=text]::-moz-placeholder{
+color:#757575
+}
+.dialog input[type=email]:-ms-input-placeholder,.dialog input[type=text]:-ms-input-placeholder{
+color:#757575
+}
+.dialog input[type=email]::-ms-input-placeholder,.dialog input[type=text]::-ms-input-placeholder{
+color:#757575
+}
+.dialog input[type=email]::placeholder,.dialog input[type=text]::placeholder{
+color:#757575
+}
+.dialog input[type=email]:focus,.dialog input[type=text]:focus{
+border-bottom:2px solid #2196f3;
+padding-bottom:6px
+}
+.dialog input.no-cursor{
+color:transparent;
+text-shadow:0 0 0 #757575
+}
+.dialog input.no-cursor:focus{
+outline:none
+}
+.dialog input[type=submit]{
+font-family:Roboto, sans-serif
+}
+.dialog .goog-buttonset-default{
+color:#2196f3
+}
+.subscribe-popup{
+max-width:364px
+}
+.subscribe-popup h3{
+color:#424242;
+font-size:1.8em;
+margin-top:0
+}
+.subscribe-popup .FollowByEmail h3{
+display:none
+}
+.subscribe-popup .FollowByEmail .follow-by-email-submit{
+color:#2196f3;
+display:inline-block;
+margin:24px auto 0;
+width:auto;
+white-space:normal
+}
+.subscribe-popup .FollowByEmail .follow-by-email-submit:disabled{
+cursor:default;
+opacity:.3
+}
+@media (max-width:800px){
+.blog-name div.widget.Subscribe{
+margin-bottom:16px
+}
+body.item-view .blog-name div.widget.Subscribe{
+margin:8px auto 16px;
+width:100%
+}
+}
+.tabs{
+list-style:none
+}
+.tabs li,.tabs li a{
+display:inline-block
+}
+.tabs li a{
+cursor:pointer;
+font-weight:700;
+text-transform:uppercase;
+padding:12px 8px
+}
+.tabs .selected{
+border-bottom:4px solid #424242
+}
+.tabs .selected a{
+color:#424242
+}
+body#layout .bg-photo,body#layout .bg-photo-overlay{
+display:none
+}
+body#layout .page_body{
+padding:0;
+position:relative;
+top:0
+}
+body#layout .page{
+display:inline-block;
+left:inherit;
+position:relative;
+vertical-align:top;
+width:540px
+}
+body#layout .centered{
+max-width:954px
+}
+body#layout .navigation{
+display:none
+}
+body#layout .sidebar-container{
+display:inline-block;
+width:40%
+}
+body#layout .hamburger-menu,body#layout .search{
+display:none
+}
+.centered-top-container .svg-icon-24,body.collapsed-header .centered-top-placeholder .svg-icon-24{
+fill:#424242
+}
+.sidebar-container .svg-icon-24{
+fill:#707070
+}
+.centered-bottom .svg-icon-24,body.collapsed-header .centered-top-container .svg-icon-24{
+fill:#707070
+}
+.centered-bottom .share-buttons .svg-icon-24,.share-buttons .svg-icon-24{
+fill:#424242
+}
+body{
+background-color:#f4f4f4;
+color:#757575;
+font:15px Roboto, sans-serif;
+margin:0;
+min-height:100vh
+}
+img{
+max-width:100%
+}
+h3{
+color:#757575;
+font-size:16px
+}
+a{
+text-decoration:none;
+color:#2196f3
+}
+a:visited{
+color:#2196f3
+}
+a:hover{
+color:#2196f3
+}
+blockquote{
+color:#444444;
+font:italic 300 15px Roboto, sans-serif;
+font-size:x-large;
+text-align:center
+}
+.pill-button{
+font-size:12px
+}
+.bg-photo-container{
+height:480px;
+overflow:hidden;
+position:absolute;
+width:100%;
+z-index:1
+}
+.bg-photo{
+background:#f4f4f4 none repeat scroll top left;
+background-attachment:scroll;
+background-size:cover;
+-webkit-filter:blur(0px);
+filter:blur(0px);
+height:calc(100% + 2 * 0px);
+left:0px;
+position:absolute;
+top:0px;
+width:calc(100% + 2 * 0px)
+}
+.bg-photo-overlay{
+background:rgba(0, 0, 0 ,0);
+background-size:cover;
+height:480px;
+position:absolute;
+width:100%;
+z-index:2
+}
+.hamburger-menu{
+float:left;
+margin-top:0
+}
+.sticky .hamburger-menu{
+float:none;
+position:absolute
+}
+.no-sidebar-widget .hamburger-menu{
+display:none
+}
+.footer .widget .title{
+margin:0;
+line-height:24px
+}
+.search{
+border-bottom:1px solid rgba(66, 66, 66, 0);
+float:right;
+position:relative;
+-webkit-transition-property:width;
+transition-property:width;
+-webkit-transition-duration:.5s;
+transition-duration:.5s;
+-webkit-transition-timing-function:cubic-bezier(.4,0,.2,1);
+transition-timing-function:cubic-bezier(.4,0,.2,1);
+z-index:101
+}
+.search .dim-overlay{
+background-color:transparent
+}
+.search form{
+height:36px;
+-webkit-transition:border-color .2s cubic-bezier(.4,0,.2,1) .5s;
+transition:border-color .2s cubic-bezier(.4,0,.2,1) .5s
+}
+.search.focused{
+width:calc(100% - 48px)
+}
+.search.focused form{
+display:-webkit-box;
+display:flex;
+-webkit-box-flex:1;
+flex:1 0 1px;
+border-color:#424242;
+margin-left:-24px;
+padding-left:36px;
+position:relative;
+width:auto
+}
+.item-view .search,.sticky .search{
+right:0;
+float:none;
+margin-left:0;
+position:absolute
+}
+.item-view .search.focused,.sticky .search.focused{
+width:calc(100% - 50px)
+}
+.item-view .search.focused form,.sticky .search.focused form{
+border-bottom-color:#000000
+}
+.centered-top-placeholder.cloned .search form{
+z-index:30
+}
+.search_button{
+-webkit-box-flex:0;
+flex:0 0 24px;
+-webkit-box-orient:vertical;
+-webkit-box-direction:normal;
+flex-direction:column
+}
+.search_button svg{
+margin-top:0
+}
+.search-input{
+height:48px
+}
+.search-input input{
+display:block;
+color:#424242;
+font:16px Roboto, sans-serif;
+height:48px;
+line-height:48px;
+padding:0;
+width:100%
+}
+.search-input input::-webkit-input-placeholder{
+color:#424242;
+opacity:.3
+}
+.search-input input::-moz-placeholder{
+color:#424242;
+opacity:.3
+}
+.search-input input:-ms-input-placeholder{
+color:#424242;
+opacity:.3
+}
+.search-input input::-ms-input-placeholder{
+color:#424242;
+opacity:.3
+}
+.search-input input::placeholder{
+color:#424242;
+opacity:.3
+}
+.search-action{
+background:transparent;
+border:0;
+color:#424242;
+cursor:pointer;
+display:none;
+height:48px;
+margin-top:0
+}
+.sticky .search-action{
+color:#000000
+}
+.search.focused .search-action{
+display:block
+}
+.search.focused .search-action:disabled{
+opacity:.3
+}
+.page_body{
+position:relative;
+z-index:20
+}
+.page_body .widget{
+margin-bottom:16px
+}
+.page_body .centered{
+box-sizing:border-box;
+display:-webkit-box;
+display:flex;
+-webkit-box-orient:vertical;
+-webkit-box-direction:normal;
+flex-direction:column;
+margin:0 auto;
+max-width:1222px;
+min-height:100vh;
+padding:24px 0
+}
+.page_body .centered>*{
+-webkit-box-flex:0;
+flex:0 0 auto
+}
+.page_body .centered>.footer{
+margin-top:auto;
+text-align:center
+}
+.blog-name{
+margin:32px 0 16px
+}
+.item-view .blog-name,.sticky .blog-name{
+box-sizing:border-box;
+margin-left:36px;
+min-height:48px;
+opacity:1;
+padding-top:12px
+}
+.blog-name .subscribe-section-container{
+margin-bottom:32px;
+text-align:center;
+-webkit-transition-property:opacity;
+transition-property:opacity;
+-webkit-transition-duration:.5s;
+transition-duration:.5s
+}
+.item-view .blog-name .subscribe-section-container,.sticky .blog-name .subscribe-section-container{
+margin:0 0 8px
+}
+.blog-name .subscribe-empty-placeholder{
+margin-bottom:48px
+}
+.blog-name .PageList{
+margin-top:16px;
+padding-top:8px;
+text-align:center
+}
+.blog-name .PageList .overflowable-contents{
+width:100%
+}
+.blog-name .PageList h3.title{
+color:#424242;
+margin:8px auto;
+text-align:center;
+width:100%
+}
+.centered-top-container .blog-name{
+-webkit-transition-property:opacity;
+transition-property:opacity;
+-webkit-transition-duration:.5s;
+transition-duration:.5s
+}
+.item-view .return_link{
+margin-bottom:12px;
+margin-top:12px;
+position:absolute
+}
+.item-view .blog-name{
+display:-webkit-box;
+display:flex;
+flex-wrap:wrap;
+margin:0 48px 27px
+}
+.item-view .subscribe-section-container{
+-webkit-box-flex:0;
+flex:0 0 auto
+}
+.item-view #header,.item-view .Header{
+margin-bottom:5px;
+margin-right:15px
+}
+.item-view .sticky .Header{
+margin-bottom:0
+}
+.item-view .Header p{
+margin:10px 0 0;
+text-align:left
+}
+.item-view .post-share-buttons-bottom{
+margin-right:16px
+}
+.sticky{
+background:#FFFFFF;
+box-shadow:0 0 20px 0 rgba(0,0,0,.7);
+box-sizing:border-box;
+margin-left:0
+}
+.sticky #header{
+margin-bottom:8px;
+margin-right:8px
+}
+.sticky .centered-top{
+margin:4px auto;
+max-width:1190px;
+min-height:48px
+}
+.sticky .blog-name{
+display:-webkit-box;
+display:flex;
+margin:0 48px
+}
+.sticky .blog-name #header{
+-webkit-box-flex:0;
+flex:0 1 auto;
+-webkit-box-ordinal-group:2;
+order:1;
+overflow:hidden
+}
+.sticky .blog-name .subscribe-section-container{
+-webkit-box-flex:0;
+flex:0 0 auto;
+-webkit-box-ordinal-group:3;
+order:2
+}
+.sticky .Header h1{
+overflow:hidden;
+text-overflow:ellipsis;
+white-space:nowrap;
+margin-right:-10px;
+margin-bottom:-10px;
+padding-right:10px;
+padding-bottom:10px
+}
+.sticky .Header p,.sticky .PageList{
+display:none
+}
+.search-focused .hamburger-menu,.search-focused>*{
+visibility:visible
+}
+.item-view .search-focused .blog-name,.sticky .search-focused .blog-name{
+opacity:0
+}
+.centered-bottom,.centered-top-container,.centered-top-placeholder{
+padding:0 16px
+}
+.centered-top{
+position:relative
+}
+.item-view .centered-top.search-focused .subscribe-section-container,.sticky .centered-top.search-focused .subscribe-section-container{
+opacity:0
+}
+.page_body.has-vertical-ads .centered .centered-bottom{
+display:inline-block;
+width:calc(100% - 176px)
+}
+.Header h1{
+font:normal bold 36px Roboto, sans-serif;
+line-height:normal;
+margin:0 0 13px;
+text-align:center;
+width:100%
+}
+.Header h1,.Header h1 a,.Header h1 a:hover,.Header h1 a:visited{
+color:#424242
+}
+.item-view .Header h1,.sticky .Header h1{
+font-size:24px;
+line-height:24px;
+margin:0;
+text-align:left
+}
+.sticky .Header h1,.sticky .Header h1 a,.sticky .Header h1 a:hover,.sticky .Header h1 a:visited{
+color:#000000
+}
+.Header p{
+color:#424242;
+margin:0 0 13px;
+opacity:.8;
+text-align:center
+}
+.widget .title{
+line-height:28px
+}
+.BlogArchive li{
+font-size:16px
+}
+.BlogArchive .post-count{
+color:#000000
+}
+#page_body .FeaturedPost,.Blog .blog-posts .post-outer-container{
+background:#FFFFFF;
+min-height:40px;
+padding:30px 40px;
+width:auto;
+box-shadow:0 1px 4px 0 rgba(60, 64, 67, 0.30)
+}
+.Blog .blog-posts .post-outer-container:last-child{
+margin-bottom:0
+}
+.Blog .blog-posts .post-outer-container .post-outer{
+border:0;
+position:relative;
+padding-bottom:.25em
+}
+.post-outer-container{
+margin-bottom:16px
+}
+.post:first-child{
+margin-top:0
+}
+.post .thumb{
+float:left;
+height:20%;
+width:20%
+}
+.post-share-buttons-bottom,.post-share-buttons-top{
+float:right
+}
+.post-share-buttons-bottom{
+margin-right:24px
+}
+.post-footer,.post-header{
+clear:left;
+color:rgba(0, 0, 0, 0.54);
+margin:0;
+width:inherit
+}
+.blog-pager{
+text-align:center
+}
+.blog-pager a{
+color:#2196f3
+}
+.blog-pager a:visited{
+color:#2196f3
+}
+.blog-pager a:hover{
+color:#2196f3
+}
+.post-title{
+font:bold 22px Roboto, sans-serif;
+float:left;
+margin:0 0 8px;
+max-width:calc(100% - 48px)
+}
+.post-title a{
+font:bold 30px Roboto, sans-serif
+}
+.post-title,.post-title a,.post-title a:hover,.post-title a:visited{
+color:#424242
+}
+.post-body{
+color:#000000;
+font:15px Roboto, sans-serif;
+line-height:1.6em;
+margin:1.5em 0 2em;
+display:block
+}
+.post-body img{
+height:inherit
+}
+.post-body .snippet-thumbnail{
+float:left;
+margin:0;
+margin-right:2em;
+max-height:128px;
+max-width:128px
+}
+.post-body .snippet-thumbnail img{
+max-width:100%
+}
+.main .FeaturedPost .widget-content{
+border:0;
+position:relative;
+padding-bottom:.25em
+}
+.FeaturedPost img{
+margin-top:2em
+}
+.FeaturedPost .snippet-container{
+margin:2em 0
+}
+.FeaturedPost .snippet-container p{
+margin:0
+}
+.FeaturedPost .snippet-thumbnail{
+float:none;
+height:auto;
+margin-bottom:2em;
+margin-right:0;
+overflow:hidden;
+max-height:calc(600px + 2em);
+max-width:100%;
+text-align:center;
+width:100%
+}
+.FeaturedPost .snippet-thumbnail img{
+max-width:100%;
+width:100%
+}
+.byline{
+color:rgba(0, 0, 0, 0.54);
+display:inline-block;
+line-height:24px;
+margin-top:8px;
+vertical-align:top
+}
+.byline.post-author:first-child{
+margin-right:0
+}
+.byline.reactions .reactions-label{
+line-height:22px;
+vertical-align:top
+}
+.byline.post-share-buttons{
+position:relative;
+display:inline-block;
+margin-top:0;
+width:100%
+}
+.byline.post-share-buttons .sharing{
+float:right
+}
+.flat-button.ripple:hover{
+background-color:rgba(33,150,243,.12)
+}
+.flat-button.ripple .splash{
+background-color:rgba(33,150,243,.4)
+}
+a.timestamp-link,a:active.timestamp-link,a:visited.timestamp-link{
+color:inherit;
+font:inherit;
+text-decoration:inherit
+}
+.post-share-buttons{
+margin-left:0
+}
+.post-share-buttons.invisible{
+display:none
+}
+.clear-sharing{
+min-height:24px
+}
+.comment-link{
+color:#2196f3;
+position:relative
+}
+.comment-link .num_comments{
+margin-left:8px;
+vertical-align:top
+}
+#comment-holder .continue{
+display:none
+}
+#comment-editor{
+margin-bottom:20px;
+margin-top:20px
+}
+#comments .comment-form h4,#comments h3.title{
+position:absolute;
+clip:rect(1px,1px,1px,1px);
+padding:0;
+border:0;
+height:1px;
+width:1px;
+overflow:hidden
+}
+.post-filter-message{
+background-color:rgba(0,0,0,.7);
+color:#fff;
+display:table;
+margin-bottom:16px;
+width:100%
+}
+.post-filter-message div{
+display:table-cell;
+padding:15px 28px
+}
+.post-filter-message div:last-child{
+padding-left:0;
+text-align:right
+}
+.post-filter-message a{
+white-space:nowrap
+}
+.post-filter-message .search-label,.post-filter-message .search-query{
+font-weight:700;
+color:#2196f3
+}
+#blog-pager{
+margin:2em 0
+}
+#blog-pager a{
+color:#2196f3;
+font-size:14px
+}
+.subscribe-button{
+border-color:#424242;
+color:#424242
+}
+.sticky .subscribe-button{
+border-color:#000000;
+color:#000000
+}
+.tabs{
+margin:0 auto;
+padding:0
+}
+.tabs li{
+margin:0 8px;
+vertical-align:top
+}
+.tabs .overflow-button a,.tabs li a{
+color:#757575;
+font:700 normal 15px Roboto, sans-serif;
+line-height:18px
+}
+.tabs .overflow-button a{
+padding:12px 8px
+}
+.overflow-popup .tabs li{
+text-align:left
+}
+.overflow-popup li a{
+color:#757575;
+display:block;
+padding:8px 20px
+}
+.overflow-popup li.selected a{
+color:#424242
+}
+.ReportAbuse.widget{
+margin-bottom:0
+}
+.ReportAbuse a.report_abuse{
+display:inline-block;
+margin-bottom:8px;
+font:15px Roboto, sans-serif;
+font-weight:400;
+line-height:24px
+}
+.ReportAbuse a.report_abuse,.ReportAbuse a.report_abuse:hover{
+color:#888
+}
+.byline.post-labels a,.Label li,.Label span.label-size{
+background-color:#f7f7f7;
+border:1px solid #f7f7f7;
+border-radius:15px;
+display:inline-block;
+margin:4px 4px 4px 0;
+padding:3px 8px
+}
+.byline.post-labels a,.Label a{
+color:#2196f3
+}
+.Label ul{
+list-style:none;
+padding:0
+}
+.PopularPosts{
+background-color:#f4f4f4;
+padding:30px 40px
+}
+.PopularPosts .item-content{
+color:#757575;
+margin-top:24px
+}
+.PopularPosts a,.PopularPosts a:hover,.PopularPosts a:visited{
+color:#2196f3
+}
+.PopularPosts .post-title,.PopularPosts .post-title a,.PopularPosts .post-title a:hover,.PopularPosts .post-title a:visited{
+color:#424242;
+font-size:18px;
+font-weight:700;
+line-height:24px
+}
+.PopularPosts,.PopularPosts h3.title a{
+color:#000000;
+font:15px Roboto, sans-serif
+}
+.main .PopularPosts{
+padding:16px 40px
+}
+.PopularPosts h3.title{
+font-size:14px;
+margin:0
+}
+.PopularPosts h3.post-title{
+margin-bottom:0
+}
+.PopularPosts .byline{
+color:rgba(0, 0, 0, 0.54)
+}
+.PopularPosts .jump-link{
+float:right;
+margin-top:16px
+}
+.PopularPosts .post-header .byline{
+font-size:.9em;
+font-style:italic;
+margin-top:6px
+}
+.PopularPosts ul{
+list-style:none;
+padding:0;
+margin:0
+}
+.PopularPosts .post{
+padding:20px 0
+}
+.PopularPosts .post+.post{
+border-top:1px dashed #cccccc
+}
+.PopularPosts .item-thumbnail{
+float:left;
+margin-right:32px
+}
+.PopularPosts .item-thumbnail img{
+height:88px;
+padding:0;
+width:88px
+}
+.inline-ad{
+margin-bottom:16px
+}
+.desktop-ad .inline-ad{
+display:block
+}
+.adsbygoogle{
+overflow:hidden
+}
+.vertical-ad-container{
+float:right;
+margin-right:16px;
+width:128px
+}
+.vertical-ad-container .AdSense+.AdSense{
+margin-top:16px
+}
+.inline-ad-placeholder,.vertical-ad-placeholder{
+background:#FFFFFF;
+border:1px solid #000;
+opacity:.9;
+vertical-align:middle;
+text-align:center
+}
+.inline-ad-placeholder span,.vertical-ad-placeholder span{
+margin-top:290px;
+display:block;
+text-transform:uppercase;
+font-weight:700;
+color:#424242
+}
+.vertical-ad-placeholder{
+height:600px
+}
+.vertical-ad-placeholder span{
+margin-top:290px;
+padding:0 40px
+}
+.inline-ad-placeholder{
+height:90px
+}
+.inline-ad-placeholder span{
+margin-top:36px
+}
+.Attribution{
+display:inline-block;
+color:#757575
+}
+.Attribution a,.Attribution a:hover,.Attribution a:visited{
+color:#2196f3
+}
+.Attribution svg{
+display:none
+}
+.sidebar-container{
+box-shadow:1px 1px 3px rgba(0,0,0,.1)
+}
+.sidebar-container,.sidebar-container .sidebar_bottom{
+background-color:#ffffff
+}
+.sidebar-container .navigation,.sidebar-container .sidebar_top_wrapper{
+background-color:#f7f7f7
+}
+.sidebar-container .sidebar_top{
+overflow:auto
+}
+.sidebar-container .sidebar_bottom{
+width:100%;
+padding-top:16px
+}
+.sidebar-container .widget:first-child{
+padding-top:0
+}
+.no-sidebar-widget .sidebar-container,.preview .sidebar-container{
+display:none
+}
+.sidebar_top .widget.Profile{
+padding-bottom:16px
+}
+.widget.Profile{
+margin:0;
+width:100%
+}
+.widget.Profile h2{
+display:none
+}
+.widget.Profile h3.title{
+color:rgba(0,0,0,0.52);
+margin:16px 32px
+}
+.widget.Profile .individual{
+text-align:center
+}
+.widget.Profile .individual .profile-link{
+padding:1em
+}
+.widget.Profile .individual .default-avatar-wrapper .avatar-icon{
+margin:auto
+}
+.widget.Profile .team{
+margin-bottom:32px;
+margin-left:32px;
+margin-right:32px
+}
+.widget.Profile ul{
+list-style:none;
+padding:0
+}
+.widget.Profile li{
+margin:10px 0
+}
+.widget.Profile .profile-img{
+border-radius:50%;
+float:none
+}
+.widget.Profile .profile-link{
+color:#424242;
+font-size:.9em;
+margin-bottom:1em;
+opacity:.87;
+overflow:hidden
+}
+.widget.Profile .profile-link.visit-profile{
+border-style:solid;
+border-width:1px;
+border-radius:12px;
+cursor:pointer;
+font-size:12px;
+font-weight:400;
+padding:5px 20px;
+display:inline-block;
+line-height:normal
+}
+.widget.Profile dd{
+color:rgba(0, 0, 0, 0.54);
+margin:0 16px
+}
+.widget.Profile location{
+margin-bottom:1em
+}
+.widget.Profile .profile-textblock{
+font-size:14px;
+line-height:24px;
+position:relative
+}
+body.sidebar-visible .bg-photo-container,body.sidebar-visible .page_body{
+overflow-y:scroll
+}
+@media screen and (min-width:1740px){
+.sidebar-container{
+min-height:100%;
+overflow:visible;
+z-index:32
+}
+.sidebar-container.show-sidebar-top{
+margin-top:480px;
+min-height:calc(100% - 480px)
+}
+.sidebar-container .sidebar_top_wrapper{
+background-color:rgba(255, 255, 255, 1);
+height:480px;
+margin-top:-480px
+}
+.sidebar-container .sidebar_top{
+height:480px;
+max-height:480px
+}
+.sidebar-container .sidebar_bottom{
+max-width:284px;
+width:284px
+}
+body.collapsed-header .sidebar-container{
+z-index:15
+}
+.sidebar-container .sidebar_top:empty{
+display:none
+}
+.sidebar-container .sidebar_top>:only-child{
+-webkit-box-flex:0;
+flex:0 0 auto;
+align-self:center;
+width:100%
+}
+.sidebar_top_wrapper.no-items{
+display:none
+}
+}
+.post-snippet.snippet-container{
+max-height:120px
+}
+.post-snippet .snippet-item{
+line-height:24px
+}
+.post-snippet .snippet-fade{
+background:-webkit-linear-gradient(left,#FFFFFF 0,#FFFFFF 20%,rgba(255, 255, 255, 0) 100%);
+background:linear-gradient(to left,#FFFFFF 0,#FFFFFF 20%,rgba(255, 255, 255, 0) 100%);
+color:#757575;
+height:24px
+}
+.popular-posts-snippet.snippet-container{
+max-height:72px
+}
+.popular-posts-snippet .snippet-item{
+line-height:24px
+}
+.PopularPosts .popular-posts-snippet .snippet-fade{
+color:#757575;
+height:24px
+}
+.main .popular-posts-snippet .snippet-fade{
+background:-webkit-linear-gradient(left,#f4f4f4 0,#f4f4f4 20%,rgba(244, 244, 244, 0) 100%);
+background:linear-gradient(to left,#f4f4f4 0,#f4f4f4 20%,rgba(244, 244, 244, 0) 100%)
+}
+.sidebar_bottom .popular-posts-snippet .snippet-fade{
+background:-webkit-linear-gradient(left,#ffffff 0,#ffffff 20%,rgba(255, 255, 255, 0) 100%);
+background:linear-gradient(to left,#ffffff 0,#ffffff 20%,rgba(255, 255, 255, 0) 100%)
+}
+.profile-snippet.snippet-container{
+max-height:192px
+}
+.has-location .profile-snippet.snippet-container{
+max-height:144px
+}
+.profile-snippet .snippet-item{
+line-height:24px
+}
+.profile-snippet .snippet-fade{
+background:-webkit-linear-gradient(left,#f7f7f7 0,#f7f7f7 20%,rgba(247, 247, 247, 0) 100%);
+background:linear-gradient(to left,#f7f7f7 0,#f7f7f7 20%,rgba(247, 247, 247, 0) 100%);
+color:rgba(0, 0, 0, 0.54);
+height:24px
+}
+@media screen and (min-width:1740px){
+.profile-snippet .snippet-fade{
+background:-webkit-linear-gradient(left,rgba(255, 255, 255, 1) 0,rgba(255, 255, 255, 1) 20%,rgba(255, 255, 255, 0) 100%);
+background:linear-gradient(to left,rgba(255, 255, 255, 1) 0,rgba(255, 255, 255, 1) 20%,rgba(255, 255, 255, 0) 100%)
+}
+}
+@media screen and (max-width:800px){
+.blog-name{
+margin-top:0
+}
+body.item-view .blog-name{
+margin:0 48px
+}
+.blog-name .subscribe-empty-placeholder{
+margin-bottom:0
+}
+.centered-bottom{
+padding:8px
+}
+body.item-view .centered-bottom{
+padding:0
+}
+body.item-view #header,body.item-view .widget.Header{
+margin-right:0
+}
+body.collapsed-header .centered-top-container .blog-name{
+display:block
+}
+body.collapsed-header .centered-top-container .widget.Header h1{
+text-align:center
+}
+.widget.Header header{
+padding:0
+}
+.widget.Header h1{
+font-size:$(blog.title.font.size * 24/45);
+line-height:$(blog.title.font.size * 24/45);
+margin-bottom:13px
+}
+body.item-view .widget.Header h1,body.item-view .widget.Header p{
+text-align:center
+}
+.blog-name .widget.PageList{
+padding:0
+}
+body.item-view .centered-top{
+margin-bottom:5px
+}
+.search-action,.search-input{
+margin-bottom:-8px
+}
+.search form{
+margin-bottom:8px
+}
+body.item-view .subscribe-section-container{
+margin:5px 0 0;
+width:100%
+}
+#page_body.section div.widget.FeaturedPost,.widget.Blog .blog-posts .post-outer-container,.widget.PopularPosts{
+padding:16px
+}
+.widget.Blog .blog-posts .post-outer-container .post-outer{
+padding:0
+}
+.post:first-child{
+margin:0
+}
+.post-body .snippet-thumbnail{
+margin:0 3vw 3vw 0
+}
+.post-body .snippet-thumbnail img{
+height:20vw;
+width:20vw;
+max-height:128px;
+max-width:128px
+}
+.widget.PopularPosts div.item-thumbnail{
+margin:0 3vw 3vw 0
+}
+.widget.PopularPosts div.item-thumbnail img{
+height:20vw;
+width:20vw;
+max-height:88px;
+max-width:88px
+}
+.post-title{
+line-height:1
+}
+.post-title,.post-title a{
+font-size:20px
+}
+#page_body.section div.widget.FeaturedPost h3 a{
+font-size:22px
+}
+.mobile-ad .inline-ad{
+display:block
+}
+.page_body.has-vertical-ads .vertical-ad-container,.page_body.has-vertical-ads .vertical-ad-container ins{
+display:none
+}
+.page_body.has-vertical-ads .centered .centered-bottom,.page_body.has-vertical-ads .centered .centered-top{
+display:block;
+width:auto
+}
+.post-filter-message div{
+padding:8px 16px
+}
+}
+@media screen and (min-width:1740px){
+body{
+position:relative
+}
+body.item-view .blog-name{
+margin-left:48px
+}
+.no-sidebar-widget .page_body,.preview .page_body{
+margin-left:0
+}
+.page_body{
+margin-left:284px
+}
+.search{
+margin-left:0
+}
+.search.focused{
+width:100%
+}
+.sticky{
+padding-left:284px
+}
+.hamburger-menu{
+display:none
+}
+body.collapsed-header .page_body .centered-top-container{
+padding-left:284px;
+padding-right:0;
+width:100%
+}
+body.collapsed-header .centered-top-container .search.focused{
+width:100%
+}
+body.collapsed-header .centered-top-container .blog-name{
+margin-left:0
+}
+body.collapsed-header.item-view .centered-top-container .search.focused{
+width:calc(100% - 50px)
+}
+body.collapsed-header.item-view .centered-top-container .blog-name{
+margin-left:40px
+}
+}
+/* 用引用来显示代码 */
+/* https://zelikk.blogspot.com/2018/12/blogger-css-block-quote-code.html */
+blockquote {
+background-color: whitesmoke;
+border-radius: 0px;
+border: 1px solid rgb(204, 204, 204);
+box-sizing: border-box;
+color: #333333;
+font-family: "Source Code Pro", Menlo, Monaco, Consolas, "Courier New", monospace !important;
+font-size: 14px !important;
+font-weight: normal !important;
+font-style: normal !important;
+line-height: 1.42857 !important;
+overflow: auto;
+padding: 10px;
+margin: 10px;
+word-break: break-all;
+text-align: left;
+quotes: none !important;
+}
+/* 给图片显示加阴影 */
+/* https://zelikk.blogspot.com/2019/01/blogger-css-img-box-shadow.html */
+.post-body img {
+box-shadow: 3px 3px 5px 2px #ccc;
+}
+/* 中英文之间添加空格 */
+/* https://zelikk.blogspot.com/2022/03/blogger-text-autospace-js-github-pages-jquery.html */
+html.han-la hanla:after {
+content: " ";
+display: inline;
+font-family: Arial;
+font-size: 0.89em;
+}
+html.han-la code hanla,
+html.han-la pre hanla,
+html.han-la kbd hanla,
+html.han-la samp hanla,
+html.han-la blockquote hanla  {
+display: none;
+}
+html.han-la ol > hanla,
+html.han-la ul > hanla {
+display: none;
+}
+/* google广告左边加一个黄色条 */
+/* https://zelikk.blogspot.com/2022/04/blogger-google-adsense-css-adsbygooglehtml.html */
+/*
+.adsbygoogle {
+border-left: 6px solid #FFB07C;
+}
+*/
+.adsbygoogle {
+position: relative;
+}
+.adsbygoogle::before {
+content: "A\A D\A 广\A 告"; /* 垂直排列文字&#65292;每个字符后面加换行符 \A */
+white-space: pre; /* 保留换行符 */
+position: absolute;
+left: 0;
+top: 0;
+z-index: 10; /* 确保在广告内容上方 */
+height: 100%;
+background-color: #FFB07C; /* 黄色条的颜色 */
+color: #000; /* 文字颜色 */
+font-size: 9px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+line-height: 1.5;
+}
+/* 链接和代码的字体 */
+p a {
+font-family: "Source Code Pro", Menlo, Monaco, Consolas, "Courier New", monospace !important;
+}
+blockquote {
+font-family: "Source Code Pro", Menlo, Monaco, Consolas, "Courier New", monospace !important;
+}
+blockquote {
+background-color: whitesmoke;
+border-radius: 0px;
+border: 1px solid rgb(204, 204, 204);
+box-sizing: border-box;
+color: #333333;
+line-height: 1.42857 !important;
+padding: 10px;
+margin: 10px;
+overflow-x: auto;
+}
+/* 复制按钮 */
+/* https://yihui.org/en/2023/09/copy-button/ */
+/* https://cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css */
+.copy-button {
+position: absolute;
+display: none;
+cursor: pointer;
+inset: 5px 15px auto auto;
+width: 1em;
+height: 1em;
+border: 1px solid;
+box-shadow: -3px 3px #999
+}
+:hover>.copy-button {
+display: inline-block
+}
+.copy-success {
+box-shadow: none;
+background-color: #999;
+transition: box-shadow .3s ease-out,background-color .3s ease-out
+}
+.copy-fail {
+border-style: dotted
+}
+/* 处理代码块的水平滚动条 */
+/* https://yihui.org/en/2023/08/css-scrollbar/ */
+/* 暂不使用, 影响大段shell日志的显示 */
+/*
+blockquote, blockquote:hover {
+white-space: pre-wrap;
+word-break: break-all;
+}
+blockquote {
+display: block;
+overflow-x: auto;
+}
+@media only screen and (min-width: 992px) {
+blockquote { white-space: pre-wrap; }
+}
+*/
+
+--></style>
+<style id='template-skin-1' type='text/css'><!--
+body#layout .hidden,
+body#layout .invisible {
+display: inherit;
+}
+body#layout .navigation {
+display: none;
+}
+body#layout .page,
+body#layout .sidebar_top,
+body#layout .sidebar_bottom {
+display: inline-block;
+left: inherit;
+position: relative;
+vertical-align: top;
+}
+body#layout .page {
+float: right;
+margin-left: 20px;
+width: 55%;
+}
+body#layout .sidebar-container {
+float: right;
+width: 40%;
+}
+body#layout .hamburger-menu {
+display: none;
+}
+--></style>
+<!-- Google tag (gtag.js) -->
+<script async='true' src='https://www.googletagmanager.com/gtag/js?id=G-KWDK66LMVN'></script>
+<script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KWDK66LMVN');
+      </script>
+<script async='async' src='https://www.gstatic.com/external_hosted/clipboardjs/clipboard.min.js'></script>
+<script type='text/javascript'>
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "tjdwuviek3");
+</script>
+<link href='https://www.blogger.com/dyn-css/authorization.css?targetBlogID=5672901950085364729&amp;zx=b6bec7af-2d8a-4b65-a8a2-26f53f436019' media='none' onload='if(media!=&#39;all&#39;)media=&#39;all&#39;' rel='stylesheet'/><noscript><link href='https://www.blogger.com/dyn-css/authorization.css?targetBlogID=5672901950085364729&amp;zx=b6bec7af-2d8a-4b65-a8a2-26f53f436019' rel='stylesheet'/></noscript>
+<meta name='google-adsense-platform-account' content='ca-host-pub-1556223355139109'/>
+<meta name='google-adsense-platform-domain' content='blogspot.com'/>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2351123213541849&host=ca-host-pub-1556223355139109" crossorigin="anonymous"></script>
+
+<!-- data-ad-client=ca-pub-2351123213541849 -->
+
+</head>
+<body class='item-view'>
+<a class='skip-navigation' href='#main' tabindex='0'>
+跳至主要内容
+</a>
+<div class='page'>
+<div class='bg-photo-overlay'></div>
+<div class='bg-photo-container'>
+<div class='bg-photo'></div>
+</div>
+<div class='page_body'>
+<div class='centered'>
+<div class='centered-top-placeholder'></div>
+<header class='centered-top-container' role='banner'>
+<div class='centered-top'>
+<!-- <b:if cond='data:view.isSingleItem'> <a class='return_link' expr:href='data:blog.homepageUrl'> <b:include data='{ button: true, iconClass: &quot;back-button rtl-reversible-icon flat-icon-button ripple&quot; }' name='backArrowIcon'/> </a> <b:else/> -->
+<button class='svg-icon-24-button hamburger-menu flat-icon-button ripple'>
+<svg class='svg-icon-24'>
+<use xlink:href='/responsive/sprite_v1_6.css.svg#ic_menu_black_24dp' xmlns:xlink='http://www.w3.org/1999/xlink'></use>
+</svg>
+</button>
+<!-- </b:if> -->
+<div class='search'>
+<button aria-label='搜索' class='search-expand touch-icon-button'>
+<div class='flat-icon-button ripple'>
+<svg class='svg-icon-24 search-expand-icon'>
+<use xlink:href='/responsive/sprite_v1_6.css.svg#ic_search_black_24dp' xmlns:xlink='http://www.w3.org/1999/xlink'></use>
+</svg>
+</div>
+</button>
+<div class='section' id='search_top' name='Search (Top)'><div class='widget BlogSearch' data-version='2' id='BlogSearch1'>
+<h3 class='title'>
+搜索此博客
+</h3>
+<div class='widget-content' role='search'>
+<form action='https://zelikk.blogspot.com/search' target='_top'>
+<div class='search-input'>
+<input aria-label='搜索此博客' autocomplete='off' name='q' placeholder='搜索此博客' value=''/>
+</div>
+<input class='search-action flat-button' type='submit' value='搜索'/>
+</form>
+</div>
+</div></div>
+</div>
+<div class='clearboth'></div>
+<div class='blog-name container'>
+<div class='container section' id='header' name='标题'><div class='widget Header' data-version='2' id='Header1'>
+<div class='header-widget'>
+<div>
+<h1>
+<a href='https://zelikk.blogspot.com/'>
+ICDYCT / 我能, 你也行 / I Can Do, You Can Too
+</a>
+</h1>
+</div>
+<p>
+</p>
+</div>
+</div></div>
+<nav role='navigation'>
+<div class='clearboth section' id='page_list_top' name='页面列表（顶部）'><div class='widget PageList' data-version='2' id='PageList1'>
+<div class='widget-content'>
+<div class='overflowable-container'>
+<div class='overflowable-contents'>
+<div class='container'>
+<ul class='tabs'>
+<li class='overflowable-item'>
+<a href='https://zelikk.blogspot.com/p/icdyct.html'>ICDYCT</a>
+</li>
+<li class='overflowable-item'>
+<a href='https://zelikk.blogspot.com/p/tg-group.html'>翻墙学习交流群</a>
+</li>
+<li class='overflowable-item'>
+<a href='https://zelikk.blogspot.com/p/develop.html'>编程</a>
+</li>
+<li class='overflowable-item'>
+<a href='https://zelikk.blogspot.com/p/think.html'>随想</a>
+</li>
+<li class='overflowable-item'>
+<a href='https://zelikk.blogspot.com/p/life.html'>生活</a>
+</li>
+<li class='overflowable-item'>
+<a href='https://zelikk.blogspot.com/p/vpn.html'>VPN&amp;VPS</a>
+</li>
+<li class='overflowable-item'>
+<a href='https://zelikk.blogspot.com/p/cases.html'>案例</a>
+</li>
+<li class='overflowable-item'>
+<a href='https://zelikk.blogspot.com/p/others.html'>其它</a>
+</li>
+</ul>
+</div>
+</div>
+<div class='overflow-button hidden'>
+<a>更多&#8230;</a>
+</div>
+</div>
+</div>
+</div></div>
+</nav>
+</div>
+</div>
+</header>
+<div>
+<div class='vertical-ad-container no-items section' id='ads' name='广告'>
+</div>
+<main class='centered-bottom' id='main' role='main' tabindex='-1'>
+<div class='main section' id='page_body' name='页面主体'>
+<div class='widget Blog' data-version='2' id='Blog1'>
+<div class='blog-posts hfeed container'>
+<article class='post-outer-container'>
+<div class='post-outer'>
+<div class='post'>
+<script type='application/ld+json'>{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://zelikk.blogspot.com/2026/03/openclaw-tui-agent-cooperate.html"
+  },
+  "headline": "Openclaw 命令行 TUI 中 使用多 Agent 协同完成任务 Openclaw v2026.3.13","description": "前言 上一篇我们在TUI配置了多Agent实现上下文隔离 现在我们试试让不同的agent扮演不同的身份, 协同工作. 建立 Agent 团队 我已经做了很多尝试, 根据我的经验, 最好先让openclaw学习一下自己的文档, 总结出来放在上下文里. 学习你自己openclaw的文...","datePublished": "2026-03-20T11:42:00+08:00",
+  "dateModified": "2026-03-21T16:32:48+08:00","image": {
+    "@type": "ImageObject","url": "https://blogger.googleusercontent.com/img/a/AVvXsEiAEnYfJqYPWJ5onFQqbIqAD1CMYmHvImsOOvUHhuEQqAGLNDWig9oy8zp8egIsGaLCDPZiUCTiId3cal62Ji1Wj89L7WoyHtvZqyFoxKyeZclEJdjE1gAd4vWwSNPKHMkmoLfesiRfrug-zbpckr4HOZrE8RRuayHmf50CgKKbtPKxRHMrOr6Zb9rssww=w1200-h630-p-k-no-nu",
+    "height": 630,
+    "width": 1200},"publisher": {
+    "@type": "Organization",
+    "name": "Blogger",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://blogger.googleusercontent.com/img/b/U2hvZWJveA/AVvXsEgfMvYAhAbdHksiBA24JKmb2Tav6K0GviwztID3Cq4VpV96HaJfy0viIu8z1SSw_G9n5FQHZWSRao61M3e58ImahqBtr7LiOUS6m_w59IvDYwjmMcbq3fKW4JSbacqkbxTo8B90dWp0Cese92xfLMPe_tg11g/h60/",
+      "width": 206,
+      "height": 60
+    }
+  },"author": {
+    "@type": "Person",
+    "name": "ǝɔɐǝԀʎzɐɹƆ"
+  }
+}</script>
+<a name='1456213950534754656'></a>
+<h3 class='post-title entry-title'>
+Openclaw 命令行 TUI 中 使用多 Agent 协同完成任务 Openclaw v2026.3.13
+</h3>
+<div class='post-header'>
+<div class='post-header-line-1'>
+<span class='byline post-labels'>
+<span class='byline-label'>查看相关主题:</span>
+<a href='https://zelikk.blogspot.com/search/label/openclaw' rel='tag'>openclaw</a>
+</span>
+</div>
+</div>
+<div class='post-body entry-content float-container' id='post-body-1456213950534754656'>
+<h3 style="text-align: left;">前言</h3><div><a href="https://zelikk.blogspot.com/2026/03/openclaw-tui-agent.html">上一篇我们在TUI配置了多Agent实现上下文隔离</a></div><div><br /></div><div>现在我们试试让不同的agent扮演不同的身份, 协同工作.</div><div><br /></div><h3 style="text-align: left;">建立 Agent 团队</h3><div>我已经做了很多尝试, 根据我的经验, 最好先让openclaw学习一下自己的文档, 总结出来放在上下文里.</div><div><blockquote>学习你自己openclaw的文档, 特别是 agent的设置,&nbsp; agent 之间的通信</blockquote></div><div><br /></div><div>在TUI中用自然语言发送以下要求 (<span style="background-color: #9fc5e8;">蓝色</span>部分你自己发挥)</div><div><div></div><blockquote><div>新建一个agent协作团队, 团队中有多个agent</div><div>新建这些agent, 设置他们的身份&#65292; 以及他们之间的协作关系</div><div><span style="background-color: #cccccc;">注意是新增, 已有的agent main要保留</span></div><div><span style="background-color: #cccccc;">注意是agent, 不是subagent</span></div><div><br /></div><div><span style="background-color: #cccccc;">为了agent之间可以发送信息, 注意修改 openclaw.json 文件的参数</span></div><div><span style="background-color: #cccccc;">tools.sessions.visibility = all</span></div><div><span style="background-color: #cccccc;">tools.agentToAgent.enabled = true</span></div><div><br /></div><div>1号 agent</div><div>名称 = agent-<span style="background-color: #9fc5e8;">leader</span></div><div>身份 = 任务总负责人, 将总任务拆解为小任务, 分配给其它agent</div><div>知识 = 知道其它agent的全量信息(包括身份和知识)</div><div><br /></div><div>2号 agent</div><div>名称 = agent-<span style="background-color: #9fc5e8;">code</span></div><div>身份 = 从其它agent接受任务, 完成后通知任务发起者, 并提交成果</div><div><span style="background-color: #9fc5e8;">特别的, 此agent是一个程序员</span></div><div>知识 = 任务完成后的成果, 需要保存在 非workspace的目录下, 再交付出去</div><div><br /></div><div>3号 agent</div><div>名称 = agent-<span style="background-color: #9fc5e8;">test</span></div><div>身份 = 从其它agent接受任务, 完成后通知任务发起者, 并提交成果</div><div><span style="background-color: #9fc5e8;">特别的, 此agent是一个测试员, 接受测试对象和测试标准, 交付测试报告</span></div><div>知识 = 任务完成后的成果, 需要保存在 非workspace的目录下, 再交付出去</div><div><br /></div><div><span style="background-color: #cccccc;">公共知识:</span></div><div><span style="background-color: #cccccc;">这个团队里面都是已经存在的agent, 所以不要用 sessions_spawn, 而是要用 sessions_send</span></div><div><span style="background-color: #cccccc;">agent之间发消息用 sessions_send(sessionKey="...", message=...) 方法, 不要用label参数</span></div><div><span style="background-color: #cccccc;">sessions_send 使用 timeoutSeconds = 0 参数, 不等待回报, 而是让接收方agent自己主动回报, 并且发出方agent可以定时检查.</span></div></blockquote><div></div></div><div><span style="background-color: #cccccc;">* 灰色部分是我根据多次实验的结果, 总结出的常见容易出错的地方. 我认为随着openclaw和模型的发展, 未来会不需要这些补充信息.</span></div><div><br /></div><div>等一会儿, openclaw 完成了</div><div>需要看一下做了什么.&nbsp; gpt-5.4 很有可能需要你要求才会重启gateway</div><div><br /></div><div>检查一下workspace 目录也建立好了.</div><div><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/a/AVvXsEiAEnYfJqYPWJ5onFQqbIqAD1CMYmHvImsOOvUHhuEQqAGLNDWig9oy8zp8egIsGaLCDPZiUCTiId3cal62Ji1Wj89L7WoyHtvZqyFoxKyeZclEJdjE1gAd4vWwSNPKHMkmoLfesiRfrug-zbpckr4HOZrE8RRuayHmf50CgKKbtPKxRHMrOr6Zb9rssww" style="margin-left: 1em; margin-right: 1em;"><img alt="" data-original-height="792" data-original-width="674" loading="lazy" src="https://blogger.googleusercontent.com/img/a/AVvXsEiAEnYfJqYPWJ5onFQqbIqAD1CMYmHvImsOOvUHhuEQqAGLNDWig9oy8zp8egIsGaLCDPZiUCTiId3cal62Ji1Wj89L7WoyHtvZqyFoxKyeZclEJdjE1gAd4vWwSNPKHMkmoLfesiRfrug-zbpckr4HOZrE8RRuayHmf50CgKKbtPKxRHMrOr6Zb9rssww=s16000-rw" /></a></div><br />有兴趣的可以自己查看这些 .md 文件里面是怎么写的.</div><div><br /></div><h3 style="text-align: left;">"监视" 各个Agent的 session (可选的)</h3><div>如果你想看到多Agent协同工作的全过程, 你可以在多个SSH会话中打开多个 tui, 切换到不同的agent.</div><div>还记得我们在<a href="https://zelikk.blogspot.com/2026/03/openclaw-tui-agent.html">上一篇</a>里提到的 /agent 命令吗?</div><div><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/a/AVvXsEgCbTfaNf9ZDuVGHcXTDMU6lRradwpoQjYsYYXKow65eG6uGgEA5uOmAbsCn5XMNOYTH_h4Enp4Kb_NIHGFSRQI0AF2hp85Ik7CBSeeI1VA8LeA7LlOV8ExHeSPXxUuEhG0hyxRRDtVSE6Cv3TitEgkS_vUegvWUotVucM_IwGG6EKvtlL0UNn-F0H5hzI" style="margin-left: 1em; margin-right: 1em;"><img alt="" data-original-height="3780" data-original-width="2560" loading="lazy" src="https://blogger.googleusercontent.com/img/a/AVvXsEgCbTfaNf9ZDuVGHcXTDMU6lRradwpoQjYsYYXKow65eG6uGgEA5uOmAbsCn5XMNOYTH_h4Enp4Kb_NIHGFSRQI0AF2hp85Ik7CBSeeI1VA8LeA7LlOV8ExHeSPXxUuEhG0hyxRRDtVSE6Cv3TitEgkS_vUegvWUotVucM_IwGG6EKvtlL0UNn-F0H5hzI=s16000-rw" /></a></div><br />* 有一个取巧的方法是, 直接在某个agent的workspace目录下面运行 openclaw tui, 会连接到这个agent, 而不是系统默认的agent&nbsp;</div><div>省得加载一次agent main的session 还要用 /agent命令切换<br /><a href="https://docs.openclaw.ai/cli/tui">source</a></div><div><br /><h3>测试各个Agent之间发送信息 (当下这个时间, 推荐你必做此测试, 未来应该是可选的)</h3><div>在agent main中, 询问系统中总共有几个agent, 几个session</div><div><blockquote>系统中总共有几个agent, 几个session</blockquote></div><div>在agent main中, 测试分别 给其它 agent 的 session 发信息</div><div><blockquote>测试分别 给其它 agent 的 session 发信息</blockquote></div><div>在agent main中, 要求 agent-leader 测试分别 给其它 2个agent 的 session 发信息</div><div><blockquote>要求 agent-leader 测试分别 给其它 2个agent 的 session 发信息</blockquote><p><br /></p><p>上面的这几个测试如果结果不对, 说明agent之间的通信机制都有问题. 就不要开始下面的复杂任务了 (其实也不复杂)</p><p>* 注: 清空上下文要用 /reset 不会新建session, 你的各个 agent 的 session应该保持为 main.<br />不要用 /new 这个会新建 session, 有可能会让agent之间的通信搞乱. <br />(当然, 我是站在当下这个时间说的, 未来这一点应该得到改善)&nbsp;</p><p><br /></p></div><h3 style="text-align: left;">向 Agent 团队的 Leader 发总任务</h3></div><div>用一个简单的开发任务作为例子.</div><div></div><blockquote><div>把以下任务描述原样发送给 agent-leader 你不需要对任务进行分析</div><div><br /></div>开发一个生成随机密码的页面<br />核心功能 参考 https://crazypeace.github.io/xkcd-password-generator/ <br />视觉风格 参考 https://onojyun.com/ </blockquote><div class="separator" style="clear: both; text-align: center;"><iframe allowfullscreen="" class="BLOG_video_class" height="266" src="https://www.youtube.com/embed/MUSUt7Mjyd0" width="320" youtube-src-id="MUSUt7Mjyd0"></iframe></div><div><br /></div>可以看到 agent-leader向agnet-code发了信息之后, 要到agent-code把活干完了之后, 这个信息才在agent-code的tui中打印出来.&nbsp;<div>我原本的期望是应该是这样的时间顺序</div><div>agent-leader向agnet-code发信息</div><div>在agent-code的tui中打印出来这条信息</div><div>agent-code干活</div><div>...</div><div>不知道是我的使用方式有问题, 还是openclaw的系统设计有问题.</div><div><br /></div><div>整个agent"团队"的协作过程和最终结果我都不满意.&nbsp;</div><div>可能需要更多的提示词或更好的模型.</div><div><br /></div><div>gpt-5.4 总是要在 session_send时使用label参数, 我已经提示了不要用, 但还老是使用.&nbsp; 我详细问过TA, 回答说是&nbsp;session_send 这个函数在内部声明时有 label 参数, 所以模型总是会这样使用.</div><div>openrouter/hunter-alpha 没有这个问题, 我强调过后, 会按我的强调做. (当然也有可能是, 内部其实也总是尝试label参数, 只是不会打印在session里让我发现)</div><div><br /></div><div>我要求了交付物不要放在 workspace 下, 但是 gpt-5.4 的处理是, 放在&nbsp;</div><div>/root/.openclaw/workspace-agent-code/password-generator-app/</div><div>/root/.openclaw/workspace-agent-leader/deliverables/password-generator-app/</div><div>很明显没有理解我的意思.</div><div>openrouter/hunter-alpha 的做法是 放在&nbsp;</div><div>/root/team-delivery/agent-code/</div><div>/root/team-delivery/agent-test/</div><div>明显这样更好, 也更像真实世界里的团队协作的实践.</div><div><br /><h3 style="text-align: left;">后记</h3><div>以上我用的模型是<a href="https://zelikk.blogspot.com/2026/03/cpa-cliproxyapi.html">白嫖公益站的 gpt-5.4</a></div><div>免费的&nbsp;nvidia/nemotron-3-super-120b-a12b 和 openrouter/hunter-alpha 我都试过, 常常前面看着没问题, 但是跑着跑着就没反应了, 或者超时了, 或者报错了. 我猜测是token用太多了吧.</div><div><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/a/AVvXsEjzNEGlbMEsgb7df6l3xShtcy6YbvA5u5XnIx87PmrPuFIFn5jFgkrilGMG_4_r0PrFozht2RovaiFMhLIoTwtaT7AuLmhrH8s6Ij2xdHrOOcrwwEDBJPUKt4YvvRdLsVNPm49QqHehqHkihvHwdkoaI1OQbZ-B12Bvbs7ioNaMBHJAQt3DCC8m4p6F93E" style="margin-left: 1em; margin-right: 1em;"><img alt="" data-original-height="337" data-original-width="788" loading="lazy" src="https://blogger.googleusercontent.com/img/a/AVvXsEjzNEGlbMEsgb7df6l3xShtcy6YbvA5u5XnIx87PmrPuFIFn5jFgkrilGMG_4_r0PrFozht2RovaiFMhLIoTwtaT7AuLmhrH8s6Ij2xdHrOOcrwwEDBJPUKt4YvvRdLsVNPm49QqHehqHkihvHwdkoaI1OQbZ-B12Bvbs7ioNaMBHJAQt3DCC8m4p6F93E=s16000-rw" /></a></div><br /></div><div>随着openclaw越来越火, 我觉得模型厂家把针对openclaw系统的系统架构, 使用文档, 常见用法等 训练为模型的一部分, 是很有用的.</div><div>小米的模型&nbsp;xiaomi/MiMo-V2-Pro 号称针对多agent协作 长上下文场景有优化, 我觉得是个好方向.</div><div><br /></div></div>
+</div>
+<div class='post-bottom'>
+<div class='post-footer float-container'>
+<div class='post-footer-line post-footer-line-1'>
+<span class='byline post-timestamp'>
+<meta content='https://zelikk.blogspot.com/2026/03/openclaw-tui-agent-cooperate.html'/>
+<a class='timestamp-link' href='https://zelikk.blogspot.com/2026/03/openclaw-tui-agent-cooperate.html' rel='bookmark' title='permanent link'>
+<time class='published' datetime='2026-03-20T11:42:00+08:00' title='2026-03-20T11:42:00+08:00'>
+三月 20, 2026
+</time>
+</a>
+</span>
+</div>
+<div class='post-footer-line post-footer-line-2'>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section class='comments embed' data-num-comments='0' id='comments'>
+<a name='comments'></a>
+<h3 class='title'>评论</h3>
+<div id='Blog1_comments-block-wrapper'>
+</div>
+<div class='footer'>
+<div class='comment-form'>
+<a name='comment-form'></a>
+<h4 id='comment-post-message'>发表评论</h4>
+<a href='https://www.blogger.com/comment/frame/5672901950085364729?po=1456213950534754656&hl=zh-CN&saa=85391&origin=https://zelikk.blogspot.com&skin=essential' id='comment-editor-src'></a>
+<iframe allowtransparency='allowtransparency' class='blogger-iframe-colorize blogger-comment-from-post' frameborder='0' height='410px' id='comment-editor' name='comment-editor' src='' width='100%'></iframe>
+<script src='https://www.blogger.com/static/v1/jsbin/2830521187-comment_from_post_iframe.js' type='text/javascript'></script>
+<script type='text/javascript'>
+      BLOG_CMT_createIframe('https://www.blogger.com/rpc_relay.html');
+    </script>
+</div>
+</div>
+</section>
+</article>
+</div>
+</div><div class='widget PopularPosts' data-version='2' id='PopularPosts1'>
+<h3 class='title'>
+The Hot3 in Last 7 Days
+</h3>
+<div class='widget-content'>
+<div role='feed'>
+<article class='post' role='article'>
+<h3 class='post-title'><a href='https://zelikk.blogspot.com/2022/04/woiden-ipv6-vps-v2ray-vless-websocket-tls.html'>Woiden IPv6 VPS 搭 V2ray 梯子 VLESS+Websocket+TLS 模式 免费 白嫖 全程手机操作 2022-4-19</a></h3>
+<div class='post-header'>
+<div class='post-header-line-1'>
+</div>
+</div>
+<div class='item-content float-container'>
+<div class='item-thumbnail'>
+<a href='https://zelikk.blogspot.com/2022/04/woiden-ipv6-vps-v2ray-vless-websocket-tls.html'>
+<img alt='图片' sizes='72px' src='https://blogger.googleusercontent.com/img/a/AVvXsEig1J8Qgrg8WasDgzN44V1YZ_p0LeKr2c-DNQwqfVaFCHSjGBDZQofHniaaYmMbmo4KUpwIr54Btj-Y_lndi-u7qEGBoCmfI8HqF5q1g98vO4fpzw-ZAFZghuOMG0bGxugAG8OVWnQs6H8AT-DalHt2fEOREU0_XK8VYM2UbUWJDf5cndqzVCWjxowp=s16000' srcset='https://blogger.googleusercontent.com/img/a/AVvXsEig1J8Qgrg8WasDgzN44V1YZ_p0LeKr2c-DNQwqfVaFCHSjGBDZQofHniaaYmMbmo4KUpwIr54Btj-Y_lndi-u7qEGBoCmfI8HqF5q1g98vO4fpzw-ZAFZghuOMG0bGxugAG8OVWnQs6H8AT-DalHt2fEOREU0_XK8VYM2UbUWJDf5cndqzVCWjxowp=w72-h72-p-k-no-nu 72w, https://blogger.googleusercontent.com/img/a/AVvXsEig1J8Qgrg8WasDgzN44V1YZ_p0LeKr2c-DNQwqfVaFCHSjGBDZQofHniaaYmMbmo4KUpwIr54Btj-Y_lndi-u7qEGBoCmfI8HqF5q1g98vO4fpzw-ZAFZghuOMG0bGxugAG8OVWnQs6H8AT-DalHt2fEOREU0_XK8VYM2UbUWJDf5cndqzVCWjxowp=w144-h144-p-k-no-nu 144w'/>
+</a>
+</div>
+<div class='popular-posts-snippet snippet-container r-snippet-container'>
+<div class='snippet-item r-snippetized'>
+最近因为Woiden的网络环境有一些变化&#65292;请看这里的最新更新:&#160; &lt; Woiden IPv6 VPS 搭 V2ray 梯子 2022-8-1 &gt; HAX 的 IPv6 VPS 大火之后&#65292;现在库存已经被抢完了&#12290;目前手里有鸡的朋友&#65292;谨慎删鸡哦&#12290; 同样一套班子&#65292;又搭了一个Woiden.id出来&#65292;机器是基于OpenVZ虚拟的NAT VPS&#65292;有共享的IPv4&#65292;独立的IPv6&#12290; 整个搭建过程和HAX差不多 &#12290;准备工作有一点点不一样&#12290;一开始要关闭自带的apache2服务&#65292;最后也不需要WARP获得IPv4&#39;网口&#39;
+</div>
+<a class='snippet-fade r-snippet-fade hidden' href='https://zelikk.blogspot.com/2022/04/woiden-ipv6-vps-v2ray-vless-websocket-tls.html'></a>
+</div>
+<div class='jump-link flat-button ripple'>
+<a href='https://zelikk.blogspot.com/2022/04/woiden-ipv6-vps-v2ray-vless-websocket-tls.html#more' title='Woiden IPv6 VPS 搭 V2ray 梯子 VLESS+Websocket+TLS 模式 免费 白嫖 全程手机操作 2022-4-19'>
+Read more &#187;
+</a>
+</div>
+</div>
+</article>
+<article class='post' role='article'>
+<h3 class='post-title'><a href='https://zelikk.blogspot.com/2022/11/naiveproxy-caddy-v2-vless-vmess-cdn.html'>极简一键脚本 搭NaiveProxy梯子 自定义端口 与Caddy V2前置的VLESS/Vmess V2Ray共存 可开CDN</a></h3>
+<div class='post-header'>
+<div class='post-header-line-1'>
+</div>
+</div>
+<div class='item-content float-container'>
+<div class='item-thumbnail'>
+<a href='https://zelikk.blogspot.com/2022/11/naiveproxy-caddy-v2-vless-vmess-cdn.html'>
+<img alt='图片' sizes='72px' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjhM1HBNjw1s6LB4Z6iwWaohZQf6ZaP1VsOdicdaYwpAUw7LB634G7Q_HHA0iogZ5jnsk_yKCxFKkhWhTDVVYC6IxFjwaB72sgNzHKmSH-EGUK8BD4d4rugUgsxawt15NxOBNkQbsRFSnYlXo9qkaWWXzsiTaI8JQTtwiURiluBsmp1VtW6DJaXQ9kK/s16000/image.png' srcset='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjhM1HBNjw1s6LB4Z6iwWaohZQf6ZaP1VsOdicdaYwpAUw7LB634G7Q_HHA0iogZ5jnsk_yKCxFKkhWhTDVVYC6IxFjwaB72sgNzHKmSH-EGUK8BD4d4rugUgsxawt15NxOBNkQbsRFSnYlXo9qkaWWXzsiTaI8JQTtwiURiluBsmp1VtW6DJaXQ9kK/w72-h72-p-k-no-nu/image.png 72w, https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjhM1HBNjw1s6LB4Z6iwWaohZQf6ZaP1VsOdicdaYwpAUw7LB634G7Q_HHA0iogZ5jnsk_yKCxFKkhWhTDVVYC6IxFjwaB72sgNzHKmSH-EGUK8BD4d4rugUgsxawt15NxOBNkQbsRFSnYlXo9qkaWWXzsiTaI8JQTtwiURiluBsmp1VtW6DJaXQ9kK/w144-h144-p-k-no-nu/image.png 144w'/>
+</a>
+</div>
+<div class='popular-posts-snippet snippet-container r-snippet-container'>
+<div class='snippet-item r-snippetized'>
+* 推荐使用 Xshell 的撰写窗格&#65292;这样多行命令可以写到撰写窗格里面执行&#12290; 1. 极简一键脚本搭 Caddy V2 前置的VLESS或Vmess+WebSocket+TLS &#160; 设置好域名解析, 如 vless.mydomain.com , CDN关掉 bash &lt;(curl -L https://github.com/crazypeace/v2ray_wss/raw/main/install.sh) 搭完自己检查一下是否能正常使用 CDN可以开 2. 搭建NaiveProxy 2.1 设置域名解析, 如 np.mydomain.com , CDN关掉 -update- 所有以下这些步骤&#65292;我做成了一个一键脚本&#12290;执行这个脚本&#65292;以下步骤都不用手搓了&#12290; bash &lt;(curl -L https://github.com/crazypeace/naive/raw/main/install.sh) 2.2 用Caddy官方脚本安装Caddy 来源: https://caddyserver.com/docs/install#debian-ubuntu-raspbian sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https curl -1sLf &#39;https://dl.cloudsmith.io/public/caddy/stable/gpg.key&#39; | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg curl -1sLf &#39;https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt&#39; | sudo tee /etc/apt/sources.list.d/caddy-stable.list sudo apt update sudo apt install caddy 2.3 下载NaiveProxy作者编译的caddy https://github.com/klzgrad/forwardproxy/releases 找最新的版本 cd /tmp wget https://...
+</div>
+<a class='snippet-fade r-snippet-fade hidden' href='https://zelikk.blogspot.com/2022/11/naiveproxy-caddy-v2-vless-vmess-cdn.html'></a>
+</div>
+<div class='jump-link flat-button ripple'>
+<a href='https://zelikk.blogspot.com/2022/11/naiveproxy-caddy-v2-vless-vmess-cdn.html' title='极简一键脚本 搭NaiveProxy梯子 自定义端口 与Caddy V2前置的VLESS/Vmess V2Ray共存 可开CDN'>
+Read more &#187;
+</a>
+</div>
+</div>
+</article>
+<article class='post' role='article'>
+<h3 class='post-title'><a href='https://zelikk.blogspot.com/2025/04/sillytavern-lorebooks.html'>酒馆SillyTavern 玩英文角色卡 也能以中文输出 设置世界书Lorebooks </a></h3>
+<div class='post-header'>
+<div class='post-header-line-1'>
+</div>
+</div>
+<div class='item-content float-container'>
+<div class='item-thumbnail'>
+<a href='https://zelikk.blogspot.com/2025/04/sillytavern-lorebooks.html'>
+<img alt='图片' sizes='72px' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhjXT4jp-JsnRvvkm63eKLU0ZaO8tG2Zwof5vU4kG0x9D7ufO6wY0JNs_pDoc8Y-rIQCnIkGys6jSHsvjz2-0NXxj4LkhnIeQXw7877Y8eJD1jpSmoDg-eEMEXGkBg5fhw0-emr5HnYI_4c4r_k_pA_soZHLLB8TTeewJxRVqiiKXvJgM0ziJ_JH2b-flc/s16000/image.png' srcset='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhjXT4jp-JsnRvvkm63eKLU0ZaO8tG2Zwof5vU4kG0x9D7ufO6wY0JNs_pDoc8Y-rIQCnIkGys6jSHsvjz2-0NXxj4LkhnIeQXw7877Y8eJD1jpSmoDg-eEMEXGkBg5fhw0-emr5HnYI_4c4r_k_pA_soZHLLB8TTeewJxRVqiiKXvJgM0ziJ_JH2b-flc/w72-h72-p-k-no-nu/image.png 72w, https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhjXT4jp-JsnRvvkm63eKLU0ZaO8tG2Zwof5vU4kG0x9D7ufO6wY0JNs_pDoc8Y-rIQCnIkGys6jSHsvjz2-0NXxj4LkhnIeQXw7877Y8eJD1jpSmoDg-eEMEXGkBg5fhw0-emr5HnYI_4c4r_k_pA_soZHLLB8TTeewJxRVqiiKXvJgM0ziJ_JH2b-flc/w144-h144-p-k-no-nu/image.png 144w'/>
+</a>
+</div>
+<div class='popular-posts-snippet snippet-container r-snippet-container'>
+<div class='snippet-item r-snippetized'>
+之前 我们实现了 让酒馆SillyTavern输出中文 . 不过, 我们在寻找/试用角色卡的时候, 常常要试用大量的角色卡, 而有些角色卡你说上一两句话就不想继续用了. 如果每个角色卡都那样操作一遍输出中文的话, 会觉得有点麻烦. 那么, 有没有什么方法可以设置一次, 就应用到每一个角色卡呢? 我们可以使用 世界书Lorebooks 这个功能. 在酒馆界面中, 点击 世界书 - 新建 随便用一个你喜欢的名字 * 这个名字只是为了方便管理. 不影响最终效果. 这时, 你应该看到刚刚新建的世界书被选中. (如果不是, 需要你在下拉菜单中选择) 然后 点击 右边的 新条目 按钮 设定这个新条目 1. 条目的标题, 随便设置什么. * 这个标题只是为了方便管理, 不影响最终效果. 2. 触发策略, 设置为 蓝色 * 意思是, 不需要关键词触发. 3. 插入位置, 设置为&quot;角色定义前&quot; * 如果效果不好, 可以试着改为 &quot;角色定义后&quot; 4. 展开条目设定 5. 设置条目的内容为 {{char}}用中文输出全部信息, 包括语言和场景描述. {{char}}输出内容中不要有大段的非中文内容. 现在, 设置你的全局世界书为你刚刚新建的这个世界书. 然后试着和你的新添加的角色卡对话看看? 我们来看看命令行里实际发生了什么. 对比 之前的方案 , 可以看到命令行日志中的效果是一样的, 也就是说, 发送给AI的格式是一样的. ======== 未完待续
+</div>
+<a class='snippet-fade r-snippet-fade hidden' href='https://zelikk.blogspot.com/2025/04/sillytavern-lorebooks.html'></a>
+</div>
+<div class='jump-link flat-button ripple'>
+<a href='https://zelikk.blogspot.com/2025/04/sillytavern-lorebooks.html' title='酒馆SillyTavern 玩英文角色卡 也能以中文输出 设置世界书Lorebooks '>
+Read more &#187;
+</a>
+</div>
+</div>
+</article>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<footer class='footer section' id='footer' name='页脚'><div class='widget Attribution' data-version='2' id='Attribution1'>
+<div class='widget-content'>
+<div class='blogger'>
+<a href='https://www.blogger.com' rel='nofollow'>
+<svg class='svg-icon-24'>
+<use xlink:href='/responsive/sprite_v1_6.css.svg#ic_post_blogger_black_24dp' xmlns:xlink='http://www.w3.org/1999/xlink'></use>
+</svg>
+由 Blogger 提供支持
+</a>
+</div>
+<div class='copyright'><a href="https://zelikk.blogspot.com/p/icdyct.html">联系我 FollowMe</a></div>
+</div>
+</div>
+</footer>
+</div>
+</div>
+</div>
+<aside class='sidebar-container container sidebar-invisible' role='complementary'>
+<div class='navigation'>
+<button class='svg-icon-24-button flat-icon-button ripple sidebar-back'>
+<svg class='svg-icon-24'>
+<use xlink:href='/responsive/sprite_v1_6.css.svg#ic_arrow_back_black_24dp' xmlns:xlink='http://www.w3.org/1999/xlink'></use>
+</svg>
+</button>
+</div>
+<div class='sidebar_top_wrapper no-items'>
+<div class='sidebar_top no-items section' id='sidebar_top' name='边栏（顶部）'>
+</div>
+</div>
+<div class='sidebar_bottom section' id='sidebar_bottom' name='边栏（底部）'><div class='widget HTML' data-version='2' id='HTML2'>
+<h3 class='title'>
+关注我 Follow Me
+</h3>
+<div class='widget-content'>
+<a href='https://zelikk.blogspot.com/rss.xml'>My RSS Feed</a> <br />
+<a href='https://zelikk.blogspot.com/p/icdyct.html'>其它方式</a>
+</div>
+</div>
+<div class='widget Label' data-version='2' id='Label1'>
+<details class='collapsible extendable version-1-0-1'>
+<summary>
+<div class='collapsible-title'>
+<h3 class='title'>
+标签
+</h3>
+<svg class='svg-icon-24 chevron-down'>
+<use xlink:href='/responsive/sprite_v1_6.css.svg#ic_expand_more_black_24dp' xmlns:xlink='http://www.w3.org/1999/xlink'></use>
+</svg>
+<svg class='svg-icon-24 chevron-up'>
+<use xlink:href='/responsive/sprite_v1_6.css.svg#ic_expand_less_black_24dp' xmlns:xlink='http://www.w3.org/1999/xlink'></use>
+</svg>
+</div>
+</summary>
+<div class='widget-content cloud-label-widget-content'>
+<div class='first-items'>
+<span class='label-size label-size-5'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E5%BC%80%E5%8F%91'>开发<span class='label-count'>87</span></a></span>
+<span class='label-size label-size-4'><a class='label-name' href='https://zelikk.blogspot.com/search/label/shell'>shell<span class='label-count'>42</span></a></span>
+<span class='label-size label-size-4'><a class='label-name' href='https://zelikk.blogspot.com/search/label/worker'>worker<span class='label-count'>40</span></a></span>
+<span class='label-size label-size-4'><a class='label-name' href='https://zelikk.blogspot.com/search/label/GPT%E5%BC%80%E5%8F%91'>GPT开发<span class='label-count'>36</span></a></span>
+<span class='label-size label-size-4'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E6%A1%88%E4%BE%8B'>案例<span class='label-count'>36</span></a></span>
+<span class='label-size label-size-4'><a class='label-name' href='https://zelikk.blogspot.com/search/label/Url-Shorten-Worker'>Url-Shorten-Worker<span class='label-count'>34</span></a></span>
+<span class='label-size label-size-4'><a class='label-name' href='https://zelikk.blogspot.com/search/label/Telegram'>Telegram<span class='label-count'>32</span></a></span>
+<span class='label-size label-size-4'><a class='label-name' href='https://zelikk.blogspot.com/search/label/vps'>vps<span class='label-count'>30</span></a></span>
+<span class='label-size label-size-4'><a class='label-name' href='https://zelikk.blogspot.com/search/label/blogger'>blogger<span class='label-count'>29</span></a></span>
+<span class='label-size label-size-4'><a class='label-name' href='https://zelikk.blogspot.com/search/label/v2rayN-3.29-VLESS'>v2rayN-3.29-VLESS<span class='label-count'>27</span></a></span>
+</div>
+<div class='remaining-items'>
+<span class='label-size label-size-4'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E4%BD%B3%E8%BD%AF'>佳软<span class='label-count'>21</span></a></span>
+<span class='label-size label-size-4'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E6%8E%92%E9%94%99'>排错<span class='label-count'>18</span></a></span>
+<span class='label-size label-size-4'><a class='label-name' href='https://zelikk.blogspot.com/search/label/233boy'>233boy<span class='label-count'>17</span></a></span>
+<span class='label-size label-size-4'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E7%BF%BB%E5%A2%99'>翻墙<span class='label-count'>17</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/aria2'>aria2<span class='label-count'>15</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E5%A4%96%E8%B4%B8'>外贸<span class='label-count'>15</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/gcp'>gcp<span class='label-count'>14</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/Xshell'>Xshell<span class='label-count'>13</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/ghproxy'>ghproxy<span class='label-count'>13</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/hysteria2'>hysteria2<span class='label-count'>13</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/wss'>wss<span class='label-count'>13</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E5%AF%86%E7%A0%81'>密码<span class='label-count'>13</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E6%95%B0%E7%A0%81'>数码<span class='label-count'>13</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E6%9E%81%E7%AE%80%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC'>极简一键脚本<span class='label-count'>13</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E7%94%9F%E6%B4%BB'>生活<span class='label-count'>13</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/antispam'>antispam<span class='label-count'>12</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/SSH'>SSH<span class='label-count'>11</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/openclaw'>openclaw<span class='label-count'>11</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/xray'>xray<span class='label-count'>11</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E7%BC%96%E8%AF%91'>编译<span class='label-count'>11</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E5%9F%9F%E5%90%8D'>域名<span class='label-count'>10</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E9%9A%8F%E6%83%B3'>随想<span class='label-count'>10</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/IPv6'>IPv6<span class='label-count'>9</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/RackNerd'>RackNerd<span class='label-count'>9</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/bandwagon'>bandwagon<span class='label-count'>9</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/v2rayN-HY2'>v2rayN-HY2<span class='label-count'>9</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/webssh'>webssh<span class='label-count'>9</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/V2Ray'>V2Ray<span class='label-count'>8</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/naive'>naive<span class='label-count'>8</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E5%88%86%E6%B5%81'>分流<span class='label-count'>8</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E9%85%92%E9%A6%86'>酒馆<span class='label-count'>8</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/v2rayN-v6'>v2rayN-v6<span class='label-count'>7</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E6%B2%B9%E7%8C%B4'>油猴<span class='label-count'>7</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/css'>css<span class='label-count'>6</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/fake-curl-wget-sh'>fake-curl-wget-sh<span class='label-count'>6</span></a></span>
+<span class='label-size label-size-3'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E9%93%BE%E5%BC%8F%E4%BB%A3%E7%90%86'>链式代理<span class='label-count'>6</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/Caddy'>Caddy<span class='label-count'>5</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/Github'>Github<span class='label-count'>5</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/Tutorial'>Tutorial<span class='label-count'>5</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/WOIDEN'>WOIDEN<span class='label-count'>5</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/justmysocks'>justmysocks<span class='label-count'>5</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/rclone'>rclone<span class='label-count'>5</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/CloudFlare'>CloudFlare<span class='label-count'>4</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/HAX'>HAX<span class='label-count'>4</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/KV-woker'>KV-woker<span class='label-count'>4</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/Reality'>Reality<span class='label-count'>4</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/WARP'>WARP<span class='label-count'>4</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/cheapwinvps'>cheapwinvps<span class='label-count'>4</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/screen'>screen<span class='label-count'>4</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/vpshostingservice'>vpshostingservice<span class='label-count'>4</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E9%98%B2%E7%81%AB%E5%A2%99'>防火墙<span class='label-count'>4</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/AutoHotKey'>AutoHotKey<span class='label-count'>3</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/RSS'>RSS<span class='label-count'>3</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/VPN'>VPN<span class='label-count'>3</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/keepass'>keepass<span class='label-count'>3</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/tg-keyword-monitor-bot'>tg-keyword-monitor-bot<span class='label-count'>3</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/yt-dlp'>yt-dlp<span class='label-count'>3</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E6%88%AA%E5%9B%BE'>截图<span class='label-count'>3</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E8%A7%86%E9%A2%91'>视频<span class='label-count'>3</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2'>远程桌面<span class='label-count'>3</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/Clash'>Clash<span class='label-count'>2</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/CloudCone'>CloudCone<span class='label-count'>2</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/PayPal'>PayPal<span class='label-count'>2</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/Shadowrocket'>Shadowrocket<span class='label-count'>2</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/Shortcuts'>Shortcuts<span class='label-count'>2</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/UUID'>UUID<span class='label-count'>2</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/dns'>dns<span class='label-count'>2</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/google%20voice'>google voice<span class='label-count'>2</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/termius'>termius<span class='label-count'>2</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/tg-keyword-react-bot'>tg-keyword-react-bot<span class='label-count'>2</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/trojan'>trojan<span class='label-count'>2</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/v2rayn'>v2rayn<span class='label-count'>2</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/vbs'>vbs<span class='label-count'>2</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E5%BD%B1%E8%A7%86'>影视<span class='label-count'>2</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E7%85%A7%E7%89%87'>照片<span class='label-count'>2</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E7%BD%91%E7%AB%99'>网站<span class='label-count'>2</span></a></span>
+<span class='label-size label-size-2'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E7%BE%8E%E5%8C%BA'>美区<span class='label-count'>2</span></a></span>
+<span class='label-size label-size-1'><a class='label-name' href='https://zelikk.blogspot.com/search/label/AppleID'>AppleID<span class='label-count'>1</span></a></span>
+<span class='label-size label-size-1'><a class='label-name' href='https://zelikk.blogspot.com/search/label/CLAW%E5%BC%80%E5%8F%91'>CLAW开发<span class='label-count'>1</span></a></span>
+<span class='label-size label-size-1'><a class='label-name' href='https://zelikk.blogspot.com/search/label/autospace'>autospace<span class='label-count'>1</span></a></span>
+<span class='label-size label-size-1'><a class='label-name' href='https://zelikk.blogspot.com/search/label/cliproxyapi'>cliproxyapi<span class='label-count'>1</span></a></span>
+<span class='label-size label-size-1'><a class='label-name' href='https://zelikk.blogspot.com/search/label/cpa'>cpa<span class='label-count'>1</span></a></span>
+<span class='label-size label-size-1'><a class='label-name' href='https://zelikk.blogspot.com/search/label/ech-wk'>ech-wk<span class='label-count'>1</span></a></span>
+<span class='label-size label-size-1'><a class='label-name' href='https://zelikk.blogspot.com/search/label/ffmpeg'>ffmpeg<span class='label-count'>1</span></a></span>
+<span class='label-size label-size-1'><a class='label-name' href='https://zelikk.blogspot.com/search/label/json'>json<span class='label-count'>1</span></a></span>
+<span class='label-size label-size-1'><a class='label-name' href='https://zelikk.blogspot.com/search/label/pac'>pac<span class='label-count'>1</span></a></span>
+<span class='label-size label-size-1'><a class='label-name' href='https://zelikk.blogspot.com/search/label/service'>service<span class='label-count'>1</span></a></span>
+<span class='label-size label-size-1'><a class='label-name' href='https://zelikk.blogspot.com/search/label/sub-store'>sub-store<span class='label-count'>1</span></a></span>
+<span class='label-size label-size-1'><a class='label-name' href='https://zelikk.blogspot.com/search/label/uniproxy'>uniproxy<span class='label-count'>1</span></a></span>
+<span class='label-size label-size-1'><a class='label-name' href='https://zelikk.blogspot.com/search/label/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F'>正则表达式<span class='label-count'>1</span></a></span>
+</div>
+<span class='show-more pill-button'>显示更多</span>
+<span class='show-less hidden pill-button'>隐藏部分</span>
+</div>
+</details>
+</div><div class='widget BlogArchive' data-version='2' id='BlogArchive1'>
+<details class='collapsible extendable'>
+<summary>
+<div class='collapsible-title'>
+<h3 class='title'>
+Blog Archive
+</h3>
+<svg class='svg-icon-24 chevron-down'>
+<use xlink:href='/responsive/sprite_v1_6.css.svg#ic_expand_more_black_24dp' xmlns:xlink='http://www.w3.org/1999/xlink'></use>
+</svg>
+<svg class='svg-icon-24 chevron-up'>
+<use xlink:href='/responsive/sprite_v1_6.css.svg#ic_expand_less_black_24dp' xmlns:xlink='http://www.w3.org/1999/xlink'></use>
+</svg>
+</div>
+</summary>
+<div class='widget-content'>
+<div id='ArchiveList'>
+<div id='BlogArchive1_ArchiveList'>
+<div class='first-items'>
+<ul class='hierarchy'>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2026/'>
+2026
+<span class='post-count'>25</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+<ul class='hierarchy'>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2026/03/'>
+3月 2026
+<span class='post-count'>5</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+<ul class='posts hierarchy'>
+<li>
+<a href='https://zelikk.blogspot.com/2026/03/openclaw-tui-agent-cooperate.html'>Openclaw 命令行 TUI 中 使用多 Agent 协同完成任务 Openclaw v2026...</a>
+</li>
+<li>
+<a href='https://zelikk.blogspot.com/2026/03/cpa-cliproxyapi.html'>自建 CPA cliproxyapi 汇聚各路白嫖公益站 提供给Openclaw</a>
+</li>
+<li>
+<a href='https://zelikk.blogspot.com/2026/03/openclaw-telegram-group-topic-binding-agent.html'>在Telegram group电报群组中使用不同的topic话题binding绑定不同的Opencl...</a>
+</li>
+<li>
+<a href='https://zelikk.blogspot.com/2026/03/openclaw-tui-agent.html'>Openclaw 命令行 TUI 中 使用多 Agent</a>
+</li>
+<li>
+<a href='https://zelikk.blogspot.com/2026/03/nvidia-nim-glm47-openclaw.html'>白嫖 免费的NVIDIA NIM glm4.7 用于 OpenClaw</a>
+</li>
+</ul>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2026/02/'>
+2月 2026
+<span class='post-count'>4</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2026/01/'>
+1月 2026
+<span class='post-count'>16</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class='remaining-items'>
+<ul class='hierarchy'>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2025/'>
+2025
+<span class='post-count'>113</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+<ul class='hierarchy'>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2025/12/'>
+12月 2025
+<span class='post-count'>11</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2025/11/'>
+11月 2025
+<span class='post-count'>35</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2025/10/'>
+10月 2025
+<span class='post-count'>26</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2025/09/'>
+9月 2025
+<span class='post-count'>13</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2025/08/'>
+8月 2025
+<span class='post-count'>2</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2025/07/'>
+7月 2025
+<span class='post-count'>2</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2025/05/'>
+5月 2025
+<span class='post-count'>1</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2025/04/'>
+4月 2025
+<span class='post-count'>11</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2025/03/'>
+3月 2025
+<span class='post-count'>3</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2025/02/'>
+2月 2025
+<span class='post-count'>1</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2025/01/'>
+1月 2025
+<span class='post-count'>8</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2024/'>
+2024
+<span class='post-count'>86</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+<ul class='hierarchy'>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2024/12/'>
+12月 2024
+<span class='post-count'>11</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2024/11/'>
+11月 2024
+<span class='post-count'>23</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2024/10/'>
+10月 2024
+<span class='post-count'>6</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2024/09/'>
+9月 2024
+<span class='post-count'>8</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2024/07/'>
+7月 2024
+<span class='post-count'>8</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2024/06/'>
+6月 2024
+<span class='post-count'>6</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2024/05/'>
+5月 2024
+<span class='post-count'>1</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2024/04/'>
+4月 2024
+<span class='post-count'>8</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2024/03/'>
+3月 2024
+<span class='post-count'>1</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2024/02/'>
+2月 2024
+<span class='post-count'>2</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2024/01/'>
+1月 2024
+<span class='post-count'>12</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2023/'>
+2023
+<span class='post-count'>105</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+<ul class='hierarchy'>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2023/12/'>
+12月 2023
+<span class='post-count'>9</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2023/11/'>
+11月 2023
+<span class='post-count'>14</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2023/10/'>
+10月 2023
+<span class='post-count'>10</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2023/09/'>
+9月 2023
+<span class='post-count'>8</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2023/08/'>
+8月 2023
+<span class='post-count'>2</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2023/07/'>
+7月 2023
+<span class='post-count'>14</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2023/06/'>
+6月 2023
+<span class='post-count'>24</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2023/05/'>
+5月 2023
+<span class='post-count'>2</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2023/03/'>
+3月 2023
+<span class='post-count'>4</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2023/02/'>
+2月 2023
+<span class='post-count'>7</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2023/01/'>
+1月 2023
+<span class='post-count'>11</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2022/'>
+2022
+<span class='post-count'>145</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+<ul class='hierarchy'>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2022/12/'>
+12月 2022
+<span class='post-count'>6</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2022/11/'>
+11月 2022
+<span class='post-count'>13</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2022/10/'>
+10月 2022
+<span class='post-count'>6</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2022/09/'>
+9月 2022
+<span class='post-count'>1</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2022/08/'>
+8月 2022
+<span class='post-count'>13</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2022/07/'>
+7月 2022
+<span class='post-count'>20</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2022/06/'>
+6月 2022
+<span class='post-count'>15</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2022/05/'>
+5月 2022
+<span class='post-count'>21</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2022/04/'>
+4月 2022
+<span class='post-count'>16</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2022/03/'>
+3月 2022
+<span class='post-count'>18</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2022/02/'>
+2月 2022
+<span class='post-count'>9</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2022/01/'>
+1月 2022
+<span class='post-count'>7</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2021/'>
+2021
+<span class='post-count'>21</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+<ul class='hierarchy'>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2021/12/'>
+12月 2021
+<span class='post-count'>2</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2021/11/'>
+11月 2021
+<span class='post-count'>1</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2021/09/'>
+9月 2021
+<span class='post-count'>1</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2021/08/'>
+8月 2021
+<span class='post-count'>1</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2021/05/'>
+5月 2021
+<span class='post-count'>2</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2021/03/'>
+3月 2021
+<span class='post-count'>5</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2021/02/'>
+2月 2021
+<span class='post-count'>7</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2021/01/'>
+1月 2021
+<span class='post-count'>2</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2020/'>
+2020
+<span class='post-count'>18</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+<ul class='hierarchy'>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2020/12/'>
+12月 2020
+<span class='post-count'>6</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2020/11/'>
+11月 2020
+<span class='post-count'>1</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2020/10/'>
+10月 2020
+<span class='post-count'>4</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2020/09/'>
+9月 2020
+<span class='post-count'>2</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2020/08/'>
+8月 2020
+<span class='post-count'>3</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2020/07/'>
+7月 2020
+<span class='post-count'>2</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2019/'>
+2019
+<span class='post-count'>41</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+<ul class='hierarchy'>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2019/08/'>
+8月 2019
+<span class='post-count'>1</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2019/07/'>
+7月 2019
+<span class='post-count'>3</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2019/01/'>
+1月 2019
+<span class='post-count'>37</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2018/'>
+2018
+<span class='post-count'>59</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+<ul class='hierarchy'>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2018/12/'>
+12月 2018
+<span class='post-count'>15</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2018/09/'>
+9月 2018
+<span class='post-count'>1</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2018/06/'>
+6月 2018
+<span class='post-count'>1</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2018/04/'>
+4月 2018
+<span class='post-count'>12</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2018/03/'>
+3月 2018
+<span class='post-count'>11</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2018/02/'>
+2月 2018
+<span class='post-count'>11</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2018/01/'>
+1月 2018
+<span class='post-count'>8</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2017/'>
+2017
+<span class='post-count'>3</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+<ul class='hierarchy'>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2017/11/'>
+11月 2017
+<span class='post-count'>3</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2015/'>
+2015
+<span class='post-count'>1</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+<ul class='hierarchy'>
+<li class='archivedate'>
+<div class='hierarchy-title'>
+<a class='post-count-link' href='https://zelikk.blogspot.com/2015/07/'>
+7月 2015
+<span class='post-count'>1</span>
+</a>
+</div>
+<div class='hierarchy-content'>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<span class='show-more pill-button'>显示更多</span>
+<span class='show-less hidden pill-button'>隐藏部分</span>
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+</aside>
+<script type="text/javascript" src="https://resources.blogblog.com/blogblog/data/res/396686643-strm_compiled.js" async="true"></script>
+
+<script type="text/javascript" src="https://www.blogger.com/static/v1/widgets/432983155-widgets.js"></script>
+<script type='text/javascript'>
+window['__wavt'] = 'AOuZoY4pkODja5MO6j7M-1HFJqm0c9aQlQ:1774245892657';_WidgetManager._Init('//www.blogger.com/rearrange?blogID\x3d5672901950085364729','//zelikk.blogspot.com/2026/03/openclaw-tui-agent-cooperate.html','5672901950085364729');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'blogId': '5672901950085364729', 'title': 'ICDYCT / \u6211\u80fd, \u4f60\u4e5f\u884c / I Can Do, You Can Too', 'url': 'https://zelikk.blogspot.com/2026/03/openclaw-tui-agent-cooperate.html', 'canonicalUrl': 'https://zelikk.blogspot.com/2026/03/openclaw-tui-agent-cooperate.html', 'homepageUrl': 'https://zelikk.blogspot.com/', 'searchUrl': 'https://zelikk.blogspot.com/search', 'canonicalHomepageUrl': 'https://zelikk.blogspot.com/', 'blogspotFaviconUrl': 'https://zelikk.blogspot.com/favicon.ico', 'bloggerUrl': 'https://www.blogger.com', 'hasCustomDomain': false, 'httpsEnabled': true, 'enabledCommentProfileImages': true, 'gPlusViewType': 'FILTERED_POSTMOD', 'adultContent': false, 'analyticsAccountNumber': 'G-KWDK66LMVN', 'analytics4': true, 'encoding': 'UTF-8', 'locale': 'zh-CN', 'localeUnderscoreDelimited': 'zh_cn', 'languageDirection': 'ltr', 'isPrivate': false, 'isMobile': false, 'isMobileRequest': false, 'mobileClass': '', 'isPrivateBlog': false, 'isDynamicViewsAvailable': true, 'feedLinks': '\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22ICDYCT / \u6211\u80fd, \u4f60\u4e5f\u884c / I Can Do, You Can Too - Atom\x22 href\x3d\x22https://zelikk.blogspot.com/feeds/posts/default\x22 /\x3e\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/rss+xml\x22 title\x3d\x22ICDYCT / \u6211\u80fd, \u4f60\u4e5f\u884c / I Can Do, You Can Too - RSS\x22 href\x3d\x22https://zelikk.blogspot.com/feeds/posts/default?alt\x3drss\x22 /\x3e\n\x3clink rel\x3d\x22service.post\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22ICDYCT / \u6211\u80fd, \u4f60\u4e5f\u884c / I Can Do, You Can Too - Atom\x22 href\x3d\x22https://www.blogger.com/feeds/5672901950085364729/posts/default\x22 /\x3e\n\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22ICDYCT / \u6211\u80fd, \u4f60\u4e5f\u884c / I Can Do, You Can Too - Atom\x22 href\x3d\x22https://zelikk.blogspot.com/feeds/1456213950534754656/comments/default\x22 /\x3e\n', 'meTag': '', 'adsenseClientId': 'ca-pub-2351123213541849', 'adsenseHostId': 'ca-host-pub-1556223355139109', 'adsenseHasAds': true, 'adsenseAutoAds': true, 'boqCommentIframeForm': true, 'loginRedirectParam': '', 'view': '', 'dynamicViewsCommentsSrc': '//www.blogblog.com/dynamicviews/4224c15c4e7c9321/js/comments.js', 'dynamicViewsScriptSrc': '//www.blogblog.com/dynamicviews/46b10451b9b7a00c', 'plusOneApiSrc': 'https://apis.google.com/js/platform.js', 'disableGComments': true, 'interstitialAccepted': false, 'sharing': {'platforms': [{'name': '\u83b7\u53d6\u94fe\u63a5', 'key': 'link', 'shareMessage': '\u83b7\u53d6\u94fe\u63a5', 'target': ''}, {'name': 'Facebook', 'key': 'facebook', 'shareMessage': '\u5206\u4eab\u5230 Facebook', 'target': 'facebook'}, {'name': 'BlogThis!', 'key': 'blogThis', 'shareMessage': 'BlogThis!', 'target': 'blog'}, {'name': 'X', 'key': 'twitter', 'shareMessage': '\u5206\u4eab\u5230 X', 'target': 'twitter'}, {'name': 'Pinterest', 'key': 'pinterest', 'shareMessage': '\u5206\u4eab\u5230 Pinterest', 'target': 'pinterest'}, {'name': '\u7535\u5b50\u90ae\u4ef6', 'key': 'email', 'shareMessage': '\u7535\u5b50\u90ae\u4ef6', 'target': 'email'}], 'disableGooglePlus': true, 'googlePlusShareButtonWidth': 0, 'googlePlusBootstrap': '\x3cscript type\x3d\x22text/javascript\x22\x3ewindow.___gcfg \x3d {\x27lang\x27: \x27zh_CN\x27};\x3c/script\x3e'}, 'hasCustomJumpLinkMessage': true, 'jumpLinkMessage': 'Read more \xbb', 'pageType': 'item', 'postId': '1456213950534754656', 'postImageThumbnailUrl': 'https://blogger.googleusercontent.com/img/a/AVvXsEiAEnYfJqYPWJ5onFQqbIqAD1CMYmHvImsOOvUHhuEQqAGLNDWig9oy8zp8egIsGaLCDPZiUCTiId3cal62Ji1Wj89L7WoyHtvZqyFoxKyeZclEJdjE1gAd4vWwSNPKHMkmoLfesiRfrug-zbpckr4HOZrE8RRuayHmf50CgKKbtPKxRHMrOr6Zb9rssww\x3ds72-c', 'postImageUrl': 'https://blogger.googleusercontent.com/img/a/AVvXsEiAEnYfJqYPWJ5onFQqbIqAD1CMYmHvImsOOvUHhuEQqAGLNDWig9oy8zp8egIsGaLCDPZiUCTiId3cal62Ji1Wj89L7WoyHtvZqyFoxKyeZclEJdjE1gAd4vWwSNPKHMkmoLfesiRfrug-zbpckr4HOZrE8RRuayHmf50CgKKbtPKxRHMrOr6Zb9rssww\x3ds16000', 'pageName': 'Openclaw \u547d\u4ee4\u884c TUI \u4e2d \u4f7f\u7528\u591a Agent \u534f\u540c\u5b8c\u6210\u4efb\u52a1 Openclaw v2026.3.13', 'pageTitle': 'ICDYCT / \u6211\u80fd, \u4f60\u4e5f\u884c / I Can Do, You Can Too: Openclaw \u547d\u4ee4\u884c TUI \u4e2d \u4f7f\u7528\u591a Agent \u534f\u540c\u5b8c\u6210\u4efb\u52a1 Openclaw v2026.3.13', 'metaDescription': 'https://www.youtube.com/watch?v\x3dMUSUt7Mjyd0'}}, {'name': 'features', 'data': {}}, {'name': 'messages', 'data': {'edit': '\u4fee\u6539', 'linkCopiedToClipboard': '\u94fe\u63a5\u5df2\u590d\u5236\u5230\u526a\u8d34\u677f\uff01', 'ok': '\u786e\u5b9a', 'postLink': '\u535a\u6587\u94fe\u63a5'}}, {'name': 'template', 'data': {'name': 'custom', 'localizedName': '\u81ea\u5b9a\u4e49', 'isResponsive': true, 'isAlternateRendering': false, 'isCustom': true}}, {'name': 'view', 'data': {'classic': {'name': 'classic', 'url': '?view\x3dclassic'}, 'flipcard': {'name': 'flipcard', 'url': '?view\x3dflipcard'}, 'magazine': {'name': 'magazine', 'url': '?view\x3dmagazine'}, 'mosaic': {'name': 'mosaic', 'url': '?view\x3dmosaic'}, 'sidebar': {'name': 'sidebar', 'url': '?view\x3dsidebar'}, 'snapshot': {'name': 'snapshot', 'url': '?view\x3dsnapshot'}, 'timeslide': {'name': 'timeslide', 'url': '?view\x3dtimeslide'}, 'isMobile': false, 'title': 'Openclaw \u547d\u4ee4\u884c TUI \u4e2d \u4f7f\u7528\u591a Agent \u534f\u540c\u5b8c\u6210\u4efb\u52a1 Openclaw v2026.3.13', 'description': 'https://www.youtube.com/watch?v\x3dMUSUt7Mjyd0', 'featuredImage': 'https://blogger.googleusercontent.com/img/a/AVvXsEiAEnYfJqYPWJ5onFQqbIqAD1CMYmHvImsOOvUHhuEQqAGLNDWig9oy8zp8egIsGaLCDPZiUCTiId3cal62Ji1Wj89L7WoyHtvZqyFoxKyeZclEJdjE1gAd4vWwSNPKHMkmoLfesiRfrug-zbpckr4HOZrE8RRuayHmf50CgKKbtPKxRHMrOr6Zb9rssww\x3ds16000', 'url': 'https://zelikk.blogspot.com/2026/03/openclaw-tui-agent-cooperate.html', 'type': 'item', 'isSingleItem': true, 'isMultipleItems': false, 'isError': false, 'isPage': false, 'isPost': true, 'isHomepage': false, 'isArchive': false, 'isLabelSearch': false, 'postId': 1456213950534754656}}, {'name': 'widgets', 'data': [{'title': '\u641c\u7d22\u6b64\u535a\u5ba2', 'type': 'BlogSearch', 'sectionId': 'search_top', 'id': 'BlogSearch1'}, {'title': 'ICDYCT / \u6211\u80fd, \u4f60\u4e5f\u884c / I Can Do, You Can Too (\u6807\u9898)', 'type': 'Header', 'sectionId': 'header', 'id': 'Header1'}, {'title': '', 'type': 'PageList', 'sectionId': 'page_list_top', 'id': 'PageList1'}, {'title': '', 'type': 'FeaturedPost', 'sectionId': 'page_body', 'id': 'FeaturedPost1', 'postId': '2669919904699962844'}, {'title': '\u535a\u6587', 'type': 'Blog', 'sectionId': 'page_body', 'id': 'Blog1', 'posts': [{'id': '1456213950534754656', 'title': 'Openclaw \u547d\u4ee4\u884c TUI \u4e2d \u4f7f\u7528\u591a Agent \u534f\u540c\u5b8c\u6210\u4efb\u52a1 Openclaw v2026.3.13', 'featuredImage': 'https://blogger.googleusercontent.com/img/a/AVvXsEiAEnYfJqYPWJ5onFQqbIqAD1CMYmHvImsOOvUHhuEQqAGLNDWig9oy8zp8egIsGaLCDPZiUCTiId3cal62Ji1Wj89L7WoyHtvZqyFoxKyeZclEJdjE1gAd4vWwSNPKHMkmoLfesiRfrug-zbpckr4HOZrE8RRuayHmf50CgKKbtPKxRHMrOr6Zb9rssww\x3ds16000', 'showInlineAds': false}], 'headerByline': {'regionName': 'header1', 'items': [{'name': 'labels', 'label': '\u67e5\u770b\u76f8\u5173\u4e3b\u9898:'}]}, 'footerBylines': [{'regionName': 'footer1', 'items': [{'name': 'timestamp', 'label': ''}]}, {'regionName': 'footer2', 'items': [{'name': 'comments', 'label': 'comments'}]}], 'allBylineItems': [{'name': 'labels', 'label': '\u67e5\u770b\u76f8\u5173\u4e3b\u9898:'}, {'name': 'timestamp', 'label': ''}, {'name': 'comments', 'label': 'comments'}]}, {'title': 'The Hot3 in Last 7 Days', 'type': 'PopularPosts', 'sectionId': 'page_body', 'id': 'PopularPosts1', 'posts': [{'title': 'Woiden IPv6 VPS \u642d V2ray \u68af\u5b50 VLESS+Websocket+TLS \u6a21\u5f0f \u514d\u8d39 \u767d\u5ad6 \u5168\u7a0b\u624b\u673a\u64cd\u4f5c 2022-4-19', 'id': 2415725183534332571}, {'title': '\u6781\u7b80\u4e00\u952e\u811a\u672c \u642dNaiveProxy\u68af\u5b50 \u81ea\u5b9a\u4e49\u7aef\u53e3 \u4e0eCaddy V2\u524d\u7f6e\u7684VLESS/Vmess V2Ray\u5171\u5b58 \u53ef\u5f00CDN', 'id': 8929552751418846063}, {'title': '\u9152\u9986SillyTavern \u73a9\u82f1\u6587\u89d2\u8272\u5361 \u4e5f\u80fd\u4ee5\u4e2d\u6587\u8f93\u51fa \u8bbe\u7f6e\u4e16\u754c\u4e66Lorebooks ', 'id': 533103650611651368}]}, {'type': 'Attribution', 'sectionId': 'footer', 'id': 'Attribution1'}, {'title': '\u5173\u6ce8\u6211 Follow Me', 'type': 'HTML', 'sectionId': 'sidebar_bottom', 'id': 'HTML2'}, {'title': '\u6807\u7b7e', 'type': 'Label', 'sectionId': 'sidebar_bottom', 'id': 'Label1'}, {'title': 'Blog Archive', 'type': 'BlogArchive', 'sectionId': 'sidebar_bottom', 'id': 'BlogArchive1'}]}]);
+_WidgetManager._RegisterWidget('_BlogSearchView', new _WidgetInfo('BlogSearch1', 'search_top', document.getElementById('BlogSearch1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HeaderView', new _WidgetInfo('Header1', 'header', document.getElementById('Header1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_PageListView', new _WidgetInfo('PageList1', 'page_list_top', document.getElementById('PageList1'), {'title': '', 'links': [{'isCurrentPage': false, 'href': 'https://zelikk.blogspot.com/p/icdyct.html', 'id': '223306597329134260', 'title': 'ICDYCT'}, {'isCurrentPage': false, 'href': 'https://zelikk.blogspot.com/p/tg-group.html', 'id': '6010481717394221182', 'title': '\u7ffb\u5899\u5b66\u4e60\u4ea4\u6d41\u7fa4'}, {'isCurrentPage': false, 'href': 'https://zelikk.blogspot.com/p/develop.html', 'id': '4414266610010988869', 'title': '\u7f16\u7a0b'}, {'isCurrentPage': false, 'href': 'https://zelikk.blogspot.com/p/think.html', 'id': '7663408623267211075', 'title': '\u968f\u60f3'}, {'isCurrentPage': false, 'href': 'https://zelikk.blogspot.com/p/life.html', 'id': '6744309649189097908', 'title': '\u751f\u6d3b'}, {'isCurrentPage': false, 'href': 'https://zelikk.blogspot.com/p/vpn.html', 'id': '2840163553699335765', 'title': 'VPN\x26amp;VPS'}, {'isCurrentPage': false, 'href': 'https://zelikk.blogspot.com/p/cases.html', 'id': '2695569657515918544', 'title': '\u6848\u4f8b'}, {'isCurrentPage': false, 'href': 'https://zelikk.blogspot.com/p/others.html', 'id': '7789921389267922438', 'title': '\u5176\u5b83'}], 'mobile': false, 'showPlaceholder': true, 'hasCurrentPage': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_FeaturedPostView', new _WidgetInfo('FeaturedPost1', 'page_body', document.getElementById('FeaturedPost1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'page_body', document.getElementById('Blog1'), {'cmtInteractionsEnabled': false, 'lightboxEnabled': true, 'lightboxModuleUrl': 'https://www.blogger.com/static/v1/jsbin/2264337555-lbx__zh_cn.js', 'lightboxCssUrl': 'https://www.blogger.com/static/v1/v-css/828616780-lightbox_bundle.css'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_PopularPostsView', new _WidgetInfo('PopularPosts1', 'page_body', document.getElementById('PopularPosts1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AttributionView', new _WidgetInfo('Attribution1', 'footer', document.getElementById('Attribution1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML2', 'sidebar_bottom', document.getElementById('HTML2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LabelView', new _WidgetInfo('Label1', 'sidebar_bottom', document.getElementById('Label1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar_bottom', document.getElementById('BlogArchive1'), {'languageDirection': 'ltr', 'loadingMessage': '\u6b63\u5728\u52a0\u8f7d\u2026'}, 'displayModeFull'));
+</script>
+</body>
+</html>

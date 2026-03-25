@@ -1,0 +1,22 @@
+{
+  "agent_name": "主Agent-Main",
+  "updated_at": "2026-03-25T17:29:00+08:00",
+  "memory_items": [
+    {
+      "topic": "用户出口规则",
+      "summary": "只有主Agent 可以直接对用户输出，内部 agent 只能回传结构化结果。",
+      "source": "SKILL.md",
+      "confidence": 0.98,
+      "last_verified_at": "2026-03-25T16:20:00+08:00",
+      "tags": ["policy", "messaging"]
+    },
+    {
+      "topic": "默认接管目标态",
+      "summary": "复杂任务默认先到主Agent，再判断是否扩成多会话；默认常驻角色只有主Agent、审核Agent、检查Agent、AgentPool。",
+      "source": "安装与使用.md",
+      "confidence": 0.95,
+      "last_verified_at": "2026-03-25T16:20:00+08:00",
+      "tags": ["takeover", "runtime"]
+    }
+  ]
+}

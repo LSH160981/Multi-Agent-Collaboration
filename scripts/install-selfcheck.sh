@@ -34,10 +34,12 @@ done
 
 echo "[INFO] OpenClaw 原生命令参考：openclaw help / openclaw agent --help / openclaw sessions --help / openclaw agents --help"
 echo "[INFO] 若要看到原生命令 /mac，请确认 skills/mac 已作为 user-invocable skill 安装。"
+echo "[INFO] 推荐配置前提：tools.agentToAgent.enabled=true，并把允许通信的 agent id 写入 tools.agentToAgent.allow。"
 
 echo "[TODO] 建议按以下顺序验收："
 echo "       1. 握手测试:  $REPO_ROOT/scripts/test_agent_handshake.py"
 echo "       2. 静默任务:  $REPO_ROOT/scripts/test_silent_task.py"
-echo "       3. 恢复测试:  $REPO_ROOT/scripts/test_recovery_pipeline_smoke.py"
-echo "       4. 原生demo:  $REPO_ROOT/scripts/runtime_sessions.py \"/mac 调研最近 30 天值得关注的 OpenClaw 多Agent 项目\""
-echo "       5. 查看文档:  cat $REPO_ROOT/docs/测试脚本.md"
+echo "       3. runtime smoke: $REPO_ROOT/scripts/test_runtime_orchestrator_smoke.py"
+echo "       4. 恢复测试:  $REPO_ROOT/scripts/test_recovery_pipeline_smoke.py"
+echo "       5. 原生demo:  $REPO_ROOT/scripts/runtime_sessions.py \"/mac 调研最近 30 天值得关注的 OpenClaw 多Agent 项目\""
+echo "       6. 查看文档:  cat $REPO_ROOT/docs/测试脚本.md"

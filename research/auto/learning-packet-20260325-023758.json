@@ -1,0 +1,47 @@
+{
+  "generated_at": "20260325-023758",
+  "sources": [
+    {
+      "name": "openclaw-docs-pi",
+      "kind": "url",
+      "url": "https://docs.openclaw.ai/zh-CN/pi",
+      "status": "ok",
+      "chars": 1221681,
+      "saved_to": "/root/.openclaw/workspace/Multi-Agent-Collaboration/research/auto/raw/openclaw-docs-pi-20260325-023758.html"
+    },
+    {
+      "name": "clawhub-agent-team-orchestration",
+      "kind": "url",
+      "url": "https://clawhub.ai/arminnaimi/agent-team-orchestration",
+      "status": "ok",
+      "chars": 39721,
+      "saved_to": "/root/.openclaw/workspace/Multi-Agent-Collaboration/research/auto/raw/clawhub-agent-team-orchestration-20260325-023758.html"
+    },
+    {
+      "name": "clawhub-agent-directory",
+      "kind": "url",
+      "url": "https://clawhub.ai/aerialcombat/agent-directory",
+      "status": "ok",
+      "chars": 28953,
+      "saved_to": "/root/.openclaw/workspace/Multi-Agent-Collaboration/research/auto/raw/clawhub-agent-directory-20260325-023758.html"
+    },
+    {
+      "name": "blog-openclaw-tui-agent",
+      "kind": "url",
+      "url": "https://zelikk.blogspot.com/2026/03/openclaw-tui-agent.html",
+      "status": "ok",
+      "chars": 127936,
+      "saved_to": "/root/.openclaw/workspace/Multi-Agent-Collaboration/research/auto/raw/blog-openclaw-tui-agent-20260325-023758.html"
+    },
+    {
+      "name": "blog-openclaw-tui-agent-cooperate",
+      "kind": "url",
+      "url": "https://zelikk.blogspot.com/2026/03/openclaw-tui-agent-cooperate.html",
+      "status": "ok",
+      "chars": 145870,
+      "saved_to": "/root/.openclaw/workspace/Multi-Agent-Collaboration/research/auto/raw/blog-openclaw-tui-agent-cooperate-20260325-023758.html"
+    }
+  ],
+  "summary_path": "/root/.openclaw/workspace/Multi-Agent-Collaboration/research/auto/learning-summary-20260325-023758.md",
+  "review_result": null
+}

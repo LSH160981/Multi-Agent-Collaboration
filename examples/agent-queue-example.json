@@ -1,0 +1,17 @@
+{
+  "task_id": "TASK-20260325-QUEUE-001",
+  "title": "多会话运行时闭环补强",
+  "status": "in_progress",
+  "from": "主Agent-Main",
+  "to": "A组-组长-Lead",
+  "goal": "补齐 review 与 final brief 收口结构并完成最小回归",
+  "inputs": ["runtime-results.json", "review-result.json", "schema 现状"],
+  "constraints": ["禁止非主Agent联系用户", "保持 staged runtime 兼容"],
+  "deliverables": ["schema 文件", "示例 JSON", "README 索引更新"],
+  "current_step": "已新增 final brief 相关 schema，正在统一队列/日志/记忆约定",
+  "last_action_at": "2026-03-25T17:28:00+08:00",
+  "blockers": [],
+  "artifacts": ["schemas/final-brief.schema.json", "examples/final-brief-example.json"],
+  "verification": ["最小 JSON 解析校验", "README 索引抽查"],
+  "next_step": "补齐 queue/log/memory/capability schema 与样例"
+}

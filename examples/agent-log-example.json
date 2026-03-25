@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-03-25T17:30:00+08:00",
+  "task_id": "TASK-20260325-QUEUE-001",
+  "agent": "检查Agent-Inspect",
+  "action": "巡检 runtime 收口产物是否齐备",
+  "result": "已确认 review-scorecard 与 final-brief 均有 schema 与示例文件",
+  "issue": "queue/log/memory/capability 结构此前未统一",
+  "next_step": "补齐剩余 schema 并更新 README",
+  "artifacts": [
+    "schemas/final-brief.schema.json",
+    "examples/final-brief-example.json",
+    "schemas/agent-queue.schema.json"
+  ],
+  "session_key": "sess_demo_inspect_001"
+}

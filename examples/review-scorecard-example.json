@@ -1,0 +1,10 @@
+{
+  "task_id": "TASK-20260325-001",
+  "group": "GROUP-A",
+  "reviewer_score": 26,
+  "judge_score": 60,
+  "metrics_score": 23,
+  "total_score": 109,
+  "decision": "pass",
+  "notes": "功能完整，验证步骤清晰，建议继续优化恢复分支与文档收口。"
+}

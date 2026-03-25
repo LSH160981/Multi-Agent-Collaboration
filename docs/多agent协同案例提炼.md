@@ -109,6 +109,7 @@
 
 ### 规则 7：自学习必须先 research，后审核，再吸收
 不能直接让自动化脚本野蛮修改主 skill。
+必须遵守：抓取外部资料 → 落 `research/` → 审核Agent 给出 should_absorb / code_first / doc_first → 主Agent 决定改 skill/docs/scripts → git 提交。
 
 ---
 

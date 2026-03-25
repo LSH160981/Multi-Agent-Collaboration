@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FinalBrief",
+  "type": "object",
+  "required": [
+    "task_id",
+    "final_summary",
+    "key_points",
+    "risks",
+    "next_steps",
+    "dedupe_notes"
+  ],
+  "properties": {
+    "task_id": { "type": "string" },
+    "review_decision": { "type": "string", "enum": ["pass", "rework", "reject"] },
+    "winner": { "type": "string", "enum": ["A", "B", "tie", "single"] },
+    "final_summary": { "type": "string" },
+    "key_points": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "risks": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "next_steps": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "dedupe_notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "sources": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "user_visible": { "type": "boolean" }
+  }
+}

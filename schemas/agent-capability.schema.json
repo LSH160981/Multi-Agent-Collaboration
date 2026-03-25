@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent Capability",
+  "type": "object",
+  "required": ["agent_name", "role", "strengths"],
+  "properties": {
+    "agent_name": { "type": "string" },
+    "role": { "type": "string" },
+    "strengths": { "type": "array", "items": { "type": "string" } },
+    "weaknesses": { "type": "array", "items": { "type": "string" } },
+    "preferred_tasks": { "type": "array", "items": { "type": "string" } },
+    "avoid_tasks": { "type": "array", "items": { "type": "string" } },
+    "tooling": { "type": "array", "items": { "type": "string" } },
+    "notes": { "type": "string" }
+  }
+}

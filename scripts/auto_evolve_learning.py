@@ -41,8 +41,33 @@ def build_local_summary(items: list[dict]) -> str:
         "2. 哪些只是参考，不应直接照搬？",
         "3. 哪些点需要补代码而不是补文档？",
         "4. 哪些点会和主Agent唯一出口规则冲突？",
+        "5. 如果要吸收，应该改哪些文件？",
     ]
     return "\n".join(lines) + "\n"
+
+
+def build_evolve_plan(review_result: dict | None) -> dict:
+    if not isinstance(review_result, dict):
+        return {
+            "status": "needs-review",
+            "targets": ["research/README.md", "docs/多agent协同案例提炼.md", "docs/自动学习与审核后自进化.md"],
+            "actions": ["等待审核Agent给出 should_absorb/code_first/doc_first 结论"],
+        }
+    text = json.dumps(review_result, ensure_ascii=False)
+    targets = ["research/README.md", "docs/多agent协同案例提炼.md"]
+    if "code_first" in text:
+        targets += ["scripts/runtime_orchestrator.py", "scripts/protocol_lib.py", "scripts/staffing_decision.py"]
+    if "doc_first" in text:
+        targets += ["skills/Multi-Agent-Collaboration/SKILL.md", "docs/项目骨架与逻辑执行流程.md"]
+    return {
+        "status": "reviewed",
+        "targets": targets,
+        "actions": [
+            "先把外部观点整理进 research",
+            "再由主Agent审核是否更新 skill/docs/scripts",
+            "涉及运行逻辑时优先小步提交",
+        ],
+    }
 
 
 def main():
@@ -78,19 +103,22 @@ def main():
         "sources": items,
         "summary_path": str(summary_path),
         "review_result": None,
+        "evolve_plan": None,
     }
 
     if args.with_review:
         prompt = (
             "你是审核Agent。请审查这批自动学习候选资料。只输出 JSON："
-            '{"should_absorb":[""],"should_not_absorb":[""],"code_first":[""],"doc_first":[""],"risks":[""]}'
+            '{"should_absorb":[""],"should_not_absorb":[""],"code_first":[""],"doc_first":[""],"risks":[""],"file_targets":[""]}'
             + "\n\n"
             + summary_md
         )
         packet["review_result"] = run_openclaw_agent(args.review_agent, prompt, timeout=300)
 
+    packet["evolve_plan"] = build_evolve_plan(packet.get("review_result"))
+
     write_json(outdir / f"learning-packet-{stamp}.json", packet)
-    print(json.dumps({"status": "ok", "summary": str(summary_path), "review": bool(args.with_review)}, ensure_ascii=False, indent=2))
+    print(json.dumps({"status": "ok", "summary": str(summary_path), "review": bool(args.with_review), "evolve_plan": packet['evolve_plan']}, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

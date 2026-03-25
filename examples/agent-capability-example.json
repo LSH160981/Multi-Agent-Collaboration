@@ -1,0 +1,10 @@
+{
+  "agent_name": "审核Agent-Review",
+  "role": "Reviewer",
+  "strengths": ["结果比较", "风险识别", "驳回条件提炼"],
+  "weaknesses": ["不适合直接承担大规模执行工作"],
+  "preferred_tasks": ["review scorecard", "A/B 仲裁", "收口前复核"],
+  "avoid_tasks": ["直接对用户发言", "长链路并行执行"],
+  "tooling": ["scorecard schema", "final brief", "review templates"],
+  "notes": "适合做最后一轮质量门，不适合作为默认用户出口。"
+}

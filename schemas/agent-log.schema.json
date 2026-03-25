@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent Log Entry",
+  "type": "object",
+  "required": ["timestamp", "task_id", "agent", "action", "result"],
+  "properties": {
+    "timestamp": { "type": "string" },
+    "task_id": { "type": "string" },
+    "agent": { "type": "string" },
+    "action": { "type": "string" },
+    "result": { "type": "string" },
+    "issue": { "type": "string" },
+    "next_step": { "type": "string" },
+    "artifacts": { "type": "array", "items": { "type": "string" } },
+    "session_key": { "type": "string" }
+  }
+}

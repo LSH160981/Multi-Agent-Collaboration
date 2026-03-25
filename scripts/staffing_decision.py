@@ -65,13 +65,7 @@ def decide_member(member: dict) -> dict:
     }
 
 
-def main():
-    parser = argparse.ArgumentParser(description="Decide reuse vs hire for group members")
-    parser.add_argument("group_plan_json")
-    parser.add_argument("--output")
-    args = parser.parse_args()
-
-    group_plan = json.loads(Path(args.group_plan_json).read_text(encoding="utf-8"))
+def build_staffing_decision(group_plan: dict) -> dict:
     result = {
         "task_id": group_plan.get("task_id"),
         "decisions": [],
@@ -84,7 +78,17 @@ def main():
             result["summary"][item["decision"]] += 1
             decided.append(item)
         result["decisions"].append({"group": group.get("group"), "members": decided})
+    return result
 
+
+def main():
+    parser = argparse.ArgumentParser(description="Decide reuse vs hire for group members")
+    parser.add_argument("group_plan_json")
+    parser.add_argument("--output")
+    args = parser.parse_args()
+
+    group_plan = json.loads(Path(args.group_plan_json).read_text(encoding="utf-8"))
+    result = build_staffing_decision(group_plan)
     rendered = json.dumps(result, ensure_ascii=False, indent=2)
     if args.output:
         Path(args.output).write_text(rendered + "\n", encoding="utf-8")

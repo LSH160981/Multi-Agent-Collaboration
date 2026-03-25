@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent Memory",
+  "type": "object",
+  "required": ["agent_name", "updated_at", "memory_items"],
+  "properties": {
+    "agent_name": { "type": "string" },
+    "updated_at": { "type": "string" },
+    "memory_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["topic", "summary", "source"],
+        "properties": {
+          "topic": { "type": "string" },
+          "summary": { "type": "string" },
+          "source": { "type": "string" },
+          "confidence": { "type": "number" },
+          "last_verified_at": { "type": "string" },
+          "tags": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}
