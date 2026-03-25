@@ -1,4 +1,18 @@
 #!/usr/bin/env python3
+"""protocol_lib.py
+
+Multi-Agent-Collaboration 的协议辅助库。
+
+职责：
+- 从主 skill 的 `通信协议.json` 读取协议定义。
+- 构造标准消息：task_assign / review_scorecard / recovery_action 等。
+- 做轻量字段校验，减少上层脚本拼错 JSON 协议的概率。
+
+说明：
+- 协议本体在 `skills/Multi-Agent-Collaboration/通信协议.json`。
+- 本文件只负责“按协议组装消息”，不负责具体调度。
+"""
+
 import json
 from datetime import datetime, timezone
 from pathlib import Path

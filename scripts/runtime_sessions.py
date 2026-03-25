@@ -1,4 +1,18 @@
 #!/usr/bin/env python3
+"""runtime_sessions.py
+
+原生 session 风格演示脚本。
+
+用途：
+- 用最少角色跑通主Agent / AgentPool / 审核Agent / 检查Agent 的一轮示例协作。
+- 输出 native-session-results.json，便于人工审计和自动化测试。
+
+注意：
+- 当前实现仍使用 CLI 作为适配层，因此它是“原生 session 风格 demo”，
+  而不是平台内部实现本身。
+- 该脚本更适合作为验收/展示工具，而不是长期生产调度器。
+"""
+
 import argparse
 import json
 import subprocess

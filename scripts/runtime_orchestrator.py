@@ -1,4 +1,25 @@
 #!/usr/bin/env python3
+"""runtime_orchestrator.py
+
+面向演示与回归测试的运行时总控脚本。
+
+职责：
+- 解析 `/mac` 输入为任务包
+- 生成编组与 staffing 决策
+- 驱动主Agent / AgentPool / 审核Agent / 检查Agent / worker 的一轮闭环
+- 将阶段性结果稳定落盘，便于 smoke test、恢复和人工审计
+
+非职责：
+- 不替代 OpenClaw 平台原生 session/tool 能力
+- 不承担长期守护进程职责
+- 不在这里实现所有业务策略
+
+设计原则：
+- 结果优先落盘
+- 部分阶段失败时仍保留中间状态
+- 尽量使用结构化 JSON 作为上下游协议
+"""
+
 import argparse
 import json
 from pathlib import Path

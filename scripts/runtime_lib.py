@@ -1,8 +1,27 @@
 #!/usr/bin/env python3
+"""runtime_lib.py
+
+OpenClaw runtime 调度辅助库。
+
+职责边界：
+1. 封装 `openclaw agent` / `openclaw sessions` 的基础调用。
+2. 提供 session 探测、最新 session 选择、恢复提示生成等公共能力。
+3. 保持轻量，不在这里混入具体业务编排逻辑。
+
+说明：
+- 这是仓库脚本层的适配库，不等同于 OpenClaw 平台原生能力本身。
+- 上层 orchestrator / smoke / recover 脚本可以依赖这里，但平台真实能力仍以 OpenClaw 为准。
+"""
+
 import json
 import subprocess
 from pathlib import Path
 from typing import Any
+
+
+# NOTE:
+# 这里故意保持函数粒度较小，方便后续在测试、恢复、编排脚本中复用，
+# 同时也更符合企业项目里“公共 runtime helper” 的职责划分。
 
 
 def _run(cmd: list[str]) -> str:

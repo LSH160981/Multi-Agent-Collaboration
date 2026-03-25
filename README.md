@@ -2,29 +2,40 @@
 
 **OpenClaw 原生多会话协作系统**
 
-不是“堆很多角色名”的文档仓库，而是：
+这个仓库的目标不是堆很多角色名，而是把下面这件事做扎实：
 
-- 以 **OpenClaw session** 作为 Agent 运行单元
-- 以 **主Agent** 作为唯一用户出口
-- 以 **AgentPool / 审核Agent / 检查Agent** 作为可按需启用的内部能力
-- 以 **`/mac`** 作为显式强制入口
-- 以 **复杂任务默认接管** 作为日常工作方式
+> 以 OpenClaw session 作为 Agent 运行单元，以主Agent 作为唯一用户出口，把复杂任务拆解、并行、审核、恢复、去重收口，最终形成一个更接近企业级多会话协作系统的工程骨架。
 
 ---
 
-## 你要的最终方向
+## 一句话理解
 
-这个 skill 的目标很明确：
+- **Agent = OpenClaw session**
+- **主Agent = 唯一用户出口**
+- **`/mac` = 强制进入多会话协作模式**
+- **复杂任务 = 默认接管**
+- **研究资料 = 先 research，再审核吸收，不直接污染主实现**
 
-> **安装后，普通复杂任务默认走它；用户也可以用 `/mac XXX` 显式进入多会话协作；整个系统最终变成 OpenClaw 原生多 session 的协作框架。**
+---
 
-也就是说：
+## 当前项目结构
 
-1. **默认接管复杂任务**
-2. **`/mac` 是显式命令入口**
-3. **Agent = OpenClaw session**
-4. **只有主Agent能和用户说话**
-5. **其他 agent 只做内部协作，不得直连用户**
+```text
+Multi-Agent-Collaboration/
+├── README.md
+├── docs/
+├── skills/
+├── scripts/
+├── schemas/
+├── examples/
+├── agents/
+├── templates/
+└── research/
+```
+
+详细说明看：
+- `docs/PROJECT_STRUCTURE.md`
+- `docs/CODE_REVIEW_NOTES.md`
 
 ---
 
@@ -44,184 +55,118 @@
 
 ---
 
-## 与别家方案的区别
+## 项目分层
 
-### 不是本地 JSON 自嗨
-本仓库已经开始接 OpenClaw 原生 runtime：
-- `openclaw agent`
-- `openclaw sessions`
-- 文档层面对应 `sessions_spawn` / `sessions_send` / `sessions_history` / `sessions_list`
+### 1. skills/
+真正给 OpenClaw 读取的 skill：
+- `skills/Multi-Agent-Collaboration/`
+- `skills/mac/`
 
-### 不是永久预建一堆空 agent
-安装后默认只保留：
-- 主Agent
-- 审核Agent
-- 检查Agent
-- AgentPool
+### 2. scripts/
+工程实现与测试脚本：
+- 安装与初始化
+- 协议与任务解析
+- runtime / session / 恢复
+- smoke / 回归 / 测试
 
-真正 specialist 在理解用户任务之后再按需生成或复用。
+### 3. docs/
+工程文档，而不是所有东西都堆在 README。
 
-### 不是所有 agent 都能碰用户
-主Agent 是**唯一**用户出口；其余 agent 一律禁止联系用户。
-
----
-
-## 入口方式
-
-### 方式 1：直接说复杂任务
-安装后，复杂任务默认按本 skill 方法论处理。
-
-### 方式 2：显式使用 `/mac`
-
-```text
-/mac 搜索 GitHub 最近 7 天 star 涨得最快的 10 个项目，总结共同特点
-```
-
-### 方式 3：点名 skill
-
-```text
-使用 Multi-Agent-Collaboration skill 完成 XXX 任务
-```
+### 4. research/
+外部资料、网页抓取、GitHub 参考、副本、自动学习材料。
 
 ---
 
-## 仓库里最值得先看的文件
+## 最重要的入口
 
-### 给使用者
+### 使用者先看
 - `skills/Multi-Agent-Collaboration/SKILL.md`
 - `skills/mac/SKILL.md`
+- `skills/Multi-Agent-Collaboration/安装与使用.md`
 - `docs/openclaw-agent-session-commands.md`
-- `docs/演示跑通手册.md`
-- `docs/测试脚本.md`
 
-### 给设计/开发者
+### 开发者先看
+- `docs/PROJECT_STRUCTURE.md`
+- `docs/CODE_REVIEW_NOTES.md`
 - `docs/项目骨架与逻辑执行流程.md`
-- `docs/多agent协同案例提炼.md`
-- `docs/对照手稿的落地差距清单.md`
-- `docs/runtime调度说明.md`
-- `docs/runtime闭环现状.md`
-- `docs/伪代码到代码映射.md`
+- `scripts/README.md`
 
-### 给学习者
+### 学习者先看
 - `research/README.md`
+- `docs/多agent协同外部资料提炼-20260326.md`
 - `research/web/*.md`
-- `research/github/repos/*`
 
 ---
 
 ## 快速开始
 
 ### 1. 初始化系统目录
-
 ```bash
 ./scripts/init-mac-system.sh
 ```
 
-### 2. 安装共享 skill 与 `/mac` 命令桥
-
+### 2. 安装主 skill 与 `/mac` 命令桥
 ```bash
 ./scripts/default-takeover-setup.sh
 ```
 
 ### 3. 运行自检
-
 ```bash
 ./scripts/install-selfcheck.sh
 ```
 
-### 4. 看 OpenClaw session / 命令参考
-
+### 4. 查看 OpenClaw session / 命令参考
 ```bash
 cat docs/openclaw-agent-session-commands.md
 ```
 
-### 5. 先跑握手测试
-
+### 5. 运行验收测试
 ```bash
 ./scripts/test_agent_handshake.py
-```
-
-### 6. 再跑静默任务测试
-
-```bash
 ./scripts/test_silent_task.py
-```
-
-### 7. 再跑恢复测试
-
-```bash
+./scripts/test_runtime_orchestrator_smoke.py
 ./scripts/test_recovery_pipeline_smoke.py
 ```
 
 ---
 
-## 默认运行策略
+## 当前工程判断
 
-### 简单任务
-主Agent 单会话完成，不强行拉团队。
-
-### 复杂任务
-主Agent 分析任务后决定：
-- 单组
-- 双组竞争
-- 是否需要 reviewer
-- 是否需要 inspect
-- 是否需要按需招聘 specialist
-
-### 已有团队时
-优先：`sessions_send`
-
-### 缺少角色时
-再考虑：`sessions_spawn`
-
----
-
-## `/mac` 命令目标
-
-你提的目标是：
-- TUI / GUI / TG 都要有 `/mac` 的效果
-- 安装后让用户感觉自己就在和这个 skill 的主Agent 对话
-
-本仓库当前实现方式是：
-
-1. `skills/mac/SKILL.md` 暴露为 `user-invocable` skill，支持 slash command 场景
-2. 即使平台侧没把 `/mac` 真注册出来，也要求把纯文本 `/mac xxx` 当成强触发词
-3. `default-takeover-setup.sh` 把主 skill 与 `/mac` 命令桥一起安装到共享 skill 目录
-4. 复杂任务默认由主 skill 接管
-
----
-
-## 项目现状
-
-现在它已经不是“概念手稿”，而是：
-
+这个仓库现在已经不是概念手稿，而是：
 - 有 skill
 - 有 `/mac` 命令桥
 - 有 agent 骨架目录
-- 有 research 资料库
+- 有研究资料库
 - 有 JSON A2A 样例
 - 有 runtime 调度原型
 - 有 inspect / recover 原型
 - 有自动化测试脚本
 - 有中文伪代码 / 执行流程 / 差距清单
 
-但也诚实地说：
+但也要诚实：
 
-> 真正的“长期自治公司化系统”还在持续推进中，重点仍然是把 `sessions_send` / `sessions_spawn` / `sessions_history` 串成更硬的原生闭环。
+> 它现在仍然处于“企业级骨架持续收敛期”，最重要的工作不是继续加角色，而是继续清理结构、统一协议、强化原生 session 闭环、减少重复实现。
 
 ---
 
-## 参考与致谢
+## 原则
 
-这个项目明确参考、学习并吸收了下列来源中的优秀思路：
+1. 只有主Agent 可以联系用户
+2. 已有会话优先复用，再考虑扩张
+3. 自学习先落 research，再审核吸收
+4. 文档、脚本、协议、示例要分层维护
+5. 不把 CLI 适配层误写成平台能力本身
 
+---
+
+## 致谢
+
+本项目明确学习并吸收了以下来源的优点：
 - OpenClaw 官方文档
 - OpenMOSS
 - OpenCrew
 - ClawTeam-OpenClaw
-- ClawHub 上的多 agent skill
+- ClawHub 多 agent skill
 - zelikk 的多 agent TUI 实战文章
 
-但最终目标不是复制别人，而是：
-
-> **把这些优点转译成 OpenClaw 原生多会话版的 Multi-Agent-Collaboration。**
+目标不是复制，而是把优点转译成 **OpenClaw 原生多会话版 Multi-Agent-Collaboration**。

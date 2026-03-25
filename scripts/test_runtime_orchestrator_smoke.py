@@ -1,4 +1,19 @@
 #!/usr/bin/env python3
+"""test_runtime_orchestrator_smoke.py
+
+runtime_orchestrator 的烟雾测试。
+
+测试目标：
+- 脚本可执行
+- 关键产物文件能落盘
+- runtime-results.json 中关键字段完整
+- 最终阶段能收敛到 stage3_done
+
+说明：
+- 这是偏集成测试的 smoke，不是纯单元测试。
+- 失败时尽量保留 stdout/stderr 与中间结果，便于回溯。
+"""
+
 import argparse
 import json
 import subprocess
