@@ -36,6 +36,7 @@ Multi-Agent-Collaboration/
 详细说明看：
 - `docs/PROJECT_STRUCTURE.md`
 - `docs/CODE_REVIEW_NOTES.md`
+- `docs/ENTRYPOINTS.md`
 - `docs/README.md`
 
 ---

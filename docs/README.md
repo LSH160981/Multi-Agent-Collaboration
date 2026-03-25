@@ -17,4 +17,5 @@
 ## 顶层文件
 - `PROJECT_STRUCTURE.md`：项目整体结构总纲
 - `CODE_REVIEW_NOTES.md`：本轮重构/审计结论
+- `ENTRYPOINTS.md`：正式入口矩阵
 - `目录结构设计.md`：中文目录设计说明

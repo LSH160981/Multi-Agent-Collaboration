@@ -43,7 +43,6 @@
 ## 5. 校验与测试
 - `validate_pipeline_state.py`
 - `validate_examples.py`
-- `generate-log-samples.py`
 - `test_agent_handshake.py`
 - `test_silent_task.py`
 - `test_runtime_orchestrator_smoke.py`
