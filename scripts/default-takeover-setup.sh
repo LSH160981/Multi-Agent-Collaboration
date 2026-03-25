@@ -22,11 +22,16 @@ cat <<EOF
 
 这代表：
 1. 所有本机 OpenClaw Agent 都能读到 Multi-Agent-Collaboration skill
-2. mac-system 目录已初始化
-3. 复杂任务现在可以默认按本 skill 的方法论处理
+2. /mac 已作为 user-invocable skill 暴露候选入口
+3. mac-system 目录已初始化
+4. 复杂任务现在可以默认按本 skill 的方法论处理
+5. 即使平台没有显式注册 /mac，纯文本 '/mac ...' 也应被视为强触发词
 
 建议下一步：
 - 运行: $REPO_ROOT/scripts/install-selfcheck.sh "$WORKSPACE"
+- 先跑握手测试: $REPO_ROOT/scripts/test_agent_handshake.py
+- 再跑静默任务: $REPO_ROOT/scripts/test_silent_task.py
+- 再跑恢复测试: $REPO_ROOT/scripts/test_recovery_pipeline_smoke.py
 - 新开一个 OpenClaw session
 - 发送: /mac 调研最近 30 天值得关注的 OpenClaw 多Agent 项目
 EOF

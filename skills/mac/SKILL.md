@@ -19,6 +19,7 @@ user-invocable: true
 - 主 Agent 仍然是唯一用户出口
 - 其他 session 只能做内部工作，禁止直接联系用户
 - 若任务信息不足，先补问关键约束，再进入拆解
+- 即使平台未显式展示 slash command，也要把纯文本 `/mac ...` 视为强触发词
 
 ## 处理规则
 
@@ -27,13 +28,14 @@ user-invocable: true
 1. 去掉 `/mac` 前缀
 2. 解析任务目标、约束、交付物、风险
 3. 判断是最小团队、A/B 双组，还是需要 reviewer / inspect / specialist
-4. 通过 OpenClaw 原生 session 能力执行协作：
+4. 优先复用已有 session / agent；缺角色时再扩张
+5. 通过 OpenClaw 原生 session 能力执行协作：
    - `sessions_spawn`
    - `sessions_send`
    - `sessions_list`
    - `sessions_history`
    - 必要时 `sessions_yield`
-5. 最终只输出一条去重后的用户可见结论
+6. 最终只输出一条去重后的用户可见结论
 
 ## 输出纪律
 
@@ -47,5 +49,4 @@ user-invocable: true
 
 - `/mac` 是入口
 - `Multi-Agent-Collaboration` 是完整方法论与运行体系
-
-如果用户没有写 `/mac`，但任务明显复杂，也可以直接按 `Multi-Agent-Collaboration` 执行。
+- 用户不写 `/mac`，但任务明显复杂时，也可以默认按 Multi-Agent-Collaboration 执行

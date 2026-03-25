@@ -30,6 +30,9 @@ def main():
         "--main-agent", args.main_agent,
         "--pool-agent", args.pool_agent,
         "--inspect-agent", args.inspect_agent,
+        "--review-agent", args.review_agent,
+        "--worker-agent-a", args.worker_agent_a,
+        "--worker-agent-b", args.worker_agent_b,
         "--outdir", str(outdir),
     ])
     if args.stop_after == "stage1":

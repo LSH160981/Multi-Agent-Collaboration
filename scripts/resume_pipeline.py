@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import json
 import subprocess
 from pathlib import Path
 
@@ -22,7 +23,6 @@ def main():
     if not state_path.exists():
         raise SystemExit(f"state file not found: {state_path}")
 
-    import json
     state = json.loads(state_path.read_text(encoding="utf-8"))
     stage = state.get("stage")
 
@@ -34,8 +34,8 @@ def main():
             "--worker-agent-a", args.worker_agent_a,
             "--worker-agent-b", args.worker_agent_b,
         ])
-        stage = "stage2_done"
         state = json.loads(state_path.read_text(encoding="utf-8"))
+        stage = state.get("stage")
 
     if stage == "stage2_done":
         subprocess.check_call([
