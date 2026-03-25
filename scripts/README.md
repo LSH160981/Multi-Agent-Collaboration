@@ -46,7 +46,6 @@
 - `test_silent_task.py`
 - `test_runtime_orchestrator_smoke.py`
 - `test_recovery_pipeline_smoke.py`
-- `test_recovery_loop.py`
 - `test_stage3_smoke.py`
 
 ## 维护原则

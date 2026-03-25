@@ -50,6 +50,7 @@
 - `scripts/resume_pipeline.py`
 - `scripts/validate_examples.py`
 - `scripts/validate_pipeline_state.py`
+- `scripts/test_stage3_smoke.py`
 
 ## 已删除的重复旧入口
 
@@ -57,6 +58,7 @@
 - `scripts/demo_pipeline.py`
 - `scripts/generate-log-samples.py`
 - `scripts/full_runtime_demo.py`
+- `scripts/test_recovery_loop.py`
 
 删除原因：
 - 与现有主链路重复

@@ -12,7 +12,6 @@
 ### 自动测试
 - `scripts/test_agent_handshake.py`
 - `scripts/test_silent_task.py`
-- `scripts/test_recovery_loop.py`
 - `scripts/test_runtime_orchestrator_smoke.py`
 - `scripts/test_recovery_pipeline_smoke.py`
 - `scripts/test_stage3_smoke.py`
@@ -33,8 +32,7 @@
 目标：确认编组、派发、review、final、session_probe 等关键落盘结果存在。
 
 ### 第三层：恢复链路
-6. `scripts/test_recovery_loop.py`
-7. `scripts/test_recovery_pipeline_smoke.py`
+6. `scripts/test_recovery_pipeline_smoke.py`
 
 目标：确认 broken state、inspect、repair、resume 这条恢复链不断。
 
@@ -53,7 +51,6 @@
 | `test_silent_task.py` | 验证静默任务不会向用户泄漏过程噪音 | 静默调研链结果 |
 | `test_runtime_orchestrator_smoke.py` | 检查 task-packet/group-plan/staffing-decision/runtime-results 是否落盘 | smoke 通过/失败 |
 | `test_stage3_smoke.py` | 检查 review_result / final_result / session_probe 是否落盘 | stage3 收口结果 |
-| `test_recovery_loop.py` | 验证恢复测试基本闭环 | 恢复测试结果 |
 | `test_recovery_pipeline_smoke.py` | 验证 inspect → repair/resume → validate 整体闭环 | 恢复 pipeline smoke 结果 |
 | `session_probe.py` | 查看 agent 最近 session 与时效 | session 观测信息 |
 | `runtime_sessions.py` | 用原生 session 方式发起多会话任务 demo | session 调度结果 |
@@ -88,7 +85,6 @@
 
 ### 场景 C：恢复逻辑可疑
 先看：
-- `scripts/test_recovery_loop.py`
 - `scripts/test_recovery_pipeline_smoke.py`
 - `scripts/session_probe.py`
 
@@ -109,8 +105,6 @@
 - `scripts/session_probe.py`
 - `scripts/test_agent_handshake.py`
 - `scripts/test_silent_task.py`
-- `scripts/test_recovery_loop.py`
-
 并且还补齐了：
 - runtime orchestrator smoke
 - stage3 smoke
