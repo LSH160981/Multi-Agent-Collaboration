@@ -23,7 +23,6 @@
 - `runtime_dispatch.py`：通过 OpenClaw CLI 向 agent 发结构化任务
 - `runtime_orchestrator.py`：更完整的一轮 runtime 闭环
 - `runtime_sessions.py`：原生 session 风格 demo
-- `full_runtime_demo.py`：主Agent / AgentPool / Worker / 审核 / 检查 五段式 demo
 - `inspect_agents.py`：巡检 Agent 目录状态
 - `inspect_and_recover.py`：巡检并执行恢复动作
 - `session_probe.py`：探测当前 OpenClaw sessions，辅助排障与恢复
