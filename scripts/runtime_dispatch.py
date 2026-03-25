@@ -2,6 +2,8 @@
 import argparse
 import json
 from pathlib import Path
+
+from protocol_lib import build_task_assign, validate_message
 from runtime_lib import run_openclaw_agent, write_json
 
 
@@ -18,9 +20,24 @@ def main():
     parser.add_argument("--agent-id", required=True, help="OpenClaw agent id to receive this task")
     parser.add_argument("--output", help="Optional output JSON file")
     parser.add_argument("--timeout", type=int, default=600)
+    parser.add_argument("--auto-wrap-task-assign", action="store_true")
     args = parser.parse_args()
 
     payload = json.loads(Path(args.message_json).read_text(encoding="utf-8"))
+    if args.auto_wrap_task_assign and payload.get("message_type") is None:
+        payload = build_task_assign(
+            task_id=payload["task_id"],
+            from_agent=payload["from"],
+            to_agent=payload["to"],
+            goal=payload.get("goal", payload.get("summary", "")),
+            inputs=payload.get("inputs", []),
+            constraints=payload.get("constraints", []),
+            deliverables=payload.get("deliverables", []),
+            group=payload.get("group"),
+            strategy=payload.get("strategy"),
+            priority=payload.get("priority", "normal"),
+        )
+    validate_message(payload)
     result = run_openclaw_agent(args.agent_id, build_message(payload), timeout=args.timeout)
     rendered = {"agent_id": args.agent_id, "message": payload, "result": result}
 

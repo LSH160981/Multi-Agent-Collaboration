@@ -11,26 +11,35 @@ ROLE_MAP = {
 }
 
 
-def build_group(group_name: str, task_type: str):
+def build_group(group_name: str, task_type: str, strategy: str):
     specialists = ROLE_MAP.get(task_type, ROLE_MAP["mixed"])
-    members = [{"name": f"{group_name}组长-Lead", "role": "Lead"}]
+    members = [{"name": f"{group_name}组长-Lead", "role": "Lead", "boundary": "组内汇总，不直接联系用户"}]
     for role in specialists:
-        members.append({"name": f"{group_name}组-{role}", "role": role})
-    return {"group": group_name, "members": members}
+        members.append({
+            "name": f"{group_name}组-{role}",
+            "role": role,
+            "boundary": "只处理分配任务，不直接联系用户",
+        })
+    return {"group": group_name, "strategy": strategy, "members": members}
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Generate A/B group plan from task type")
+    parser = argparse.ArgumentParser(description="Generate group plan from task type and execution mode")
     parser.add_argument("task_packet", help="Path to task packet JSON")
     parser.add_argument("--output", help="Optional output JSON path")
     args = parser.parse_args()
 
     packet = json.loads(Path(args.task_packet).read_text(encoding="utf-8"))
     task_type = packet.get("task_type", "mixed")
+    execution_mode = packet.get("execution_mode", "single-group")
+    groups = [build_group("A", task_type, "stable")]
+    if execution_mode == "dual-group":
+        groups.append(build_group("B", task_type, "aggressive"))
     result = {
         "task_id": packet["task_id"],
         "task_type": task_type,
-        "groups": [build_group("A", task_type), build_group("B", task_type)]
+        "execution_mode": execution_mode,
+        "groups": groups,
     }
     rendered = json.dumps(result, ensure_ascii=False, indent=2)
     if args.output:
