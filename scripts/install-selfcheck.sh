@@ -6,6 +6,7 @@ SKILL_DIR="$WORKSPACE/skills/Multi-Agent-Collaboration"
 MAC_BRIDGE_DIR="$WORKSPACE/skills/mac"
 SHARED_MAC_BRIDGE_DIR="$HOME/.openclaw/skills/mac"
 MAC_DIR="$WORKSPACE/mac-system"
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
 printf '%s\n' '== Multi-Agent-Collaboration 自检 =='
 
@@ -31,9 +32,12 @@ for dir in "$MAC_DIR" "$MAC_DIR/agents" "$MAC_DIR/shared" "$MAC_DIR/tasks" "$MAC
   fi
 done
 
-echo "[INFO] 若要看到原生命令 /mac，请确认已安装 user-invocable skill: skills/mac"
-echo "[TODO] 请按 测试脚本.md 执行："
-echo "       1. Agent 两两握手测试"
-echo "       2. 静默任务测试"
-echo "       3. 恢复测试"
-echo "       4. 原生 session 调度 demo：./scripts/runtime_sessions.py \"/mac 调研最近 30 天值得关注的 OpenClaw 多Agent 项目\""
+echo "[INFO] OpenClaw 原生命令参考：openclaw help / openclaw agent --help / openclaw sessions --help / openclaw agents --help"
+echo "[INFO] 若要看到原生命令 /mac，请确认 skills/mac 已作为 user-invocable skill 安装。"
+
+echo "[TODO] 建议按以下顺序验收："
+echo "       1. 握手测试:  $REPO_ROOT/scripts/test_agent_handshake.py"
+echo "       2. 静默任务:  $REPO_ROOT/scripts/test_silent_task.py"
+echo "       3. 恢复测试:  $REPO_ROOT/scripts/test_recovery_pipeline_smoke.py"
+echo "       4. 原生demo:  $REPO_ROOT/scripts/runtime_sessions.py \"/mac 调研最近 30 天值得关注的 OpenClaw 多Agent 项目\""
+echo "       5. 查看文档:  cat $REPO_ROOT/docs/测试脚本.md"
