@@ -2,3 +2,6 @@ research/github/repos/
 *.log
 .DS_Store
 examples/generated/
+
+__pycache__/
+*.pyc
