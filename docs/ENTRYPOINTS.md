@@ -58,7 +58,6 @@
 - `scripts/demo_pipeline.py`
 - `scripts/generate-log-samples.py`
 - `scripts/full_runtime_demo.py`
-- `scripts/test_recovery_loop.py`
 
 删除原因：
 - 与现有主链路重复
