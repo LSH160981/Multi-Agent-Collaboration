@@ -19,37 +19,22 @@
 7. `mac任务包协议.md`
 8. `通信协议.json`
 
-补充资料再按需看：`references/`、`docs/`、`examples/`、`schemas/`、`scripts/`。
+补充资料再按需看：
+- `references/`
+- 仓库根目录下的 `docs/`
+- 仓库根目录下的 `examples/`
+- 仓库根目录下的 `schemas/`
+- 仓库根目录下的 `scripts/`
 
-## 说明
+## 当前 skill 层的固定边界
 
-本 skill 在设计上明确借鉴了 OpenMOSS 的优秀思路，尤其是：
+- **默认接管复杂任务**，但不要把简单任务强行拆成大团队。
+- **只有主Agent可以面向用户输出**。
+- **核心常驻角色**：主Agent / 审核Agent / 检查Agent / AgentPool。
+- **specialist 按需创建或复用**，不默认常驻。
+- **恢复先收敛出口，再 probe / 续跑 / 重派 / 重建。**
 
-- 多 Agent 协作工作台式组织方式
-- 规划 / 执行 / 审查 / 巡查 四角闭环
-- 任务拆解、评分、巡检、恢复逻辑
-
-但本 skill 的最终实现目标不是复刻 OpenMOSS，而是：
-
-**把这些优点落到 OpenClaw 原生多会话体系里。**
-
-也就是说：
-- OpenMOSS 给了我们重要启发
-- OpenClaw session 是我们的运行实体
-- 主Agent唯一对用户输出是我们的硬约束
-
-参考：
-- OpenMOSS: https://github.com/uluckyXH/OpenMOSS
-
-## 当前主文档已经明确的几件事
-
-- **默认接管**：复杂任务默认先到主Agent，再决定是否扩成多会话
-- **唯一用户出口**：只有主Agent 可以面向用户输出
-- **核心角色**：主Agent / 审核Agent / 检查Agent / AgentPool
-- **恢复底线**：先收敛出口，再 probe/催办/续跑，最后才重派或重建
-- **目录分层**：主文档层、参考层、schema/examples/scripts 分层已固定
-
-## 核心文件
+## skill 内核心文件
 
 - `SKILL.md`：主 skill 说明与硬约束
 - `安装与使用.md`：安装、入口、安装后测试
@@ -61,4 +46,11 @@
 - `mac任务包协议.md`：`/mac` 任务包协议
 - `自动自学习方案.md`：周期学习机制
 - `测试脚本.md`：安装后测试模板
-- `../../docs/openclaw-agent-session-commands.md`：OpenClaw agent session / slash commands 参考
+
+## 参考定位
+
+本 skill 在设计上明确借鉴了 OpenMOSS、多 Agent 工作台、A/B 对比、审查与巡检闭环等优秀思路。
+
+但最终目标不是复刻外部项目，而是：
+
+**把这些优点落到 OpenClaw 原生多会话体系里。**
