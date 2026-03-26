@@ -8,6 +8,8 @@
 - `../../scripts/test_silent_task.py`：静默任务回归测试
 - `../../scripts/test_recovery_pipeline_smoke.py`：恢复链路 smoke
 - `../../scripts/session_probe.py`：session 观测与排障
+- `../../scripts/test_session_probe_example.py`：校验 session-probe 固定样例结构
+- `session-probe-example.json`：session_probe 输出样例（含 probe / resume / redispatch / rebuild）
 - `agent-map.example.json`：目录角色到 OpenClaw agent id 的映射样例
 
 建议未来结合：

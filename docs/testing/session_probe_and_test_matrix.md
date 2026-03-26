@@ -40,7 +40,7 @@
 - `scripts/session_probe.py`
 - `scripts/runtime_sessions.py`
 
-目标：当测试失败或运行期卡住时，查看最近 session、定位 stale、辅助决定催办/重派/重建。
+目标：当测试失败或运行期卡住时，查看最近 session、定位 stale，并根据输出的 `probe / resume / redispatch / rebuild` 建议决定下一步动作。
 
 ## 3. 各脚本职责
 
@@ -52,7 +52,7 @@
 | `test_runtime_orchestrator_smoke.py` | 检查 task-packet/group-plan/staffing-decision/runtime-results 是否落盘 | smoke 通过/失败 |
 | `test_stage3_smoke.py` | 检查 review_result / final_result / session_probe 是否落盘 | stage3 收口结果 |
 | `test_recovery_pipeline_smoke.py` | 验证 inspect → repair/resume → validate 整体闭环 | 恢复 pipeline smoke 结果 |
-| `session_probe.py` | 查看 agent 最近 session 与时效 | session 观测信息 |
+| `session_probe.py` | 查看 agent 最近 session、时效与推荐动作 | session 观测信息（含 probe / resume / redispatch / rebuild 建议） |
 | `runtime_sessions.py` | 用原生 session 方式发起多会话任务 demo | session 调度结果 |
 
 ## 4. 推荐最小验收组合

@@ -25,7 +25,7 @@
 - `runtime_sessions.py`：原生 session 风格 demo
 - `inspect_agents.py`：巡检 Agent 目录状态
 - `inspect_and_recover.py`：巡检并执行恢复动作
-- `session_probe.py`：探测当前 OpenClaw sessions，辅助排障与恢复
+- `session_probe.py`：探测当前 OpenClaw sessions，输出 age_minutes 与 `probe / resume / redispatch / rebuild` 建议，辅助排障与恢复
 - `repair_pipeline_state.py`：修复最小 pipeline state
 - `resume_pipeline.py`：继续推进已有 pipeline
 - `run_staged_pipeline.py`：统一入口，串起 stage1 → stage2 → stage3

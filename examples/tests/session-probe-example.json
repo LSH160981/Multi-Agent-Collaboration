@@ -1,0 +1,33 @@
+{
+  "session_count": 3,
+  "stale_minutes": 30,
+  "action_legend": {
+    "probe": "缺少足够时效信息，先观察",
+    "resume": "最近 session 仍新鲜，优先续跑",
+    "redispatch": "session 偏旧，优先重派当前任务",
+    "rebuild": "session 长期 stale，优先重建链路"
+  },
+  "sessions": [
+    {
+      "key": "agent:main-ceo:main",
+      "agentId": "main-ceo",
+      "ageMs": 300000,
+      "age_minutes": 5.0,
+      "recommended_action": "resume"
+    },
+    {
+      "key": "agent:exec-worker-1:main",
+      "agentId": "exec-worker-1",
+      "ageMs": 7200000,
+      "age_minutes": 120.0,
+      "recommended_action": "redispatch"
+    },
+    {
+      "key": "agent:review-judge:old-run",
+      "agentId": "review-judge",
+      "ageMs": 21600000,
+      "age_minutes": 360.0,
+      "recommended_action": "rebuild"
+    }
+  ]
+}

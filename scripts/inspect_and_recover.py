@@ -80,6 +80,20 @@ def maybe_run(cmd_str: str):
     return subprocess.check_output(cmd_str, shell=True, text=True, stderr=subprocess.STDOUT)
 
 
+def recommend_session_action(session_info, stale_minutes: int):
+    if session_info is None:
+        return "rebuild"
+    age_ms = session_info.get("ageMs")
+    if age_ms is None:
+        return "probe"
+    age_minutes = age_ms / 60000.0
+    if age_minutes <= stale_minutes:
+        return "resume"
+    if age_minutes <= stale_minutes * 4:
+        return "redispatch"
+    return "rebuild"
+
+
 def main():
     parser = argparse.ArgumentParser(description="Inspect agents and optionally send recovery nudges through real OpenClaw agents")
     parser.add_argument("workspace", help="OpenClaw workspace path")
@@ -125,13 +139,21 @@ def main():
         if item["status"] in {"stale", "watch"}:
             mapped_agent_id = agent_map.get(item["agent"])
             session_info = newest_session_for_agent(mapped_agent_id) if mapped_agent_id else None
+            recommended_action = recommend_session_action(session_info, args.stale_minutes)
+            suggestion_map = {
+                "probe": "先观察 session 细节并确认是否真的卡住",
+                "resume": "优先续跑现有 session，避免重复派单",
+                "redispatch": "session 偏旧，优先重派当前任务并保留旧 session 供审计",
+                "rebuild": "session 长期 stale 或缺失，优先重建链路",
+            }
             action = {
                 "type": "agent_recover",
                 "agent_dir": item["agent"],
                 "mapped_agent_id": mapped_agent_id,
                 "issues": item["issues"],
                 "latest_session": session_info,
-                "suggestion": "发送唤醒消息并检查未完成任务；必要时重派或重建",
+                "recommended_action": recommended_action,
+                "suggestion": suggestion_map[recommended_action],
             }
             if args.execute and mapped_agent_id:
                 message = build_recovery_message(item["agent"], item["issues"], session_info)
