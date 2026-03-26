@@ -1,17 +1,29 @@
-# ClawHub - Agent Directory
+# ClawHub：Agent Directory（2026-03-26 抓取）
 
-来源: https://clawhub.ai/aerialcombat/agent-directory
-抓取时间: 2026-03-25
+来源：`https://clawhub.ai/aerialcombat/agent-directory`
+抓取方式：web_fetch
+说明：外部网页文本，作为学习资料落地保存。
 
-## 摘要
-- 提供了 `ctxly.com/services.json` 这样的 Agent 服务目录索引。
-- 强调“先发现服务，再读取对应 skill.md，再按 skill 接入”。
+---
 
-## 可借鉴点
-1. **目录化发现**：自动学习模块可以先查目录，再抓 skill。
-2. **skill.md 统一入口**：适合作为自学习的资料抓取对象。
-3. **服务分类**：social/chat/jobs/identity/memory/tokens/tools 这种分类方式，可借鉴到自学习标签体系。
+## 核心结论
 
-## 对本仓库的启发
-- 自动进化模块可以把 ClawHub / ctxly 风格目录作为“候选 skill 源”。
-- 抓取后先写本地 research，再由主Agent审核是否吸收进主 skill。
+这个页面更像“agent 服务目录”，价值不在 orchestration 本身，而在：
+
+1. 强调 skill/documentation 对 agent 可读性的重要性
+2. 强调“先发现服务，再读 skill，再决定如何集成”的流程
+
+## 对我们 skill 的启发
+
+- 自动学习模块不要直接乱搜乱改
+- 应先抓取 skill / 文档
+- 然后整理进 `research/`
+- 最后由审核Agent与主Agent决定是否吸收
+
+## 推荐闭环
+
+```text
+discover -> fetch skill/docs -> summarize -> review -> absorb
+```
+
+这正适合做成我们的“自学习但受审核”的机制。

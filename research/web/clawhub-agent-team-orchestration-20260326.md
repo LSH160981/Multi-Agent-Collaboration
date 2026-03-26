@@ -1,25 +1,50 @@
-# ClawHub：Agent Team Orchestration（抓取时间 2026-03-26）
+# ClawHub：Agent Team Orchestration（2026-03-26 抓取）
 
-来源：https://clawhub.ai/arminnaimi/agent-team-orchestration
+来源：`https://clawhub.ai/arminnaimi/agent-team-orchestration`
+抓取方式：web_fetch
+说明：外部网页文本，作为学习资料落地保存。
 
-## 本次提炼重点
+---
 
-- 最小有用团队 = orchestrator + builder + reviewer。
-- orchestrator 不亲自下场执行，而是负责路由、状态跟踪、结果汇报。
-- 任务要有清晰状态机：Inbox → Assigned → In Progress → Review → Done | Failed。
-- handoff 不能写空话，必须写清：做了什么、产物在哪里、怎么验证、已知问题、下一步。
-- 如果没有 review，质量很快漂移。
+## 核心结论
 
-## 对本仓库的直接启发
+这个 skill 最值得学习的，不是“大团队”，而是它先定义了 **最小有用团队**：
 
-1. 主Agent 不要兼做所有执行细节，要把“统筹”和“执行”严格分开。
-2. Reviewer 不能只是概念角色，必须是真可运行会话。
-3. 任务状态、handoff、产物路径、验证命令，都要进入 task packet 或评分卡。
-4. 最小团队原则很适合本 skill：默认先上小团队，确实需要时再扩到 A/B 双组。
+- Orchestrator
+- Builder
+- Reviewer（按需加）
 
-## 可转化为我们自己的规则
+并且把多 agent 协作推导成：
 
-- 主Agent：只做分析、派单、审核用户可见输出、去重。
-- Worker：必须交付结构化结果，不许“Done, check files.” 这种无效交接。
-- Reviewer：必须给出驳回理由和修正建议。
-- 任务失败是合法终点，但必须记录失败原因与恢复建议。
+```text
+角色 -> 状态机 -> handoff -> review -> 质量闭环
+```
+
+## 最值得吸收的点
+
+1. Orchestrator 只调度，不下场抢活
+2. Task state 必须有定义明确的生命周期
+3. Handoff 必须说清：做了什么 / 产物在哪 / 怎么验证 / 已知问题 / 下一步是谁接
+4. Reviewer 是阻止质量漂移的关键，不应省略
+5. Failed 是合法终态，而不是系统异常
+
+## 对我们 skill 的启发
+
+- 默认不要预建巨大团队
+- 先让最小闭环跑通
+- 再按需要扩成 A/B 双组竞争
+- 所有 agent-to-agent 消息都应该结构化
+- 所有 review 和 recovery 都应有明确定义
+
+## 可吸收到本 skill 的伪代码
+
+```text
+如果任务简单:
+  主Agent 单会话完成
+否则:
+  主Agent 拆任务
+  worker 产出
+  reviewer 检查
+  inspect 观察是否卡住
+  主Agent 最终收口
+```

@@ -96,7 +96,9 @@ Multi-Agent-Collaboration/
 ### 学习者先看
 - `research/README.md`
 - `docs/research/多agent协同外部资料提炼-20260326.md`
+- `docs/research/多agent协同优秀作品骨架与伪代码提炼-20260326.md`
 - `research/web/*.md`
+- `research/external/*`
 
 ---
 

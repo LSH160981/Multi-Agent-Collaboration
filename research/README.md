@@ -9,8 +9,8 @@
 ## 目录约定
 
 - `web/`：网页原文提炼与学习笔记
-- `github/repos/`：浅克隆下来的参考仓库
-- `notes/`：按主题整理的观察笔记
+- `external/`：本轮拉取到本地的 GitHub 参考仓库副本
+- `sources/`：主题化资料摘录与观察笔记
 - `auto/`：自动学习抓取、审核建议、吸收计划
 
 > 纪律：外部资料先进入 `research/`，不得直接跳过审核去修改主 skill。
@@ -35,6 +35,23 @@
 - OpenMOSS
 - ClawTeam-OpenClaw
 - zelikk 两篇博客
+
+## 本轮新增重点资料
+
+### 1. 已落地网页资料
+- `web/openclaw-docs-pi-20260326.md`
+- `web/clawhub-agent-team-orchestration-20260326.md`
+- `web/clawhub-agent-directory.md`
+- `web/zelikk-openclaw-tui-agent-20260326.md`
+- `web/zelikk-openclaw-tui-agent-cooperate-20260326.md`
+
+### 2. 已落地 GitHub 仓库副本
+- `external/opencrew/`
+- `external/OpenMOSS/`
+- `external/ClawTeam-OpenClaw/`
+
+### 3. 本轮新增综合提炼
+- `../docs/research/多agent协同优秀作品骨架与伪代码提炼-20260326.md`
 
 ## 本轮重点提炼
 

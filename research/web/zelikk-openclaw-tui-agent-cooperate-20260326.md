@@ -1,18 +1,33 @@
-# zelikk：OpenClaw TUI 中多 Agent 协同完成任务（抓取时间 2026-03-26）
+# zelikk：OpenClaw 命令行 TUI 中多 Agent 协同完成任务（2026-03-26 抓取）
 
-来源：https://zelikk.blogspot.com/2026/03/openclaw-tui-agent-cooperate.html
+来源：`https://zelikk.blogspot.com/2026/03/openclaw-tui-agent-cooperate.html`
+抓取方式：web_fetch
+说明：外部网页文本，作为学习资料落地保存。
 
-## 本次提炼重点
+---
 
-- 先让系统理解 OpenClaw 文档、agent 设置、agent 间通信，再做协作，是现实做法。
-- 多 Agent 协作前，必须先测试 agent-to-agent 通信是否正常。
-- 已有团队优先 `sessions_send`，不要动不动 `sessions_spawn`。
-- 调试时别混乱地新建 session；需要区分 agent 和 session 生命周期。
-- 作者明确记录了常见坑：label 参数误用、交付物目录不合理、模型跑飞、无响应、超时。
+## 核心结论
 
-## 对本仓库的直接启发
+这篇文章最有价值的不是成功案例，而是暴露了真实问题：
 
-1. 握手测试必须保留，而且要放在安装验收前列。
-2. 文档里要诚实写出当前已知坑，不要只写理想流程。
-3. `sessions_send` 复用优先，是本 skill 的硬规则之一。
-4. 交付目录、session 路由、恢复策略需要明确，不然公司化协作会很快失控。
+- agent-to-agent 通信很容易出错
+- `sessions_send` 的使用必须强调
+- session 混乱会直接拖垮协作
+- 先做通信测试，再做复杂任务
+- 交付物路径、session 绑定、角色约束都必须写死
+
+## 对我们 skill 的启发
+
+1. 安装后必须先做握手测试与互发测试
+2. 非主Agent 的交付物路径、能力边界、消息协议要写死
+3. 不要把复杂任务建立在“通信可能能用”的侥幸上
+4. `/new` 这类可能扰乱 session 的行为，在协作场景里要谨慎
+
+## 推荐加入本 skill 的流程纪律
+
+```text
+先看 agent/sessions 状态
+-> 再做 agent 间互发测试
+-> 再让 leader 派真实任务
+-> 通信不过，不进入复杂任务
+```
