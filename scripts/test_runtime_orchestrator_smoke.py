@@ -18,9 +18,31 @@ import argparse
 import json
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
+DEFAULT_RUNTIME_DIR = REPO / "examples" / "generated" / "runtime"
+
+
+def load_runtime_results(runtime_path: Path):
+    if not runtime_path.exists():
+        return {}
+    try:
+        return json.loads(runtime_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
+
+
+def wait_for_final_runtime(runtime_path: Path, timeout_seconds: int = 30, interval_seconds: float = 0.5):
+    started = time.time()
+    latest = load_runtime_results(runtime_path)
+    while time.time() - started < timeout_seconds:
+        latest = load_runtime_results(runtime_path)
+        if latest.get("status") == "ok" and latest.get("stage") == "stage3_done":
+            return latest, round(time.time() - started, 2)
+        time.sleep(interval_seconds)
+    return latest, round(time.time() - started, 2)
 
 
 def main():
@@ -59,10 +81,8 @@ def main():
         outdir / "runtime-results.json",
     ]
 
-    runtime_results = {}
     runtime_path = outdir / "runtime-results.json"
-    if runtime_path.exists():
-        runtime_results = json.loads(runtime_path.read_text(encoding="utf-8"))
+    runtime_results, wait_seconds = wait_for_final_runtime(runtime_path)
 
     required_runtime_keys = [
         "task_packet",
@@ -92,9 +112,11 @@ def main():
     report = {
         "task": args.task,
         "outdir": str(outdir),
+        "default_runtime_dir": str(DEFAULT_RUNTIME_DIR),
         "command_exit_code": proc.returncode,
         "command_stdout": proc.stdout[-4000:],
         "command_stderr": proc.stderr[-4000:],
+        "waited_for_final_seconds": wait_seconds,
         "checks": [{"path": str(p), "exists": p.exists()} for p in expected],
         "runtime_result_checks": {
             "present_keys": sorted(runtime_results.keys()),
@@ -108,7 +130,10 @@ def main():
             "status_ok": status_ok,
         },
     }
-    (outdir / "runtime-orchestrator-smoke-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    report_text = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
+    (outdir / "runtime-orchestrator-smoke-report.json").write_text(report_text, encoding="utf-8")
+    DEFAULT_RUNTIME_DIR.mkdir(parents=True, exist_ok=True)
+    (DEFAULT_RUNTIME_DIR / "runtime-orchestrator-smoke-report.json").write_text(report_text, encoding="utf-8")
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
     files_ok = all(p.exists() for p in expected)
