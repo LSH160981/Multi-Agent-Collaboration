@@ -84,7 +84,7 @@ Multi-Agent-Collaboration/
 ### 使用者先看
 - `skills/Multi-Agent-Collaboration/SKILL.md`
 - `skills/mac/SKILL.md`
-- `skills/Multi-Agent-Collaboration/安装与使用.md`
+- `skills/Multi-Agent-Collaboration/references/guides/安装与使用.md`
 - `docs/guides/openclaw-agent-session-commands.md`
 
 ### 开发者先看
@@ -121,7 +121,7 @@ Multi-Agent-Collaboration/
 
 ### 4. 查看 OpenClaw session / 命令参考
 ```bash
-cat docs/openclaw-agent-session-commands.md
+cat docs/guides/openclaw-agent-session-commands.md
 ```
 
 ### 5. 运行验收测试

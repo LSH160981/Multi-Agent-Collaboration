@@ -1,7 +1,13 @@
-research/github/repos/
-*.log
-.DS_Store
-examples/generated/
-
+# local caches
 __pycache__/
 *.pyc
+*.pyo
+*.log
+.DS_Store
+
+# generated outputs
+examples/generated/
+
+# heavyweight local research clones
+research/external/
+research/github/repos/
