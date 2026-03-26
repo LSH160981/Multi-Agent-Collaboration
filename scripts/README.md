@@ -48,6 +48,11 @@
 - `test_recovery_pipeline_smoke.py`
 - `test_stage3_smoke.py`
 
+### 测试链说明
+- `test_stage3_smoke.py` 现已支持**自动准备前置 stage1/stage2 状态**，不再要求手工先准备 `pipeline-state.json`
+- `test_runtime_orchestrator_smoke.py` 更适合验证完整 runtime orchestrator 闭环与落盘结果
+- `test_recovery_pipeline_smoke.py` 更适合验证 repair / resume 动作语义
+
 ## 维护原则
 - 新脚本必须写模块说明。
 - 能复用公共逻辑时，优先放进 `runtime_lib.py` / `protocol_lib.py`。
