@@ -94,9 +94,9 @@
 
 - `scripts/README.md`
 - `examples/tests/README.md`
-- `docs/openclaw-agent-session-commands.md`
-- `docs/runtime-orchestrator-smoke.md`
-- `skills/multi-agent-collaboration/安装与使用.md`
+- `docs/guides/openclaw-agent-session-commands.md`
+- `docs/testing/runtime-orchestrator-smoke.md`
+- `skills/multi-agent-collaboration/references/guides/安装与使用.md`
 
 ## 7. 收口结论
 

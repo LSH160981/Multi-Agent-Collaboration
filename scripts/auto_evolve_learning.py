@@ -50,15 +50,15 @@ def build_evolve_plan(review_result: dict | None) -> dict:
     if not isinstance(review_result, dict):
         return {
             "status": "needs-review",
-            "targets": ["research/README.md", "docs/多agent协同案例提炼.md", "docs/自动学习与审核后自进化.md"],
+            "targets": ["research/README.md", "docs/research/多agent协同案例提炼.md", "docs/自动学习与审核后自进化.md"],
             "actions": ["等待审核Agent给出 should_absorb/code_first/doc_first 结论"],
         }
     text = json.dumps(review_result, ensure_ascii=False)
-    targets = ["research/README.md", "docs/多agent协同案例提炼.md"]
+    targets = ["research/README.md", "docs/research/多agent协同案例提炼.md"]
     if "code_first" in text:
         targets += ["scripts/runtime_orchestrator.py", "scripts/protocol_lib.py", "scripts/staffing_decision.py"]
     if "doc_first" in text:
-        targets += ["skills/multi-agent-collaboration/SKILL.md", "docs/项目骨架与逻辑执行流程.md"]
+        targets += ["skills/multi-agent-collaboration/SKILL.md", "docs/architecture/项目骨架与逻辑执行流程.md"]
     return {
         "status": "reviewed",
         "targets": targets,

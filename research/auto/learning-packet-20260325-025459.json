@@ -369,12 +369,12 @@
     "status": "reviewed",
     "targets": [
       "research/README.md",
-      "docs/多agent协同案例提炼.md",
+      "docs/research/多agent协同案例提炼.md",
       "scripts/runtime_orchestrator.py",
       "scripts/protocol_lib.py",
       "scripts/staffing_decision.py",
       "skills/multi-agent-collaboration/SKILL.md",
-      "docs/项目骨架与逻辑执行流程.md"
+      "docs/architecture/项目骨架与逻辑执行流程.md"
     ],
     "actions": [
       "先把外部观点整理进 research",

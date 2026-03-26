@@ -1,20 +1,19 @@
 # 多 Agent 协同学习资料索引
 
-本目录用于沉淀：
-- 网页提取文本
-- GitHub 仓库结构与架构观察
-- ClawHub skill 方法论
-- 可复用的伪代码、运行流程、通信协议、恢复策略
+本目录只保留两类东西：
+- **值得持续参考的原始资料摘要**
+- **会影响主 skill / docs / scripts 演进的研究沉淀**
 
 ## 目录约定
 
-- `web/`：网页原文提炼与学习笔记
-- `external/`：本轮拉取到本地的 GitHub 参考仓库副本
-- `sources/`：主题化资料摘录与观察笔记
+- `web/`：网页资料的**保留版摘要**，优先保留带日期的新版本
+- `external/`：本地参考仓库副本（不作为主仓库实现的一部分）
+- `sources/`：主题化摘录与观察笔记
 - `auto/`：自动学习抓取、审核建议、吸收计划
+- 顶层 `*.md`：跨来源综合提炼
 
 > 纪律：外部资料先进入 `research/`，不得直接跳过审核去修改主 skill。
-> 正确闭环：抓取 → research 落盘 → 审核Agent判断 → 主Agent决定吸收 → git 记录。
+> 正确闭环：抓取 → research 落盘 → 审核判断 → 主 Agent 决定吸收 → git 记录。
 
 ## 当前重点主题
 
@@ -23,80 +22,29 @@
 3. A/B 双组竞争 + reviewer 裁决
 4. inspect / patrol / recover 闭环
 5. JSON 任务包与 agent-to-agent 通信
-6. 主Agent 唯一用户出口与去重治理
+6. 主 Agent 唯一用户出口与去重治理
 7. 自学习 / 自改进 / git 记忆压缩策略
 
-## 已纳入的参考来源
+## 保留策略
 
-- OpenClaw docs: Pi 集成架构
-- ClawHub: Agent Team Orchestration
-- ClawHub: Agent Directory
-- OpenCrew
-- OpenMOSS
-- ClawTeam-OpenClaw
-- zelikk 两篇博客
+- 同一网页有多份抓取时，优先保留**较新、带日期、信息更完整**的一份
+- 原始网页长文不直接大段塞仓库，只保留可复用摘要
+- GitHub 外部仓库主要用于学习，不把它们当主项目的一部分维护
 
-## 本轮新增重点资料
+## 当前建议优先阅读
 
-### 1. 已落地网页资料
+### 网页摘要
 - `web/openclaw-docs-pi-20260326.md`
 - `web/clawhub-agent-team-orchestration-20260326.md`
 - `web/clawhub-agent-directory.md`
 - `web/zelikk-openclaw-tui-agent-20260326.md`
 - `web/zelikk-openclaw-tui-agent-cooperate-20260326.md`
 
-### 2. 已落地 GitHub 仓库副本
-- `external/opencrew/`
-- `external/OpenMOSS/`
-- `external/ClawTeam-OpenClaw/`
-
-### 3. 本轮新增综合提炼
+### 综合提炼
+- `../docs/research/多agent协同外部资料提炼-20260326.md`
 - `../docs/research/多agent协同优秀作品骨架与伪代码提炼-20260326.md`
+- `多Agent协同提炼.md`
 
-## 本轮重点提炼
+## 结论
 
-### 1. OpenClaw 官方文档给出的硬边界
-- OpenClaw 已经原生提供 session / tools / skill / slash command 体系。
-- 所以本 skill 的正确方向不是“自己再实现一个假平台”，而是：
-  - 用 skill 约束方法论
-  - 用 `sessions_spawn` / `sessions_send` / `sessions_history` / `sessions_list` 串起真实协作
-  - 用 `user-invocable` skill 暴露 `/mac`
-
-### 2. ClawHub `agent-team-orchestration` 的优点
-- 最小有用团队 = orchestrator + builder + reviewer
-- 编排者只负责派单、追踪、汇报，不直接下场干活
-- 任务状态机清晰：Inbox → Assigned → In Progress → Review → Done | Failed
-- handoff 要写完整：产物、验证、问题、下一步
-
-### 3. OpenCrew 的优点
-- 用 shared protocol / workspace persona / task protocol 管理团队纪律
-- 把“谁可以给谁派单”写成硬规则
-- 强调 checkpoint / closeout / DoD
-
-### 4. ClawTeam-OpenClaw 的优点
-- 有可运行的 team lifecycle / mailbox / watcher / workspace git 管理骨架
-- 很适合借鉴到本 skill 的：
-  - mailbox / message log
-  - watcher / 巡检器
-  - team config 与成员边界
-  - git worktree / workspace 留痕
-
-### 5. zelikk 两篇博客给出的实战提醒
-- 复杂任务要切 agent，避免上下文污染
-- 先测试 agent-to-agent 通信，再开始复杂任务
-- 已有团队优先 `sessions_send`，缺角色才 `sessions_spawn`
-- TUI / 多 SSH 窗口观察 agent 是很好的调试方法
-- 要诚实记录坑：label 误用、session 路由、交付物目录、模型跑飞
-
-## 对本仓库的明确落地结论
-
-1. **主Agent永远只做统筹、审核用户可见输出、去重合并**
-2. **AgentPool 只负责招聘 / 复用 / 编组 / 角色边界，不直接越权联系用户**
-3. **已有角色优先 `sessions_send`，缺口角色再 `sessions_spawn`**
-4. **Reviewer 与 Inspect 都必须是可独立运行的 session，而不是只写在文档里**
-5. **每个阶段都要有状态文件 / 队列 / 日志 / 评分卡，方便恢复**
-6. **安装后必须先跑握手测试、静默任务测试、恢复测试，再进入长期使用**
-7. **自学习先写入 research，再由主Agent审核后吸收进主 skill，不能自动野蛮改仓库**
-
-> 原始资料不等于最终方案。
-> 这里的目标是：提取“能落地的优点”，再改造成 OpenClaw 原生多会话版本。
+`research/` 的目标不是“收藏一切”，而是给主 skill 的下一次演进留下高价值、低噪音的依据。
