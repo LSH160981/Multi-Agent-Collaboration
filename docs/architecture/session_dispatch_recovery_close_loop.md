@@ -22,7 +22,7 @@
 - `scripts/repair_pipeline_state.py`
 - `scripts/resume_pipeline.py`
 - `scripts/validate_pipeline_state.py`
-- `scripts/test_recovery_pipeline_smoke.py`
+- `tests/test_recovery_pipeline_smoke.py`
 
 ## 当前闭环已经能做到什么
 

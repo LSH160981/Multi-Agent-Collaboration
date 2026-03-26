@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 import argparse
 import json
+import sys
 from datetime import datetime
 from pathlib import Path
+
+REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO / "scripts"))
 
 from runtime_lib import run_openclaw_agent, write_json
 

@@ -397,19 +397,19 @@ AgentPool 的本质应该是：
 2. openclaw agents list（或在平台里确认已有 agent）
    看 main-ceo / pool-hr / review-judge / inspect-patrol 是否存在
 
-3. ./scripts/test_agent_handshake.py
+3. ./tests/test_agent_handshake.py
    测核心控制层会不会互相识别
 
 4. 用 TUI 的 /agent 切到不同 agent 看 session
    必要时多开几个 SSH/TUI 窗口观察
 
-5. ./scripts/test_silent_task.py
+5. ./tests/test_silent_task.py
    看静默任务时是否有中间噪音泄漏
 
-6. ./scripts/test_runtime_orchestrator_smoke.py
+6. ./tests/test_runtime_orchestrator_smoke.py
    看落盘与收口是否完整
 
-7. ./scripts/test_recovery_pipeline_smoke.py
+7. ./tests/test_recovery_pipeline_smoke.py
    看恢复链是否断
 ```
 

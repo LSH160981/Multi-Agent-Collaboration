@@ -15,4 +15,4 @@ done
 echo "已初始化：$ROOT"
 echo "建议下一步："
 echo "1. 运行 scripts/install-selfcheck.sh"
-echo "2. 按 skills/Multi-Agent-Collaboration/测试脚本.md 执行测试"
+echo "2. 按 skills/multi-agent-collaboration/测试脚本.md 执行测试"

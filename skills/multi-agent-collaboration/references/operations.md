@@ -4,7 +4,7 @@
 
 Install these skill directories into the OpenClaw workspace `skills/` folder:
 
-- `skills/Multi-Agent-Collaboration/`
+- `skills/multi-agent-collaboration/`
 - `skills/mac/` for the `/mac` command bridge
 
 Reload skills by starting a new session or restarting the gateway if needed.

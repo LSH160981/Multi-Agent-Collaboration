@@ -4,11 +4,11 @@
 
 ## 当前已保留的自动化脚本
 
-- `../../scripts/test_agent_handshake.py`：Agent 两两握手测试
-- `../../scripts/test_silent_task.py`：静默任务回归测试
-- `../../scripts/test_recovery_pipeline_smoke.py`：恢复链路 smoke
+- `../../tests/test_agent_handshake.py`：Agent 两两握手测试
+- `../../tests/test_silent_task.py`：静默任务回归测试
+- `../../tests/test_recovery_pipeline_smoke.py`：恢复链路 smoke
 - `../../scripts/session_probe.py`：session 观测与排障
-- `../../scripts/test_session_probe_example.py`：校验 session-probe 固定样例结构
+- `../../tests/test_session_probe_example.py`：校验 session-probe 固定样例结构
 - `session-probe-example.json`：session_probe 输出样例（含 probe / resume / redispatch / rebuild）
 - `agent-map.example.json`：目录角色到 OpenClaw agent id 的映射样例
 

@@ -9,7 +9,7 @@ Multi-Agent-Collaboration 的协议辅助库。
 - 做轻量字段校验，减少上层脚本拼错 JSON 协议的概率。
 
 说明：
-- 协议本体在 `skills/Multi-Agent-Collaboration/通信协议.json`。
+- 协议本体在 `skills/multi-agent-collaboration/references/protocols/通信协议.json`。
 - 本文件只负责“按协议组装消息”，不负责具体调度。
 """
 
@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Any
 
 REPO = Path(__file__).resolve().parent.parent
-PROTOCOL_PATH = REPO / "skills" / "Multi-Agent-Collaboration" / "通信协议.json"
+PROTOCOL_PATH = REPO / "skills" / "multi-agent-collaboration" / "references" / "protocols" / "通信协议.json"
 
 
 def load_protocol() -> dict[str, Any]:

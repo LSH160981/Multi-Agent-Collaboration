@@ -3,7 +3,7 @@
 新增测试脚本：
 
 ```bash
-./scripts/test_runtime_orchestrator_smoke.py
+./tests/test_runtime_orchestrator_smoke.py
 ```
 
 ## 目标

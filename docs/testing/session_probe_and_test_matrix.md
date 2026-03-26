@@ -10,29 +10,29 @@
 - `scripts/runtime_sessions.py`
 
 ### 自动测试
-- `scripts/test_agent_handshake.py`
-- `scripts/test_silent_task.py`
-- `scripts/test_runtime_orchestrator_smoke.py`
-- `scripts/test_recovery_pipeline_smoke.py`
-- `scripts/test_stage3_smoke.py`
+- `tests/test_agent_handshake.py`
+- `tests/test_silent_task.py`
+- `tests/test_runtime_orchestrator_smoke.py`
+- `tests/test_recovery_pipeline_smoke.py`
+- `tests/test_stage3_smoke.py`
 
 ## 2. 推荐执行顺序
 
 ### 第一层：安装后冒烟
 1. `scripts/install-selfcheck.sh`
-2. `scripts/test_agent_handshake.py`
-3. `scripts/test_silent_task.py`
+2. `tests/test_agent_handshake.py`
+3. `tests/test_silent_task.py`
 
 目标：确认技能、角色、基础多会话协作路径可用。
 
 ### 第二层：runtime 收口
-4. `scripts/test_runtime_orchestrator_smoke.py`
-5. `scripts/test_stage3_smoke.py`
+4. `tests/test_runtime_orchestrator_smoke.py`
+5. `tests/test_stage3_smoke.py`
 
 目标：确认编组、派发、review、final、session_probe 等关键落盘结果存在。
 
 ### 第三层：恢复链路
-6. `scripts/test_recovery_pipeline_smoke.py`
+6. `tests/test_recovery_pipeline_smoke.py`
 
 目标：确认 broken state、inspect、repair、resume 这条恢复链不断。
 
@@ -59,10 +59,10 @@
 
 如果只想快速判断“这套多会话系统是不是还活着”，最少跑这 4 个：
 
-1. `scripts/test_agent_handshake.py`
-2. `scripts/test_silent_task.py`
-3. `scripts/test_runtime_orchestrator_smoke.py`
-4. `scripts/test_recovery_pipeline_smoke.py`
+1. `tests/test_agent_handshake.py`
+2. `tests/test_silent_task.py`
+3. `tests/test_runtime_orchestrator_smoke.py`
+4. `tests/test_recovery_pipeline_smoke.py`
 
 这 4 个分别覆盖：
 - 角色互认
@@ -79,13 +79,13 @@
 
 ### 场景 B：worker 跑了但没收口
 先看：
-- `scripts/test_runtime_orchestrator_smoke.py`
-- `scripts/test_stage3_smoke.py`
+- `tests/test_runtime_orchestrator_smoke.py`
+- `tests/test_stage3_smoke.py`
 - `scripts/session_probe.py`
 
 ### 场景 C：恢复逻辑可疑
 先看：
-- `scripts/test_recovery_pipeline_smoke.py`
+- `tests/test_recovery_pipeline_smoke.py`
 - `scripts/session_probe.py`
 
 ## 6. 文档锚点
@@ -96,15 +96,15 @@
 - `examples/tests/README.md`
 - `docs/openclaw-agent-session-commands.md`
 - `docs/runtime-orchestrator-smoke.md`
-- `skills/Multi-Agent-Collaboration/安装与使用.md`
+- `skills/multi-agent-collaboration/安装与使用.md`
 
 ## 7. 收口结论
 
 当前仓库已经满足本子任务 acceptance 点名的关键项：
 
 - `scripts/session_probe.py`
-- `scripts/test_agent_handshake.py`
-- `scripts/test_silent_task.py`
+- `tests/test_agent_handshake.py`
+- `tests/test_silent_task.py`
 并且还补齐了：
 - runtime orchestrator smoke
 - stage3 smoke

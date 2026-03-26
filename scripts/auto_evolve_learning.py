@@ -58,7 +58,7 @@ def build_evolve_plan(review_result: dict | None) -> dict:
     if "code_first" in text:
         targets += ["scripts/runtime_orchestrator.py", "scripts/protocol_lib.py", "scripts/staffing_decision.py"]
     if "doc_first" in text:
-        targets += ["skills/Multi-Agent-Collaboration/SKILL.md", "docs/项目骨架与逻辑执行流程.md"]
+        targets += ["skills/multi-agent-collaboration/SKILL.md", "docs/项目骨架与逻辑执行流程.md"]
     return {
         "status": "reviewed",
         "targets": targets,

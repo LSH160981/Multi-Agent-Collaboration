@@ -1,65 +1,58 @@
 # CODE REVIEW NOTES
 
-## 2026-03-26 结构重审结论
+## 2026-03-26 再次结构重审结论
 
-本轮重点不是继续加功能，而是清理项目结构、入口和 skill 骨架。
+这轮不是继续堆内容，而是继续把仓库朝**正规 skill 工程骨架**收紧。
 
-### 已处理
+### 本轮已处理
 
-1. **主 skill 收紧为更标准的 skill skeleton**
-   - `skills/Multi-Agent-Collaboration/` 根目录现在只保留：
+1. **主 skill 目录规范化**
+   - 主 skill 从 `skills/Multi-Agent-Collaboration/` 统一为：
+     - `skills/multi-agent-collaboration/`
+   - 原因：更符合常见 skill / package 命名习惯，避免大小写路径混乱。
+
+2. **主 skill skeleton 继续收紧**
+   - 主 skill 根目录仍只保留：
      - `SKILL.md`
      - `references/`
-   - 原先平铺在 skill 根目录的大量说明文件已迁入 `references/` 子目录
-   - 分类为：
-     - `references/guides/`
-     - `references/governance/`
-     - `references/operations/`
-     - `references/protocols/`
-     - `references/strategy/`
-     - `references/testing/`
-     - `references/workflow*.md`
+   - 协议文件统一位于：
+     - `skills/multi-agent-collaboration/references/protocols/通信协议.json`
 
-2. **删除 skill 内多余 README**
-   - 删除：
-     - `skills/Multi-Agent-Collaboration/README.md`
-     - `skills/mac/README.md`
-   - 原因：它们不属于最终 skill 骨架的必要组成，且和 `SKILL.md` 职责重叠
+3. **测试与实现分层**
+   - 所有测试脚本从 `scripts/` 迁到 `tests/`
+   - 新增：`tests/README.md`
+   - 原因：`scripts/` 应只放正式入口和可复用实现，不该混杂 smoke / regression。
 
-3. **删除重复安装脚本**
-   - 删除：`skills/Multi-Agent-Collaboration/安装脚本.sh`
-   - 原因：仓库级正式安装入口已经存在于 `scripts/default-takeover-setup.sh`
+4. **修复测试迁移后的导入与路径问题**
+   - 为测试脚本显式加入 `scripts/` 到 `sys.path`
+   - 修复 `protocol_lib.py` 的协议路径引用
+   - 避免“目录搬了但测试全坏”的半截重构
 
-4. **停止跟踪 generated 运行产物**
-   - `examples/generated/` 已移出 git 跟踪
-   - 原因：这些是测试/运行产物，不应作为稳定项目骨架的一部分长期版本化
+5. **统一安装、自检、README、入口文档引用**
+   - 安装脚本、自检脚本、README、ENTRYPOINTS、PROJECT_STRUCTURE 等路径引用统一到新结构
+   - 测试命令统一改为 `python3 tests/...`
 
-5. **清理缓存与本地大文件目录**
-   - `.gitignore` 已补充：
-     - `__pycache__/`
-     - `*.pyc`
-     - `examples/generated/`
-     - `research/external/`
-   - 目的：减少仓库噪音与无意义提交
+6. **继续控制仓库噪音**
+   - 清理 `__pycache__/`
+   - `examples/generated/` 继续作为生成物目录，不作为稳定骨架的一部分强调维护
 
-6. **统一入口路径引用**
-   - README、自检脚本、skill 说明中的路径已对齐新的 `references/` 结构
+### 这一轮之后更合理的分层
 
-### 仍保留但后续可继续优化
+```text
+skills/   -> 给 OpenClaw 读的 skill 骨架
+scripts/  -> 正式入口 + 可复用实现
+tests/    -> smoke / regression / example checks
+docs/     -> 工程文档
+research/ -> 外部资料与研究沉淀
+```
 
-1. `docs/` 目录仍然较多，后续可再精简合并
-2. `research/web/` 里仍有部分旧版/新版同主题抓取，可再做一次去重
-3. runtime 代码仍以 CLI 适配层为主，后续应进一步向 OpenClaw session tools 靠拢
+### 仍然可继续优化的地方
 
-### 当前判断
+1. `docs/` 中文档数量仍偏多，可继续合并导航
+2. `research/` 仍有同主题重复抓取，可继续去重
+3. 某些脚本仍偏 CLI 适配层，后续可继续向 OpenClaw 原生 session 能力收口
+4. `skills/mac/SKILL.md` 仍以“命令桥语义”描述，但应避免依赖非标准 frontmatter 字段
 
-这轮之后，仓库更接近：
-- 正规 skill skeleton
-- 清楚的仓库级入口矩阵
-- 清楚的工程层 / 文档层 / 研究层分离
-- 减少 generated / cache / 重复说明 的污染
+### 当前结论
 
-下一阶段如果继续重构，最值得做的是：
-- 继续精简 `docs/`
-- 进一步统一 `research/` 去重
-- 让 runtime 编排更直接使用 OpenClaw 原生 session tools
+这轮之后，仓库更接近一个能长期维护的 skill 工程仓库，而不是“文档 + 脚本 + 生成物混在一起”的资料包。

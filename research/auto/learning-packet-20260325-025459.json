@@ -373,7 +373,7 @@
       "scripts/runtime_orchestrator.py",
       "scripts/protocol_lib.py",
       "scripts/staffing_decision.py",
-      "skills/Multi-Agent-Collaboration/SKILL.md",
+      "skills/multi-agent-collaboration/SKILL.md",
       "docs/项目骨架与逻辑执行流程.md"
     ],
     "actions": [

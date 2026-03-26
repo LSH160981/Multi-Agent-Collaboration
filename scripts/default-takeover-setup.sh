@@ -4,12 +4,12 @@ set -euo pipefail
 WORKSPACE="${1:-$HOME/.openclaw/workspace}"
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SHARED_SKILLS_DIR="$HOME/.openclaw/skills"
-TARGET_SKILL_DIR="$SHARED_SKILLS_DIR/Multi-Agent-Collaboration"
+TARGET_SKILL_DIR="$SHARED_SKILLS_DIR/multi-agent-collaboration"
 TARGET_MAC_BRIDGE_DIR="$SHARED_SKILLS_DIR/mac"
 
 mkdir -p "$SHARED_SKILLS_DIR"
 rm -rf "$TARGET_SKILL_DIR" "$TARGET_MAC_BRIDGE_DIR"
-cp -R "$REPO_ROOT/skills/Multi-Agent-Collaboration" "$TARGET_SKILL_DIR"
+cp -R "$REPO_ROOT/skills/multi-agent-collaboration" "$TARGET_SKILL_DIR"
 cp -R "$REPO_ROOT/skills/mac" "$TARGET_MAC_BRIDGE_DIR"
 
 "$REPO_ROOT/scripts/init-mac-system.sh" "$WORKSPACE" >/dev/null
@@ -22,7 +22,7 @@ cat <<EOF
 
 现在这套安装代表：
 1. 所有本机 OpenClaw Agent 都能读到 Multi-Agent-Collaboration skill
-2. /mac 已作为 user-invocable skill 暴露候选入口
+2. /mac 已作为 slash-like skill entry 暴露候选入口
 3. mac-system 目录已初始化
 4. 复杂任务现在可以默认按本 skill 的方法论处理
 5. 即使平台没有显式注册 /mac，纯文本 '/mac ...' 也应被视为强触发词
@@ -38,13 +38,13 @@ cat <<EOF
 - 运行安装自检:
   $REPO_ROOT/scripts/install-selfcheck.sh "$WORKSPACE"
 - 运行核心角色互认测试:
-  $REPO_ROOT/scripts/test_agent_handshake.py
+  $REPO_ROOT/tests/test_agent_handshake.py
 - 运行静默任务测试:
-  $REPO_ROOT/scripts/test_silent_task.py
+  $REPO_ROOT/tests/test_silent_task.py
 - 运行 runtime smoke:
-  $REPO_ROOT/scripts/test_runtime_orchestrator_smoke.py
+  $REPO_ROOT/tests/test_runtime_orchestrator_smoke.py
 - 运行恢复链路测试:
-  $REPO_ROOT/scripts/test_recovery_pipeline_smoke.py
+  $REPO_ROOT/tests/test_recovery_pipeline_smoke.py
 - 需要人工观察时，多开 TUI 并切换 /agent 查看各角色 session
 - 试发一条强触发任务:
   /mac 调研最近 30 天值得关注的 OpenClaw 多Agent 项目，并总结可吸收到本 skill 的优点

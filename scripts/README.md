@@ -1,6 +1,6 @@
 # scripts
 
-本目录按工程职责可以分成 5 类。
+本目录只放**正式入口**与**可复用实现**，不再混放测试脚本。
 
 ## 1. 安装与初始化
 - `default-takeover-setup.sh`：把 skill 安装到共享目录并初始化默认接管基础环境
@@ -39,22 +39,21 @@
 > 已删除早期重复原型：`orchestrate_task.py`、`demo_pipeline.py`。
 > 原因：它们已被 staged pipeline 与 runtime orchestrator 覆盖，继续保留只会制造入口混乱。
 
-## 5. 校验与测试
-- `validate_pipeline_state.py`
-- `validate_examples.py`
-- `test_agent_handshake.py`
-- `test_silent_task.py`
-- `test_runtime_orchestrator_smoke.py`
-- `test_recovery_pipeline_smoke.py`
-- `test_stage3_smoke.py`
+## 5. 测试已迁到 tests/
+请看：`tests/README.md`
 
-### 测试链说明
-- `test_stage3_smoke.py` 现已支持**自动准备前置 stage1/stage2 状态**，不再要求手工先准备 `pipeline-state.json`
-- `test_runtime_orchestrator_smoke.py` 更适合验证完整 runtime orchestrator 闭环与落盘结果
-- `test_recovery_pipeline_smoke.py` 更适合验证 repair / resume 动作语义
+当前测试入口包括：
+- `tests/test_agent_handshake.py`
+- `tests/test_silent_task.py`
+- `tests/test_runtime_orchestrator_smoke.py`
+- `tests/test_recovery_pipeline_smoke.py`
+- `tests/test_stage3_smoke.py`
+- `tests/test_session_probe_example.py`
+- `tests/test_inspect_and_recover_actions.py`
 
 ## 维护原则
 - 新脚本必须写模块说明。
 - 能复用公共逻辑时，优先放进 `runtime_lib.py` / `protocol_lib.py`。
 - demo、smoke、生产型总控不要混名混责。
+- `scripts/` 放正式入口，`tests/` 放 smoke / 回归 / 样例校验。
 - 如果两个脚本功能高度重合，优先合并或在此文件写清边界。

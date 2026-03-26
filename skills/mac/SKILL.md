@@ -1,7 +1,6 @@
 ---
 name: mac
-description: 强制进入 Multi-Agent-Collaboration 多会话协作模式。用法：`/mac <任务>`。适用于复杂任务拆解、并行研究、A/B 对比、交叉验证、调试恢复。user-invocable slash command 入口。
-user-invocable: true
+description: 强制进入 Multi-Agent-Collaboration 多会话协作模式。用法：`/mac <任务>`。适用于复杂任务拆解、并行研究、A/B 对比、交叉验证、调试恢复，是显式的 `/mac` 命令桥入口。
 ---
 
 # /mac 命令桥

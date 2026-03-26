@@ -2,11 +2,14 @@
 import argparse
 import json
 import subprocess
+import sys
 from pathlib import Path
+
+REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO / "scripts"))
 
 from runtime_lib import write_json
 
-REPO = Path(__file__).resolve().parent.parent
 DEFAULT_TASK = "/mac 搜索 GitHub 最近 7 天 star 涨得最快的 10 个项目，总结共同特点。"
 
 

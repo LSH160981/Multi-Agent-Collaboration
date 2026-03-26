@@ -1,5 +1,5 @@
 ---
-name: Multi-Agent-Collaboration
+name: multi-agent-collaboration
 description: OpenClaw 原生多会话协作技能。用于复杂任务拆解、并行研究、A/B 对比、交叉验证、调试恢复，以及 `/mac` 显式触发。要求主会话是唯一用户出口，其他会话只做内部工作，最终由主 Agent 合并、去重、审核后输出。适用于需要 session 编排、review、inspect、recover、message hygiene 的任务。
 ---
 
