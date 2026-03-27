@@ -19,13 +19,16 @@ Multi-Agent-Collaboration/
 │   ├── CODE_REVIEW_NOTES.md        # 代码审计与重构记录
 │   ├── README.md                   # docs 目录导航
 │   ├── architecture/               # 架构、骨架、接管、流程、差距
-│   ├── guides/                     # 安装、命令、演示、发布、使用说明
+│   ├── guides/                     # 安装、命令、演示、使用说明
 │   ├── testing/                    # 测试矩阵、smoke、验收说明
 │   └── research/                   # 外部资料提炼与方法总结
 ├── skills/
-│   ├── Multi-Agent-Collaboration/  # 主 skill
+│   ├── multi-agent-collaboration/  # 主 skill
 │   └── mac/                        # /mac 命令桥
-├── scripts/                        # 安装、解析、编排、恢复、测试脚本
+├── scripts/
+│   ├── bootstrap/                  # 骨架生成器与脚手架
+│   └── analysis/                   # 评分、去重、自学习等分析脚本
+├── tests/                          # smoke / 回归 / 验收
 ├── schemas/                        # JSON Schema
 ├── examples/                       # 示例输入输出、协议样例、测试模板
 ├── agents/                         # 常驻角色骨架

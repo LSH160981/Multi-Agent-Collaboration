@@ -53,6 +53,60 @@ research/ -> 外部资料与研究沉淀
 3. 某些脚本仍偏 CLI 适配层，后续可继续向 OpenClaw 原生 session 能力收口
 4. `skills/mac/SKILL.md` 仍以“命令桥语义”描述，但应避免依赖非标准 frontmatter 字段
 
+## 2026-03-27 结构与入口再次收口结论
+
+这一轮继续处理的是“结构像工程仓库，但脚本层仍稍显平铺”的问题。
+
+### 本轮已处理
+
+1. **脚本目录再次分层**
+   - 新增：
+     - `scripts/bootstrap/`
+     - `scripts/analysis/`
+   - 迁移：
+     - `generate-agent.sh` -> `scripts/bootstrap/`
+     - `generate-ab-team.sh` -> `scripts/bootstrap/`
+     - `auto_evolve_learning.py` -> `scripts/analysis/`
+     - `score_result.py` -> `scripts/analysis/`
+     - `dedupe_summary.py` -> `scripts/analysis/`
+
+2. **保留根层正式入口稳定**
+   - 安装、自检、runtime、staged pipeline、恢复入口仍保留在 `scripts/` 根层
+   - 原因：主入口不应频繁深层跳转，辅助/分析类脚本才适合下沉分组
+
+3. **文档与入口矩阵同步更新**
+   - 更新 `README.md`
+   - 更新 `docs/PROJECT_STRUCTURE.md`
+   - 更新 `docs/ENTRYPOINTS.md`
+   - 更新 `scripts/README.md`
+   - 修正自学习与伪代码映射中的旧路径引用
+
+4. **清理明显噪音**
+   - 删除 `scripts/__pycache__/`
+   - 删除 `tests/__pycache__/`
+
+### 这一轮之后的结构判断
+
+更合理的脚本分层应理解为：
+
+```text
+scripts/
+  根层        -> 正式入口 / 主链路
+  bootstrap/  -> 骨架生成、脚手架
+  analysis/   -> 分析、评分、去重、自学习
+```
+
+### 暂未大动的部分
+
+1. `research/` 仍然体量很大，但这里优先保证“研究资料不污染主链路”，暂不做激进删除
+2. `docs/research/` 仍有部分主题邻近文档，可继续再合并，但本轮先以修入口和分层为主
+3. `agents/`、`templates/` 仍是骨架资产，后续可继续收紧说明与模板边界
+
 ### 当前结论
 
-这轮之后，仓库更接近一个能长期维护的 skill 工程仓库，而不是“文档 + 脚本 + 生成物混在一起”的资料包。
+这轮之后，仓库从“已经能跑”进一步收敛到“结构更像正规 skill 工程”：
+- 主入口留在根层
+- 辅助脚本归位
+- 文档与路径引用一致
+- 测试入口矩阵更完整
+- 明显缓存噪音已清掉

@@ -104,6 +104,11 @@ Multi-Agent-Collaboration/
 - `scripts/README.md`
 - `tests/README.md`
 
+### 脚本分层提醒
+- `scripts/` 根层：正式入口与核心运行链
+- `scripts/bootstrap/`：骨架生成器与脚手架
+- `scripts/analysis/`：评分、去重、自学习等分析脚本
+
 ### 学习资料
 - `research/README.md`
 - `docs/research/多agent协同外部资料提炼-20260326.md`

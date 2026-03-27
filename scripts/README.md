@@ -2,23 +2,28 @@
 
 本目录只放**正式入口**与**可复用实现**，不再混放测试脚本。
 
-## 1. 安装与初始化
+## 1. 安装与初始化（正式入口）
 - `default-takeover-setup.sh`：把 skill 安装到共享目录并初始化默认接管基础环境
 - `install-selfcheck.sh`：安装后自检
 - `init-mac-system.sh`：初始化 `mac-system/` 多 Agent 工作目录
-- `generate-agent.sh`：快速生成一个新的 Agent 目录骨架
-- `generate-ab-team.sh`：批量生成 A/B 两组 specialist 骨架
 
-## 2. 协议与任务解析
+### bootstrap/
+- `bootstrap/generate-agent.sh`：快速生成一个新的 Agent 目录骨架
+- `bootstrap/generate-ab-team.sh`：批量生成 A/B 两组 specialist 骨架
+
+## 2. 协议、编组与任务解析
 - `mac_cli.py`：把 `/mac` 文本解析成结构化任务包
 - `protocol_lib.py`：读取协议定义并构造标准 JSON 消息
 - `recruit_team.py`：根据任务包生成 A/B 组编组方案
 - `staffing_decision.py`：把编组结果收口为 staffing 决策
 - `dispatch_task.py`：把结构化派单写入日志与队列
-- `score_result.py`：把结果包转成评分卡
-- `dedupe_summary.py`：对候选结论做去重汇总
 
-## 3. runtime / session / 恢复
+### analysis/
+- `analysis/score_result.py`：把结果包转成评分卡
+- `analysis/dedupe_summary.py`：对候选结论做去重汇总
+- `analysis/auto_evolve_learning.py`：自动抓取候选资料，先落 research，再决定是否吸收
+
+## 3. runtime / session / 恢复（正式入口）
 - `runtime_lib.py`：OpenClaw runtime 调度辅助库
 - `runtime_dispatch.py`：通过 OpenClaw CLI 向 agent 发结构化任务
 - `runtime_orchestrator.py`：更完整的一轮 runtime 闭环

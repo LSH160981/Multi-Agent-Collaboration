@@ -32,6 +32,8 @@
 - `tests/test_silent_task.py`
 - `tests/test_runtime_orchestrator_smoke.py`
 - `tests/test_recovery_pipeline_smoke.py`
+- `tests/test_recovery_scenarios.py`
+- `tests/test_full_acceptance.py`
 
 ## 辅助脚本
 

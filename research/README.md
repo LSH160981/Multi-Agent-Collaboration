@@ -1,50 +1,32 @@
-# 多 Agent 协同学习资料索引
+# research
 
-本目录只保留两类东西：
-- **值得持续参考的原始资料摘要**
-- **会影响主 skill / docs / scripts 演进的研究沉淀**
+本目录只放**原始资料、本地抓取、自动学习中间产物、外部仓库研究副本**。
 
-## 目录约定
+和 `docs/research/` 的区别：
 
-- `web/`：网页资料的**保留版摘要**，优先保留带日期的新版本
-- `external/`：本地参考仓库副本（不作为主仓库实现的一部分）
-- `sources/`：主题化摘录与观察笔记
-- `auto/`：自动学习抓取、审核建议、吸收计划
-- 顶层 `*.md`：跨来源综合提炼
+- `research/`：原料层、过程层、抓取层、本地研究缓存
+- `docs/research/`：提炼后的长期结论层
 
-> 纪律：外部资料先进入 `research/`，不得直接跳过审核去修改主 skill。
-> 正确闭环：抓取 → research 落盘 → 审核判断 → 主 Agent 决定吸收 → git 记录。
+## 当前结构
 
-## 当前重点主题
+- `research/auto/`
+  - 自动学习抓取结果
+  - 学习摘要
+  - learning packet
 
-1. OpenClaw 原生 session 编排
-2. 多 agent 角色分层
-3. A/B 双组竞争 + reviewer 裁决
-4. inspect / patrol / recover 闭环
-5. JSON 任务包与 agent-to-agent 通信
-6. 主 Agent 唯一用户出口与去重治理
-7. 自学习 / 自改进 / git 记忆压缩策略
+- `research/web/`
+  - 外部网页抓取后的本地归档
 
-## 保留策略
+- `research/github/`
+  - GitHub 资料抓取与整理
+  - 不把重量级仓库副本纳入主仓库版本控制
 
-- 同一网页有多份抓取时，优先保留**较新、带日期、信息更完整**的一份
-- 原始网页长文不直接大段塞仓库，只保留可复用摘要
-- GitHub 外部仓库主要用于学习，不把它们当主项目的一部分维护
+- `research/sources/`
+  - 来源清单、候选来源、原始来源描述
 
-## 当前建议优先阅读
+## 维护原则
 
-### 网页摘要
-- `web/openclaw-docs-pi-20260326.md`
-- `web/clawhub-agent-team-orchestration-20260326.md`
-- `web/clawhub-agent-directory.md`
-- `web/zelikk-openclaw-tui-agent-20260326.md`
-- `web/zelikk-openclaw-tui-agent-cooperate-20260326.md`
-
-### 综合提炼
-- `../docs/research/多agent协同外部资料提炼-20260326.md`
-- `../docs/research/多agent协同优秀作品骨架与伪代码提炼-20260326.md`
-- `多Agent协同提炼.md`
-
-## 结论
-
-`research/` 的目标不是“收藏一切”，而是给主 skill 的下一次演进留下高价值、低噪音的依据。
+1. 原始资料先放这里，不直接污染主 skill
+2. 值得长期保留的结论，再提炼进 `docs/research/`
+3. 重量级外部仓库副本只保留在本地，不纳入主仓库版本控制
+4. 自动学习脚本只允许把候选资料落这里，不允许直接重写主 skill
