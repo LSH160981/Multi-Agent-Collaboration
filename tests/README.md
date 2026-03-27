@@ -8,6 +8,7 @@
 - `test_runtime_orchestrator_smoke.py`
 - `test_recovery_pipeline_smoke.py`
 - `test_stage3_smoke.py`
+- `test_full_acceptance.py`
 
 ## 轻量校验
 - `test_session_probe_example.py`
@@ -24,4 +25,15 @@
 python3 tests/test_runtime_orchestrator_smoke.py
 python3 tests/test_recovery_pipeline_smoke.py
 python3 tests/test_stage3_smoke.py
+python3 tests/test_full_acceptance.py
+```
+
+### 一键全链路验收
+```bash
+python3 tests/test_full_acceptance.py
+```
+
+### 跳过依赖真实 agent 的重阶段
+```bash
+python3 tests/test_full_acceptance.py --skip-runtime --skip-stage3
 ```
