@@ -111,8 +111,7 @@ Multi-Agent-Collaboration/
 
 ### 学习资料
 - `research/README.md`
-- `docs/research/多agent协同外部资料提炼-20260326.md`
-- `docs/research/多agent协同优秀作品骨架与伪代码提炼-20260326.md`
+- `docs/research/多agent协同研究总纲-20260327.md`
 
 ---
 

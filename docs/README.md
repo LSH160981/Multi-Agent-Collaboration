@@ -14,6 +14,11 @@
 ## research/
 放已经提炼过、值得长期保留的方法总结。
 
+当前建议优先阅读：
+- `docs/research/多agent协同研究总纲-20260327.md`
+- `docs/research/自动学习与审核后自进化.md`
+- `docs/research/openmoss-任务包-2026-03-22.md`
+
 ## 顶层文件
 - `PROJECT_STRUCTURE.md`：仓库结构总纲
 - `ENTRYPOINTS.md`：正式入口矩阵
