@@ -1,0 +1,32 @@
+{
+  // Multi-Agent-Collaboration 推荐的最小 OpenClaw 配置片段（样例）
+  commands: {
+    native: "auto",
+    nativeSkills: "auto",
+    text: true
+  },
+
+  tools: {
+    agentToAgent: {
+      enabled: true,
+      allow: [
+        "main-ceo",
+        "pool-hr",
+        "review-judge",
+        "inspect-patrol"
+        // specialist 按需加入
+      ]
+    },
+
+    sessions: {
+      visibility: "all"
+    }
+  },
+
+  skills: {
+    load: {
+      watch: true,
+      watchDebounceMs: 250
+    }
+  }
+}

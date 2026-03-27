@@ -30,6 +30,19 @@
 
 ## 2. 推荐安装路径
 
+### 安装前建议先确认的 OpenClaw 配置
+
+至少建议满足：
+
+- `tools.agentToAgent.enabled = true`
+- `tools.agentToAgent.allow` 中包含 `main-ceo / pool-hr / review-judge / inspect-patrol` 以及你后续允许互通的 specialist
+- 建议 `tools.sessions.visibility = all`
+- 建议 `commands.nativeSkills = auto`，这样在支持的平台上 `/mac` 更容易显示为技能命令
+
+可直接参考：
+- `examples/openclaw.agent-to-agent.sample.json5`
+
+
 ### 一步安装
 
 ```bash

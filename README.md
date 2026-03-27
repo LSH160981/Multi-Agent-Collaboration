@@ -41,6 +41,10 @@ Multi-Agent-Collaboration/
 - `docs/ENTRYPOINTS.md`
 - `docs/CODE_REVIEW_NOTES.md`
 - `docs/README.md`
+- `docs/architecture/OpenClaw原生多会话改造方案-20260327.md`
+
+推荐配置样例：
+- `examples/openclaw.agent-to-agent.sample.json5`
 
 ---
 

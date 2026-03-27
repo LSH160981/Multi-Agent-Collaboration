@@ -39,6 +39,7 @@ done
 echo "[INFO] OpenClaw 命令参考：openclaw help / openclaw status / openclaw agent --help / openclaw agents --help / openclaw sessions --help / openclaw tui --help"
 echo "[INFO] /mac 是否能明显显示，取决于当前入口是否支持 slash-like skill entry 展示；即使不显示，也应把纯文本 '/mac ...' 作为强触发词。"
 echo "[INFO] 推荐配置前提：tools.agentToAgent.enabled=true，并把允许通信的 agent id 全部写入 tools.agentToAgent.allow。"
+echo "[INFO] 建议同时开启 commands.nativeSkills=auto；在支持的平台上，这会让 /mac 更容易显示为技能命令。"
 echo "[INFO] 建议默认核心角色：main-ceo / pool-hr / review-judge / inspect-patrol。"
 echo "[INFO] specialist 应按需创建或复用，不建议安装后预建过多。"
 
