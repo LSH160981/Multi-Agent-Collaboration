@@ -98,6 +98,7 @@ def main():
     parser.add_argument("--skip-runtime", action="store_true")
     parser.add_argument("--skip-stage3", action="store_true")
     parser.add_argument("--skip-recovery", action="store_true")
+    parser.add_argument("--skip-recovery-scenarios", action="store_true")
 
     parser.add_argument("--handshake-timeout", type=int, default=900)
     parser.add_argument("--silent-timeout", type=int, default=1200)
@@ -201,6 +202,13 @@ def main():
             str(args.outdir / "recovery"),
         ]
         steps.append(run_step("recovery-pipeline", cmd, timeout=args.recovery_timeout, cwd=REPO))
+
+    if not args.skip_recovery_scenarios:
+        cmd = [
+            PY,
+            str(REPO / "tests" / "test_recovery_scenarios.py"),
+        ]
+        steps.append(run_step("recovery-scenarios", cmd, timeout=args.recovery_timeout, cwd=REPO))
 
     report = build_report(args, steps)
     report_path = args.outdir / "full-acceptance-report.json"

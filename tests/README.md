@@ -9,6 +9,7 @@
 - `test_recovery_pipeline_smoke.py`
 - `test_stage3_smoke.py`
 - `test_full_acceptance.py`
+- `test_recovery_scenarios.py`
 
 ## 轻量校验
 - `test_session_probe_example.py`
