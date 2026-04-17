@@ -1,77 +1,105 @@
 # runtime 调度说明
 
-这批脚本开始把系统从“本地生成 JSON”推进到“通过 OpenClaw 原生 session / agent turn 真实调度 agent”。
+这份文件只讲 **运行时脚本边界与当前定位**，不再重复 staged pipeline 的详细阶段说明。
 
 ## 当前核心脚本
 
+### 正式入口
+- `scripts/runtime_orchestrator.py`
+- `scripts/run_staged_pipeline.py`
+- `scripts/inspect_and_recover.py`
+
+### 辅助 / 子阶段脚本
 - `scripts/runtime_lib.py`
 - `scripts/runtime_dispatch.py`
-- `scripts/runtime_orchestrator.py`
+- `scripts/stage1_plan.py`
+- `scripts/stage2_workers.py`
+- `scripts/stage3_review_final.py`
+- `scripts/resume_pipeline.py`
+
+### demo / 验收型脚本
 - `scripts/runtime_sessions.py`
-- `scripts/inspect_and_recover.py`
-- `scripts/run_staged_pipeline.py`
+
+> `runtime_sessions.py` 仍应视为 **原生 session 风格 demo / 验收脚本**，而不是长期生产调度主入口。
+
+---
 
 ## 1. runtime_dispatch.py
 
 作用：
-
 - 读取结构化任务 JSON
-- 通过 `openclaw agent --agent <id> --message ... --json` 真正把任务发给一个 OpenClaw agent
+- 通过 `openclaw agent --agent <id> --message ... --json` 向 agent 发任务
+
+定位：
+- 底层派发辅助
+- 不是最终用户入口
 
 ## 2. runtime_orchestrator.py
 
 作用：
+- 用 `mac_cli.py` 解析任务
+- 用 `recruit_team.py` 生成 A/B 组计划
+- 向主Agent / AgentPool / 审核Agent / 检查Agent / worker 发出真实 turn
+- 把收口结果写入 `runtime-results.json`
 
-- 先用 `mac_cli.py` 解析任务
-- 再用 `recruit_team.py` 生成 A/B 组计划
-- 然后分别向主Agent / AgentPool / 审核Agent / 检查Agent 对应的 OpenClaw agent id 发消息
+定位：
+- 当前推荐的 runtime 主入口
+- 面向 smoke / 验收 / 真实运行链实验
 
-注意：
-
-- 这里的 `--main-agent` / `--pool-agent` / `--review-agent` / `--inspect-agent` 需要传入真实存在的 OpenClaw agent id
-- 例如当前系统里可见的 agent id 有：`smart` / `speed` / `text`
-
-## 3. runtime_sessions.py
+## 3. run_staged_pipeline.py
 
 作用：
+- 统一驱动 stage1 → stage2 → stage3
+- 支持 stop-after / resume / repair 相关链路
+- 输出稳定的 `pipeline-state.json`
 
-- 默认适配当前仓库已经存在的四个角色 agent：`main-ceo` / `pool-hr` / `review-judge` / `inspect-patrol`
-- 如你的环境不同，也可以通过参数覆盖这些 agent id
-- 直接通过 OpenClaw 原生 `agent turn` 发起四个角色视角的真实任务
-- 用来验证：本系统已经不只是“本地写 JSON”，而是确实开始接 OpenClaw 原生运行面
-
-运行后会：
-
-1. 解析 `/mac` 为任务包
-2. 生成 A/B 编组方案
-3. 分别以主Agent / AgentPool / 审核Agent / 检查Agent 的角色提示发起真实 turn
-4. 把结果写入 `examples/generated/native-sessions/native-session-results.json`
+定位：
+- 当前推荐的 staged pipeline 主入口
+- 更适合恢复、阶段排障、可恢复执行
 
 ## 4. inspect_and_recover.py
 
 作用：
+- 巡检 stale / watch agent
+- 结合 pipeline-state 给出 repair / resume / rebuild 建议
+- 当前已能给出明确 `rebuild_agent.py` 调用命令
 
-- 先用 `inspect_agents.py` 发现 stale / watch agent
-- 再根据目录名 → OpenClaw agent id 的映射，可选执行真正的恢复唤醒消息
+定位：
+- 巡检与恢复入口
+- 不负责完整业务编排
 
-## 5. run_staged_pipeline.py
+## 5. runtime_sessions.py
 
 作用：
+- 以主Agent / AgentPool / 审核Agent / 检查Agent 视角发起一轮真实 task demo
+- 写出 native-session-results.json 供人工审计和示例验证
 
-- 串起 stage1 → stage2 → stage3
-- 统一当前主 pipeline 原型入口
-- 比早期 `demo_pipeline.py` 更接近实际运行链路
+定位：
+- demo / 示例 / 验收脚本
+- 适合验证“已经接上 OpenClaw 原生 agent/session 能力”
+- 不应被描述为长期自治调度器
+
+---
 
 ## 当前限制
 
-当前仓库已经具备 runtime orchestration 的代码骨架，但想完全跑成“主Agent / 审核Agent / 检查Agent / AgentPool”长期自治系统，还需要继续补：
+当前仓库已经具备 runtime orchestration 的代码骨架，但还没有把以下部分做成平台原生长期自治系统：
 
 1. 会话级状态追踪
-2. sessions_send / sessions_history 接口版调度器
+2. `sessions_send` / `sessions_history` 接口版调度器
 3. 自动恢复动作和状态机联动
-4. 安装后自动化验收闭环
+4. 完整的长期守护 / 定时自学习执行器
 
-不过现在已经跨过关键一步：
+也就是说：
 
-- 不再只是写本地 JSON
-- 已经能用 OpenClaw 原生 agent/session 能力做真实调度 demo
+- 现在已经不是“只写本地 JSON”
+- 已经能用 OpenClaw 原生 agent/session 能力跑真实调度 demo
+- 但 **正式主入口** 与 **demo / 适配层** 仍要明确区分
+
+---
+
+## 建议阅读顺序
+
+- 看 runtime 与 staged 的差异：`runtime_orchestrator_vs_pipeline_gap.md`
+- 看 staged pipeline 本身：`staged-runtime-pipeline.md`
+- 看伪代码与实现映射：`伪代码到代码映射.md`
