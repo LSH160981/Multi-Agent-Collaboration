@@ -94,6 +94,22 @@ def recommend_session_action(session_info, stale_minutes: int):
     return "rebuild"
 
 
+def infer_role_kind(agent_dir_name: str) -> str:
+    lowered = agent_dir_name.lower()
+    if "research" in lowered or "调研" in agent_dir_name:
+        return "research"
+    if "test" in lowered or "verify" in lowered or "检查" in agent_dir_name:
+        return "test"
+    if "front" in lowered or "ui" in lowered:
+        return "frontend"
+    return "general"
+
+
+def build_rebuild_command(workspace: str, agent_dir_name: str) -> str:
+    role_kind = infer_role_kind(agent_dir_name)
+    return f'{PY} {REPO / "scripts" / "rebuild_agent.py"} "{workspace}" "{agent_dir_name}" --role-name "{agent_dir_name}" --role-kind {role_kind}'
+
+
 def main():
     parser = argparse.ArgumentParser(description="Inspect agents and optionally send recovery nudges through real OpenClaw agents")
     parser.add_argument("workspace", help="OpenClaw workspace path")
@@ -154,6 +170,7 @@ def main():
                 "latest_session": session_info,
                 "recommended_action": recommended_action,
                 "suggestion": suggestion_map[recommended_action],
+                "rebuild_command": build_rebuild_command(args.workspace, item["agent"]) if recommended_action == "rebuild" else None,
             }
             if args.execute and mapped_agent_id:
                 message = build_recovery_message(item["agent"], item["issues"], session_info)
