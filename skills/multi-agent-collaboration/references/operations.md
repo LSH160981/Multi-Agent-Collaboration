@@ -26,6 +26,17 @@ Complex tasks may implicitly activate this skill.
 使用 Multi-Agent-Collaboration skill 完成这个任务
 ```
 
+## Recommended operating defaults
+
+Unless the task clearly needs more, default to:
+
+- the smallest viable team
+- one user-facing main agent
+- minimal context distribution
+- structured task packets when work is delegated
+- reviewer / verifier isolation when independent judgment matters
+- model routing by role when the runtime supports it
+
 ## Testing after installation
 
 ### Handshake test
@@ -65,6 +76,21 @@ Recovery order:
 4. reassign
 5. rebuild the role
 
+If low output quality or repeated drift is suspected, also consider:
+
+- shrinking context
+- switching model
+- adding a verifier or challenger
+- escalating to reviewer for conflict resolution
+
 ## Final delivery rule
 
-Only the main agent may send user-visible output. Always merge, deduplicate, and clean the message first.
+Only the main agent may send user-visible output.
+
+Before delivery, always:
+
+- merge and deduplicate
+- clean internal chatter
+- resolve or label conflicts
+- mark uncertainty honestly
+- rewrite worker outputs into one coherent final answer

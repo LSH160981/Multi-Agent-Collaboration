@@ -25,6 +25,7 @@ description: 显式 `/mac <任务>` 入口。把当前请求强制路由到 Mult
 2. 去掉前缀并提取真实任务
 3. 把请求强制路由到 **Multi-Agent-Collaboration** 协作模式
 4. 保持主会话仍是唯一用户出口
+5. 优先选择最小够用团队，而不是默认拉满角色
 
 ## 处理规则
 
@@ -32,10 +33,12 @@ description: 显式 `/mac <任务>` 入口。把当前请求强制路由到 Mult
 
 1. 去掉 `/mac` 前缀
 2. 解析任务目标、约束、交付物、风险
-3. 判断是单人、最小团队，还是需要 A/B + review / inspect
+3. 判断更适合 `research-team`、`implementation-team`、`debug-team`、`compare-team` 还是 `review-team`
 4. 优先复用已有 session / agent；缺角色时再补
-5. 用 OpenClaw 原生 session 能力执行协作
-6. 最终只输出一条去重后的用户可见结论
+5. 默认最小上下文分发，避免把完整历史广播给所有 worker
+6. 需要时给不同角色附加模型路由提示
+7. 用 OpenClaw 原生 session 能力执行协作
+8. 最终只输出一条去重、收口后的用户可见结论
 
 ## 硬约束
 
@@ -43,6 +46,19 @@ description: 显式 `/mac <任务>` 入口。把当前请求强制路由到 Mult
 - 子会话只做内部工作
 - 不能把内部 A2A 对话直接转发给用户
 - 不要因为写了 `/mac` 就默认无限扩张团队
+- 如果是验证 / 审查角色，优先保持上下文隔离与独立判断
+
+## 进入后默认遵守的规则
+
+进入 Multi-Agent-Collaboration 后，默认遵守：
+
+- Team shape catalog
+- Context isolation rules
+- Model routing heuristics
+- Recovery rules
+- Finalization protocol
+
+也就是说，`/mac` 不只是“开多会话”，而是“进入一套受约束的协作协议”。
 
 ## 该去哪里看完整规则
 
